@@ -1,14 +1,12 @@
 package pl.dataconsulting.APEX_TAF.APEXComponents;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.Reporter;
 import pl.dataconsulting.APEX_TAF.framework.annotation.APEXComponent;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @APEXComponent
 public class CheckboxComponent extends BaseComponent {
@@ -42,7 +40,7 @@ public class CheckboxComponent extends BaseComponent {
         }
 
         String radioValuesToSelect = match.stream().map(e -> e.getAttribute("value")).reduce("", (a, b) -> a + ":" + b).substring(1);
-        setValue(element.getAttribute("id"), radioValuesToSelect);
+        setValueJS(element.getAttribute("id"), radioValuesToSelect);
     }
 
     /**
@@ -96,13 +94,6 @@ public class CheckboxComponent extends BaseComponent {
     }
 
 
-    // == private functions ==
-
-    private void setValue(String item, String elementId) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        String SetValueTemplate = "apex.item( \"%s\").setValue(\"%s\")";
-        js.executeScript(String.format(SetValueTemplate, item, elementId), "");
-    }
 
 
 }

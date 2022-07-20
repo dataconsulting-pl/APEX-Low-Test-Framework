@@ -6,6 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.Assert;
 import pl.dataconsulting.APEX_TAF.framework.annotation.APEXComponent;
 
 import javax.annotation.PostConstruct;
@@ -133,6 +134,34 @@ public class BaseComponent {
         }
         else
             return null;
+    }
+
+    protected String getValueJS(WebElement element) {
+        String script = String.format("return apex.item( \"%s\" ).getValue()",
+                element.getAttribute("id"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        Object jsResult = js.executeScript(script, " ");
+        if (jsResult instanceof String stringResult){
+            return stringResult;
+        } else {
+            Assert.assertEquals("Value read from APEX element: " + element.getAttribute("id") + " is not String value",
+                    "Value read from APEX element " + element.getAttribute("id") + " is String value",
+                    "Verify value returned by APEX element.");
+            return null;
+        }
+    }
+
+
+    // == private functions ==
+
+    protected void setValueJS(String item, String elementId) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String SetValueTemplate = "apex.item( \"%s\").setValue(\"%s\")";
+        js.executeScript(String.format(SetValueTemplate, item, elementId), "");
+    }
+    protected void setValueJS(WebElement element, String elementId) {
+        String item = element.getAttribute("id");
+        setValueJS(item,elementId);
     }
 
 

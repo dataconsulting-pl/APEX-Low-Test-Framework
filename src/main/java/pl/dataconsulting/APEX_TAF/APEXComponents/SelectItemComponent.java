@@ -11,10 +11,10 @@ public class SelectItemComponent extends BaseComponent {
 
 
     /**
-     * Select value in select item
+     * Selects value in select item
      * @param frameTitle - name of the frame where select item is located
      * @param value - value to be selected
-     * @param fieldName - name of the
+     * @param fieldName - name of the field
      */
     public void selectItem(String frameTitle, String value, String fieldName) {
         switchToFrame(frameTitle);
@@ -22,18 +22,18 @@ public class SelectItemComponent extends BaseComponent {
     }
 
     /**
-     *
-     * @param option
-     * @param fieldName
+     * Selects value in select item
+     * @param value - value to be selected
+     * @param fieldName - name of the
      */
-    public void selectItem(String option, String fieldName) {
-        selectItemsValue(getWebElementByLabel(fieldName), option);
+    public void selectItem(String value, String fieldName) {
+        selectItemsValue(getWebElementByLabel(fieldName), value);
     }
 
     /**
-     *
-     * @param expectedValue
-     * @param fieldName
+     * Verifies value in select item
+     * @param expectedValue - value to be verified
+     * @param fieldName - name of the field
      */
     public void verifySelectItemValue(String expectedValue, String fieldName) {
         WebElement selectItem = getWebElementByLabel(fieldName);
