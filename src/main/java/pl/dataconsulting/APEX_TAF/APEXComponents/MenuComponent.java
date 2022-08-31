@@ -44,8 +44,6 @@ public class MenuComponent extends BaseComponent {
                             menuElement.findElement(By.xpath("../../span[@class='a-TreeView-toggle']")))
                     ).click();
                 }
-
-
             }
         }
     }

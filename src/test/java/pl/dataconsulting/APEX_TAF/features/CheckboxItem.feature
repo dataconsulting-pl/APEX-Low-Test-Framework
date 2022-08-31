@@ -9,21 +9,21 @@ Feature: with DC Test Automation Framework it is possible to enter data into tex
     And user presses the 'Add Customer' button
 
 
-  Scenario: Set Radioboxes - List
+  Scenario: Set Checkbox - List
     When user sets checkboxes Analyst Interview, Logo, Quote for "Reference Types" checkbox item
     Then checkboxes Analyst Interview, Logo, Quote in "Reference Types" checkbox are selected
 
-  Scenario: Set Radioboxes - Single
+  Scenario: Set Checkbox - Single
     When user sets checkbox Logo for "Reference Types" checkbox item
     Then checkbox Logo in "Reference Types" checkbox is selected
 
 
-  Scenario: Unset Radioboxes - List
+  Scenario: Unset Checkbox - List
     When user sets checkboxes Analyst Interview, Logo, Quote, Success Story for "Reference Types" checkbox item
     And user unsets checkboxes Analyst Interview, Logo, Quote for "Reference Types" checkbox item
     Then checkbox Success Story in "Reference Types" checkbox is selected
 
-  Scenario: Unset Radioboxes - Single
+  Scenario: Unset Checkbox - Single
     When user sets checkboxes Analyst Interview, Logo, Quote, Success Story for "Reference Types" checkbox item
     And user unsets checkbox Quote for "Reference Types" checkbox item
     Then checkbox Analyst Interview, Logo, Success Story in "Reference Types" checkbox is selected

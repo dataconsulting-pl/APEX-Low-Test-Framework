@@ -89,10 +89,9 @@ public class IRComponent extends BaseComponent{
     private void setIGFilter(WebElement worksheet, String columnName, String value) {
 
         String description = "Setting the filter for the column: %s with value %s";
-
-        waitForApex();
         WebElement element = worksheet.findElement(By.xpath(String.format(IR_HEADER_XPATH_TEMPLATE, columnName.toString())));
-        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+                wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+        waitForApex();
         WebElement searchWindow = worksheet.findElement(By.xpath(SEARCH_WINDOW_XPATH_TEMPLATE));
         sendKeys(searchWindow,value);
         sendKey(Keys.ENTER);
@@ -134,8 +133,7 @@ public class IRComponent extends BaseComponent{
         return idx;
     }
 
-    /**
-     *
+    /**     *
      * @param IRName
      * @return
      */
