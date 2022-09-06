@@ -46,7 +46,7 @@ public class ShuttleComponent extends BaseComponent {
     /**
      * Move all shuttle options in the shuttle component.  As result, option given in the list will be set.
      *
-     * @param radioItemName       name (label) of the radiobox component
+     * @param radioItemName name (label) of the radiobox component
      */
     public void moveAllShuttleOptions(String radioItemName) {
         WebElement element = getWebElementByLabel(radioItemName);
@@ -84,13 +84,12 @@ public class ShuttleComponent extends BaseComponent {
     /**
      * Move all shuttle options in the shuttle component.  As result, option given in the list will be set.
      *
-     * @param radioItemName       name (label) of the radiobox component
+     * @param radioItemName name (label) of the radiobox component
      */
     public void removeAllShuttleOptions(String radioItemName) {
         WebElement element = getWebElementByLabel(radioItemName);
         setValueJS(element.getAttribute("id"), "");
     }
-
 
 
     // == String Item verification functions ==
@@ -149,9 +148,6 @@ public class ShuttleComponent extends BaseComponent {
 
 
     }
-
-
-
 
 
 }

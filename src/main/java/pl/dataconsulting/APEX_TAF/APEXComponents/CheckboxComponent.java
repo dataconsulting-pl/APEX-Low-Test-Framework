@@ -16,7 +16,7 @@ public class CheckboxComponent extends BaseComponent {
     /**
      * Sets checkbox items on the checkbox component.  As result, option given in the list will be set.
      *
-     * @param itemName       name (label) of the checkbox component
+     * @param itemName            name (label) of the checkbox component
      * @param optionNamesToSelect list of option to be selected
      */
     public void setCheckboxesByOptionName(String itemName, List<String> optionNamesToSelect) {
@@ -46,7 +46,7 @@ public class CheckboxComponent extends BaseComponent {
     /**
      * Unsets checkbox items on the checkbox component.  As result, option given in the list will be unset.
      *
-     * @param itemName      name (label) of the checkbox component
+     * @param itemName           name (label) of the checkbox component
      * @param optionNamesToUnset list of option to be unset
      */
     public void unsetCheckboxesByOptionName(String itemName, List<String> optionNamesToUnset) {
@@ -73,7 +73,7 @@ public class CheckboxComponent extends BaseComponent {
     /**
      * Verifies selected checkbox items on the checkbox component.
      *
-     * @param itemName       name (label) of the checkbox component
+     * @param itemName            name (label) of the checkbox component
      * @param expectedOptionNames list of option that should be selected
      */
     public void verifyCheckboxesByOptionName(String itemName, List<String> expectedOptionNames) {

@@ -130,6 +130,7 @@ public class BaseComponent {
 
     /**
      * Gets validation webElement by its label
+     *
      * @param label - label of the APEX component
      * @return - returns validation webElement of the corresponding label
      */
@@ -167,6 +168,7 @@ public class BaseComponent {
 
     /**
      * Gets selected options of APEX item using JS
+     *
      * @param element - corresponding webElement
      * @return - returns list of selected option
      */
@@ -186,6 +188,7 @@ public class BaseComponent {
 
     /**
      * Gets selected option of APEX item using JS
+     *
      * @param element - corresponding webElement
      * @return - returns selected option
      */
@@ -205,6 +208,7 @@ public class BaseComponent {
 
     /**
      * Gets value of APEX item using JS
+     *
      * @param element - corresponding webElement
      * @return - returns value of the APEX item
      */
@@ -228,7 +232,8 @@ public class BaseComponent {
 
     /**
      * Sets the Value of APEX item using JS
-     * @param item - name of the APEX item
+     *
+     * @param item      - name of the APEX item
      * @param elementId - id of the element
      */
     protected void setValueJS(String item, String elementId) {
@@ -239,6 +244,7 @@ public class BaseComponent {
 
     /**
      * Sets the Value of APEX item using JS
+     *
      * @param element
      * @param elementId
      */

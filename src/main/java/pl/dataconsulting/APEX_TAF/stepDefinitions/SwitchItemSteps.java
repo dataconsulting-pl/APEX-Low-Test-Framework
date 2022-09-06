@@ -12,7 +12,7 @@ public class SwitchItemSteps {
     private SwitchItemComponent switchItemComponent;
 
     /**
-     * Switch on the switch item
+     * Step switches on the switch item
      * @param switchName - name of the switch item element
      * @param frameTitle - frame/pop-up name
      */
@@ -23,7 +23,7 @@ public class SwitchItemSteps {
     }
 
     /**
-     * Switch on the switch item
+     * Step switches on the switch item
      * @param switchName - name of the switch item element
      */
     @Given("user switched on the {string} switch item")
@@ -33,7 +33,7 @@ public class SwitchItemSteps {
     }
 
     /**
-     * Switch off the switch item
+     * Step switches off the switch item
      * @param switchName - name of the switch item element
      * @param frameTitle - frame/pop-up name
      */
@@ -44,7 +44,7 @@ public class SwitchItemSteps {
     }
 
     /**
-     * Switch off the switch item
+     * Step switches off the switch item
      * @param switchName - name of the switch item element
      */
     @Given("user switched off the {string} switch item")
@@ -54,7 +54,7 @@ public class SwitchItemSteps {
     }
 
     /**
-     * Verifies, that switch item is on
+     * Step verifies, if given switch item is on
      * @param switchName - name of the switch item element
      */
     @Then("verify, that switch item {string} is on")
@@ -63,7 +63,7 @@ public class SwitchItemSteps {
     }
 
     /**
-     * Verifies, that switch item is off
+     * Step verifies, if given switch item is off
      * @param switchName - name of the switch item element
      */
     @Then("verify, that switch item {string} is off")

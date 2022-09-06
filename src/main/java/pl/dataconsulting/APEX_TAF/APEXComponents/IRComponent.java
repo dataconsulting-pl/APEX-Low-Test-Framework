@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @APEXComponent
-public class IRComponent extends BaseComponent{
+public class IRComponent extends BaseComponent {
 
     //== XPATH Templates ==//
     private String IR_TEMPLATE_XPATH = "//div[@aria-label='%s' and contains(@class, 't-IRR-region')]";
@@ -31,88 +31,97 @@ public class IRComponent extends BaseComponent{
     //== Methods ==//
 
     /**
+     * Sets main IR Filter
      *
-     * @param IRName
-     * @param filter
+     * @param IRName - name of the IR component
+     * @param filter - Filter to be set. List of Maps, where k = header and v = value to set
      */
-    public void setMainIGFilter(String IRName, List<Map<String, String>> filter) {
+    public void setMainIRGFilter(String IRName, List<Map<String, String>> filter) {
         switchToMainFrame();
         for (Map<String, String> row : filter) {
-            row.forEach( (k,v) -> setIGFilter(getWorksheetByName(IRName),k,v) );
+            row.forEach((k, v) -> setIRFilter(getWorksheetByName(IRName), k, v));
         }
     }
 
     /**
+     * Verifies that at least one record is dsiplayed in IR
      *
-     * @param IRName
+     * @param IRName - name of the IR component
      */
-    public void verifyAtLeastOneRowExists(String IRName){
+    public void verifyAtLeastOneRowExists(String IRName) {
         verifyAtLeastOneRecord(getWorksheetByName(IRName));
     }
 
+
     /**
+     * Compares values in IR cell
      *
-     * @param IRName
-     * @param expected
-     * @param startIdx
+     * @param IRName   - name of the IR component
+     * @param expected - expected value. List of Maps, where k = header and v = value to compare
+     * @param startIdx - row from which comparison should be start
      */
-    public void compareMainIGValues(String IRName, List<Map<String, String>> expected, int startIdx) {
+    public void compareMainIRValues(String IRName, List<Map<String, String>> expected, int startIdx) {
         String action = "Compare Activities IR Values. ";
 
         for (Map<String, String> row : expected) {
-            row.forEach( (k,v) -> asserts.assertEqualRegexp(action,k,v,getCellValue(getWorksheetByName(IRName),startIdx-1, k)));
+            row.forEach((k, v) -> asserts.assertEqualRegexp(action, k, v, getCellValue(getWorksheetByName(IRName), startIdx - 1, k)));
         }
     }
 
     /**
+     * Gets the value from cell
      *
-     * @param worksheet
-     * @param row
-     * @param columnName
-     * @return
+     * @param worksheet  - IR component element
+     * @param row        - row number
+     * @param columnName - column name
+     * @return - returns value from cell
      */
     private String getCellValue(WebElement worksheet, int row, String columnName) {
 
 
-        int columnNumber = getColumnIdx(worksheet,columnName);
+        int columnNumber = getColumnIdx(worksheet, columnName);
         String xpathFinal = String.format(CELL_XPATH_TEMPLATE, row + 2, columnNumber + 1);
         WebElement cell = worksheet.findElement(By.xpath(xpathFinal));
         return cell.getText();
     }
 
+
     /**
+     * Sets main IR Filter
      *
-     * @param worksheet
-     * @param columnName
-     * @param value
+     * @param worksheet  - IR component element
+     * @param columnName - column name
+     * @param value      - value to be set
      */
-    private void setIGFilter(WebElement worksheet, String columnName, String value) {
+    private void setIRFilter(WebElement worksheet, String columnName, String value) {
 
         String description = "Setting the filter for the column: %s with value %s";
         WebElement element = worksheet.findElement(By.xpath(String.format(IR_HEADER_XPATH_TEMPLATE, columnName.toString())));
-                wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
         waitForApex();
         WebElement searchWindow = worksheet.findElement(By.xpath(SEARCH_WINDOW_XPATH_TEMPLATE));
-        sendKeys(searchWindow,value);
+        sendKeys(searchWindow, value);
         sendKey(Keys.ENTER);
         waitForApex();
     }
 
     /**
+     * Verifies that at least one record is displayed in IR
      *
-     * @param worksheet
+     * @param worksheet - IR component element
      */
     private void verifyAtLeastOneRecord(WebElement worksheet) {
         List<WebElement> elements = worksheet.findElements(By.xpath(WORKSHEET_RECORDS_XPATH_TEMPLATE));
         Assert.assertTrue(elements.size() >= 2, "Verify that at least one record has been found in IR");
     }
 
+
     /**
      * Get column index
      *
-     * @param worksheet
+     * @param worksheet  - IR component element
      * @param columnName - name of the column to search
-     * @return return an index of the column
+     * @return - returns an index of the column
      */
     private int getColumnIdx(WebElement worksheet, String columnName) {
         String action = "Get Column Idx";
@@ -133,12 +142,14 @@ public class IRComponent extends BaseComponent{
         return idx;
     }
 
-    /**     *
-     * @param IRName
-     * @return
+    /**
+     * Gets the Worksheet by name
+     *
+     * @param IRName - name of the IR
+     * @return - IR component webElement
      */
-    private WebElement getWorksheetByName(String IRName){
-        WebElement searchedWebElement = driver.findElement(By.xpath(String.format(IR_TEMPLATE_XPATH,IRName)));
+    private WebElement getWorksheetByName(String IRName) {
+        WebElement searchedWebElement = driver.findElement(By.xpath(String.format(IR_TEMPLATE_XPATH, IRName)));
         return searchedWebElement;
     }
 }

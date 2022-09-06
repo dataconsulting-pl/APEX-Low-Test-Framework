@@ -16,7 +16,7 @@ public class RadioButtonItemSteps {
 
 
     /**
-     * Set radioButton for radioButton item.
+     * Step sets radioButton for radioButton item.
      *
      * @param options  - option to be selected
      * @param itemName - the name of a radioButton item
@@ -26,9 +26,14 @@ public class RadioButtonItemSteps {
         radioButtonComponent.setRadioButtonByOptionName(itemName, options);
     }
 
+    /**
+     * Step verifies, if given radioButton is selected
+     * @param option - expected selected option
+     * @param itemName - the name of the radioButton item
+     */
     @Then("radioButton {string} in {string} radioButton is selected")
-    public void verify_selected_radioButton(String options, String itemName) {
-        radioButtonComponent.verifyRadioButtonsByOptionName(itemName, options);
+    public void verify_selected_radioButton(String option, String itemName) {
+        radioButtonComponent.verifyRadioButtonsByOptionName(itemName, option);
     }
 
 }

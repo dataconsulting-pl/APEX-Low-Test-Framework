@@ -13,8 +13,9 @@ public class SwitchItemComponent extends BaseComponent {
 
     /**
      * Switches switch item to on
+     *
      * @param switchItemName - name of the switch item
-     * @param frameTitle - name of the frame
+     * @param frameTitle     - name of the frame
      */
     public void switchItemOn(String switchItemName, String frameTitle) {
         switchToFrame(frameTitle);
@@ -24,6 +25,7 @@ public class SwitchItemComponent extends BaseComponent {
 
     /**
      * Switches switch item to on
+     *
      * @param switchItemName - name of the switch item
      */
     public void switchItemOn(String switchItemName) {
@@ -32,8 +34,9 @@ public class SwitchItemComponent extends BaseComponent {
 
     /**
      * Switches switch item to off
+     *
      * @param switchItemName - name of the switch item
-     * @param frameTitle - name of the frame
+     * @param frameTitle     - name of the frame
      */
     public void switchItemOff(String switchItemName, String frameTitle) {
         switchToFrame(frameTitle);
@@ -42,6 +45,7 @@ public class SwitchItemComponent extends BaseComponent {
 
     /**
      * Switches switch item to off
+     *
      * @param switchItemName - name of the switch item
      */
     public void switchItemOff(String switchItemName) {
@@ -50,8 +54,9 @@ public class SwitchItemComponent extends BaseComponent {
 
     /**
      * Verifies switch item
+     *
      * @param switchItemName - name of the switch item
-     * @param expected - expected value. True - element is switched to on
+     * @param expected       - expected value. True - element is switched to on
      */
     public void verifySwitchItem(String switchItemName, boolean expected) {
 
@@ -65,17 +70,17 @@ public class SwitchItemComponent extends BaseComponent {
         }
     }
 
+    /**
+     * Switches item value using JS
+     * @param switchItemElement - WebElement of the switch item
+     * @param switchTo - target switch option. Y or N.
+     */
     private void switchItem(WebElement switchItemElement, boolean switchTo) {
         if (switchTo)
-            setValueJS(switchItemElement,"Y");
+            setValueJS(switchItemElement, "Y");
         else
-            setValueJS(switchItemElement,"N");
+            setValueJS(switchItemElement, "N");
 
-//        String xpath = String.format(".//label[@class='a-Button'][text()='%s']", switchTo);
-//        wait.until(ExpectedConditions.elementToBeClickable(
-//                        switchItemElement.findElement(By.xpath(String.format(xpath, switchTo)))))
-//                .click();
-//        waitForApex();
     }
 
 

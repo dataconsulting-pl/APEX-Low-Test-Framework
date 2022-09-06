@@ -12,4 +12,4 @@ Feature: with DC Test Automation Framework it is possible to enter data into tex
       Given user clicked on the 'Create Activity' button
       And frame 'Activity Details' is visible
       When user enters 'test 1' in 'Name' field
-      Then verify, that text item 'Name' value is 'test 1'
+      Then verify, that value of text item 'Name' is 'test 1'

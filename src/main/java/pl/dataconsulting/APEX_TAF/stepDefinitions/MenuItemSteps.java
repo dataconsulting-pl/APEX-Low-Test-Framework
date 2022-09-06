@@ -21,7 +21,7 @@ public class MenuItemSteps {
     }
 
     /**
-     * Navigates to the menu option.
+     * Step navigates to the menu option.
      *
      * @param options - menu option to be selected In case navigation should be done to some sub-menu please use -> as delimiter.
      *                For exampele Administration->Access Control->Settings
@@ -32,7 +32,7 @@ public class MenuItemSteps {
     }
 
     /**
-     * Verifies, if menu option is selected.
+     * Step verifies, if menu option is selected.
      *
      * @param options - menu option to be verified.  In case verification should be performed on some sub-menu please use -> as delimiter.
      *                For exampele Administration->Access Control->Settings

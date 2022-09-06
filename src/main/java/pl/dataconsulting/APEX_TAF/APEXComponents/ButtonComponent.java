@@ -9,7 +9,8 @@ public class ButtonComponent extends BaseComponent {
 
     /**
      * Presses the pop-up button
-     * @param frameName - name of the frame
+     *
+     * @param frameName  - name of the frame
      * @param buttonName - button name
      */
     public void pressPopUpButton(String frameName, String buttonName) {
@@ -21,6 +22,7 @@ public class ButtonComponent extends BaseComponent {
 
     /**
      * Presses the button
+     *
      * @param buttonName - button name
      */
     public void pressButton(String buttonName) {

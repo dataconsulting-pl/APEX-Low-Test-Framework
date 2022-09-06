@@ -13,7 +13,7 @@ public class TextFieldSteps {
     private FormComponent formComponent;
 
     /**
-     * Enter text into the text field
+     * Step enters given text into the text field
      *
      * @param value     - text to enter
      * @param fieldName - text field name
@@ -26,7 +26,7 @@ public class TextFieldSteps {
     }
 
     /**
-     * Enter text into the text field
+     * Step enters given text into the text field
      *
      * @param value     - text to enter
      * @param fieldName - text field name
@@ -38,14 +38,15 @@ public class TextFieldSteps {
     }
 
     /**
-     * Verify text in text field item
-     * @param fieldName
-     * @param expectedValue
+     * Step verifies the text in text field item
+     *
+     * @param fieldName     - text field name
+     * @param expectedValue - expected text of the text field
      */
-    @Then("verify, that text item {string} value is {string}")
+    @Then("verify, that value of text item {string} is {string}")
     @Then("text item {string} value is {string}")
     public void user_verifies_value_in_text_field(String fieldName, String expectedValue) {
-        formComponent.verifyTextItemValue(fieldName,expectedValue);
+        formComponent.verifyTextItemValue(fieldName, expectedValue);
     }
 
 

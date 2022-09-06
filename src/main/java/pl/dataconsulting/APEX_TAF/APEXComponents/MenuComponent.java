@@ -22,6 +22,7 @@ public class MenuComponent extends BaseComponent {
 
     /**
      * Navigates to menu element.
+     *
      * @param menuOptions - List of menu and sub-menu elements counted from top.
      */
     public void navigateToMenu(List<String> menuOptions) {
@@ -50,10 +51,11 @@ public class MenuComponent extends BaseComponent {
 
     /**
      * Verifies, if menu option is selected
+     *
      * @param menuOption - List of menu and sub-menu elements counted from top.
      */
     public void verifyMenuOption(List<String> menuOption) {
-        String lastOptionXpath = getMenuElementsXpath(menuOption).get(getMenuElementsXpath(menuOption).size()-1);
+        String lastOptionXpath = getMenuElementsXpath(menuOption).get(getMenuElementsXpath(menuOption).size() - 1);
         WebElement menuElement = driver.findElement(By.xpath(lastOptionXpath));
         if (menuElement.getAttribute("aria-selected") != null &&
                 menuElement.getAttribute("aria-selected").equals("true")) {
@@ -67,6 +69,12 @@ public class MenuComponent extends BaseComponent {
 
     }
 
+    /**
+     * Gets xpaths of menu options
+     *
+     * @param menuOption - List of menu and sub-menu elements counted from top.
+     * @return - List contains xpath of menu options
+     */
     private List<String> getMenuElementsXpath(List<String> menuOption) {
 
         List<String> menuElements = new ArrayList<>();
@@ -81,7 +89,9 @@ public class MenuComponent extends BaseComponent {
     }
 
 
-
+    /**
+     * Extend main APEX menu
+     */
     private void extendMenu() {
         String ariaExtendedIs = navButton.getAttribute("aria-expanded");
         if (ariaExtendedIs.equalsIgnoreCase("false")) {

@@ -13,7 +13,6 @@ import java.sql.Timestamp;
 
 public class Hooks {
 
-
     @Lazy
     @Autowired
     private ScreenShotService screenShotService;
@@ -27,7 +26,7 @@ public class Hooks {
         if (scenario.isFailed()) {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             String timeMilliseconds = Long.toString(timestamp.getTime());
-            scenario.attach(this.screenShotService.getScreenshot(),"image/png",timeMilliseconds);
+            scenario.attach(this.screenShotService.getScreenshot(), "image/png", timeMilliseconds);
         }
     }
 

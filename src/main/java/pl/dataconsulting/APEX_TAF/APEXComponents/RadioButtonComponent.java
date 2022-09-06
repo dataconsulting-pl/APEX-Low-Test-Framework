@@ -42,7 +42,7 @@ public class RadioButtonComponent extends BaseComponent {
     /**
      * Verifies selected radioButton items on the radioButton component.
      *
-     * @param itemName            name (label) of the radioButton component
+     * @param itemName           name (label) of the radioButton component
      * @param expectedOptionName name of the option that should be selected
      */
     public void verifyRadioButtonsByOptionName(String itemName, String expectedOptionName) {
@@ -52,10 +52,10 @@ public class RadioButtonComponent extends BaseComponent {
 
         if (selectedOptions.equals(expectedOptionName)) {
             Assert.assertEquals("Expected radioButton option set", "Expected radioButton option set",
-                    itemName + " Expected radioButton option set: " +expectedOptionName);
+                    itemName + " Expected radioButton option set: " + expectedOptionName);
         } else {
             Assert.assertEquals("Expected radioButton option not set", "Expected radioButton option set",
-                    itemName + " Expected radioButton option not set: " +expectedOptionName);
+                    itemName + " Expected radioButton option not set: " + expectedOptionName);
         }
     }
 
