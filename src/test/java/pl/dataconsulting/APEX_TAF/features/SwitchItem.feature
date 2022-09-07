@@ -1,4 +1,4 @@
-Feature: with DC Test Automation Framework it is possible to set switch item to on or off
+Feature: Set and verify APEX Switch Item
 
 
   Background: User access Activities page

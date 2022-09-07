@@ -1,4 +1,4 @@
-Feature: with DC Test Automation Framework it is possible to enter data into text field and verify data from text field
+Feature: Navigate through the APEX Menu items
 
   Background: User access Activities page
     Given the user access the 'https://apex.oracle.com/pls/apex/dataconsulting/r/customers/login' url
@@ -8,13 +8,13 @@ Feature: with DC Test Automation Framework it is possible to enter data into tex
 
 
   Scenario: Navigate to main menu element
-    When user navigates to Activities page
-    Then verify, that menu option Activities is selected
+    When user navigates to 'Activities' page
+    Then verify, that menu option 'Activities' is selected
 
   Scenario: Navigate to sub menu element
-    When user navigates to Customers->Categories page
-    Then verify, that menu option Customers->Categories is selected
+    When user navigates to 'Customers->Categories' page
+    Then verify, that menu option 'Customers->Categories' is selected
 
   Scenario: Navigate to sub (2nd) menu element
-    When user navigates to Administration->Access Control->Settings page
-    Then verify, that menu option Administration->Access Control->Settings is selected
+    When user navigates to 'Administration->Access Control->Settings' page
+    Then verify, that menu option 'Administration->Access Control->Settings' is selected

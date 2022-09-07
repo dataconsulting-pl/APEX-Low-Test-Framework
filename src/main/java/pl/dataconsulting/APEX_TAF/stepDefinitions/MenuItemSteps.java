@@ -15,11 +15,6 @@ public class MenuItemSteps {
     @Autowired
     private MenuComponent menuComponent;
 
-    @ParameterType("(?:[^\",]*)(?:->\\s?[^,]*)*")
-    public List<String> listOfMenuElements(String arg) {
-        return Arrays.asList(arg.split("->\\s?"));
-    }
-
     /**
      * Step navigates to the menu option.
      *

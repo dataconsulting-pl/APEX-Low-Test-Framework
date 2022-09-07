@@ -1,12 +1,4 @@
-Feature: Creating Activities
-  It should be possible to create a new activity. Each activity should contain information about type, Name, Date, Owner, Location and Description.
-  Only Type and Name are mandatory fields. All other fields are optional.
-  As Type it should be possible to choose one from the options:
-  - Conference
-  - Meeting
-  - Phone Call
-  - Presentation
-  After creation of activity, the activity should be visible in Interactive Grid.
+Feature: Set filter and validate data on APEX Interactive Report
 
   Background: User access Activities page
     Given the user access the 'https://apex.oracle.com/pls/apex/dataconsulting/r/customers/login' url
@@ -24,6 +16,3 @@ Feature: Creating Activities
       Then in 'Activities' IR, data starting from 1 row match table below:
         | Type         | Name           | Activity Date | Owner        | Location | References | Updated          | Updated by                 |
         | Presentation | Cloud Overview | ^$            | Irene Walker | ^$       | 2          | ^\d+ weeks ago$  | pkantyka@dataconsulting.pl |
-
-#czyszczenie IG
-  # klikanie

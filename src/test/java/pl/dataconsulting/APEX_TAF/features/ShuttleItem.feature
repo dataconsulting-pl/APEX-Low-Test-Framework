@@ -1,4 +1,4 @@
-Feature: with DC Test Automation Framework it is possible to enter data into text field and verify data from text field
+Feature: Set and verify APEX shuttle item
 
   Background: User access Activities page
     Given the user access the 'https://apex.oracle.com/pls/apex/f?p=59118' url
@@ -8,36 +8,22 @@ Feature: with DC Test Automation Framework it is possible to enter data into tex
 
 
   Scenario: Set Shuttle Box - List
-    When user moves values "Option 1, Option 2" in 'Shuttle Item' shuttle item
-    When user moves values Option 1, Option 2 in 'Shuttle Item' shuttle item
-    Then values Option 1, Option 2 in 'Shuttle Item' shuttle item are chosen
+    When user moves values 'Option 1, Option 2' in 'Shuttle Item' shuttle item
+    Then values 'Option 1, Option 2' in 'Shuttle Item' shuttle item are chosen
 
   Scenario: Set Shuttle Box - Single
-    When user moves values Option 2 in 'Shuttle Item' shuttle item
-    Then value Option 2 in 'Shuttle Item' shuttle item is chosen
+    When user moves values 'Option 2' in 'Shuttle Item' shuttle item
+    Then value 'Option 2' in 'Shuttle Item' shuttle item is chosen
 
 
   Scenario: Remove Shuttle option
-    When user moves values Option 1, Option 2 in 'Shuttle Item' shuttle item
-    And user removes values Option 2 in 'Shuttle Item' shuttle item
-    Then value Option 1 in 'Shuttle Item' shuttle item is chosen
+    When user moves values 'Option 1, Option 2' in 'Shuttle Item' shuttle item
+    And user removes values 'Option 2' in 'Shuttle Item' shuttle item
+    Then value 'Option 1' in 'Shuttle Item' shuttle item is chosen
 
 
   Scenario: Move all + remove all
     When user moves all values in 'Shuttle Item' shuttle item
-    Then values Option 1, Option 2 in 'Shuttle Item' shuttle item are chosen
-    When user removes all values in 'Shuttle Item' shuttle item
-    Then no values in 'Shuttle Item' shuttle item are chosen
-
-
-
-  Scenario: Set Shuttle Box
-    When user moves values Option 1, Option 2 in 'Shuttle Item' shuttle item
-    Then values Option 1, Option 2 in 'Shuttle Item' shuttle item are chosen
-  Scenario: Remove Shuttle option
-    When user removes values Option 2 in 'Shuttle Item' shuttle item
-    Then value Option 1 in 'Shuttle Item' shuttle item is chosen
-  Scenario: Move all + remove all
-    When user moves all values in 'Shuttle Item' shuttle item
+    Then values 'Option 1, Option 2' in 'Shuttle Item' shuttle item are chosen
     When user removes all values in 'Shuttle Item' shuttle item
     Then no values in 'Shuttle Item' shuttle item are chosen

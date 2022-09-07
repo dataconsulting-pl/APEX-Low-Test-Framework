@@ -1,4 +1,4 @@
-Feature: with DC Test Automation Framework it is possible to enter data into text field and verify data from text field
+Feature: Set and verify APEX Select Item elements
 
   Background: User access Activities page
     Given the user access the 'https://apex.oracle.com/pls/apex/dataconsulting/r/customers/login' url

@@ -1,4 +1,4 @@
-Feature: Creating Activities
+Feature: Example Feature File - Creating Activities
   It should be possible to create a new activity. Each activity should contain information about type, Name, Date, Owner, Location and Description.
   Only Type and Name are mandatory fields. All other fields are optional.
   As Type it should be possible to choose one from the options:
