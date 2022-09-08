@@ -28,6 +28,7 @@ public class Hooks {
             String timeMilliseconds = Long.toString(timestamp.getTime());
             scenario.attach(this.screenShotService.getScreenshot(), "image/png", timeMilliseconds);
         }
+
     }
 
     @After

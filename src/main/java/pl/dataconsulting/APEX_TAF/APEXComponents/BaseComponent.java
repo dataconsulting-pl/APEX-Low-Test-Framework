@@ -95,7 +95,7 @@ public class BaseComponent {
      */
     protected String getTextFromWebElement(WebElement element) {
         wait.until(ExpectedConditions.visibilityOf(element));
-        return element.getText();
+        return element.getAttribute("value");
     }
 
 

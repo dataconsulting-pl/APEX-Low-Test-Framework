@@ -26,6 +26,8 @@ public class ScreenShotService {
 
     public void takeScreenShot(final String imageName) throws IOException {
         File sourceFile = ((TakesScreenshot) this.ctx.getBean(WebDriver.class)).getScreenshotAs(OutputType.FILE);
+        String tmp = this.path.resolve(imageName).toString();
+
         FileCopyUtils.copy(sourceFile, this.path.resolve(imageName).toFile());
     }
 
