@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>pl.dataconsulting</groupId>
 	<artifactId>APEX_TAF</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>APEX_TAF</name>
 	<description>Test Automation framework for APEX applications</description>
 	<properties>
