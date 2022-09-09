@@ -15,7 +15,7 @@ public class SelectItemSteps {
 
 
     /**
-     * Select an option on the select item
+     * Step selects an option on the select item
      * @param value - option to be selected
      * @param fieldName - name of the filed
      * @param frameName - frame/pop-up name
@@ -27,7 +27,7 @@ public class SelectItemSteps {
     }
 
     /**
-     * Select an option on the select item
+     * Step selects an option on the select item
      * @param value - option to be selected
      * @param fieldName - name of the filed
      */
@@ -38,7 +38,7 @@ public class SelectItemSteps {
     }
 
     /**
-     * Verify a value in the select item
+     * Step verifies a value in the select item
      * @param expectedValue - option to be selected
      * @param fieldName - name of the filed
      */

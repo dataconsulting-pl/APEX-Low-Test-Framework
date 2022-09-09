@@ -11,18 +11,28 @@ public class LoginPageSteps {
     @Autowired
     private BaseComponent baseComponent;
 
-
+    /**
+     * Step accesses the given url
+     * @param url - url to access
+     */
     @Given("the user access the {string} url")
     public void user_access_url(String url) {
         baseComponent.navigateToUrl(url);
     }
 
+    /**
+     * Step switches content to iframe for example APEX pop-up
+     * @param frameName - iframe name
+     */
     @Given("frame {string} is visible")
     @Then("frame {string} has been opened")
     public void switch_to_frame(String frameName){
         baseComponent.switchToFrame(frameName);
     }
 
+    /**
+     * Step switches content back to main frame
+     */
     @Given("main frame is visible")
     @Then("a main frame is again active")
     public void switch_to_main_frame(){

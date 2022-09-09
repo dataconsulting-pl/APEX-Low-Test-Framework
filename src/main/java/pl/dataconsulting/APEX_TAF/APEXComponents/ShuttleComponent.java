@@ -1,14 +1,12 @@
 package pl.dataconsulting.APEX_TAF.APEXComponents;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.Reporter;
 import pl.dataconsulting.APEX_TAF.framework.annotation.APEXComponent;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @APEXComponent
 public class ShuttleComponent extends BaseComponent {
@@ -42,13 +40,13 @@ public class ShuttleComponent extends BaseComponent {
         }
 
         String radioValuesToSelect = match.stream().map(e -> e.getAttribute("value")).reduce("", (a, b) -> a + ":" + b).substring(1);
-        setValue(element.getAttribute("id"), radioValuesToSelect);
+        setValueJS(element.getAttribute("id"), radioValuesToSelect);
     }
 
     /**
      * Move all shuttle options in the shuttle component.  As result, option given in the list will be set.
      *
-     * @param radioItemName       name (label) of the radiobox component
+     * @param radioItemName name (label) of the radiobox component
      */
     public void moveAllShuttleOptions(String radioItemName) {
         WebElement element = getWebElementByLabel(radioItemName);
@@ -57,7 +55,7 @@ public class ShuttleComponent extends BaseComponent {
                 element.findElements(By.xpath("//*[contains(@class, 'apex-item-select') and contains(@class, 'shuttle')]/option[not(@disabled)]"));
 
         String radioValuesToSelect = optionToBeSelected.stream().map(e -> e.getAttribute("value")).reduce("", (a, b) -> a + ":" + b).substring(1);
-        setValue(element.getAttribute("id"), radioValuesToSelect);
+        setValueJS(element.getAttribute("id"), radioValuesToSelect);
     }
 
     /**
@@ -86,13 +84,12 @@ public class ShuttleComponent extends BaseComponent {
     /**
      * Move all shuttle options in the shuttle component.  As result, option given in the list will be set.
      *
-     * @param radioItemName       name (label) of the radiobox component
+     * @param radioItemName name (label) of the radiobox component
      */
     public void removeAllShuttleOptions(String radioItemName) {
         WebElement element = getWebElementByLabel(radioItemName);
-        setValue(element.getAttribute("id"), "");
+        setValueJS(element.getAttribute("id"), "");
     }
-
 
 
     // == String Item verification functions ==
@@ -150,15 +147,6 @@ public class ShuttleComponent extends BaseComponent {
         WebElement element = getWebElementByLabel(itemName);
 
 
-    }
-
-
-    // == private functions ==
-
-    private void setValue(String item, String elementId) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        String SetValueTemplate = "apex.item( \"%s\").setValue(\"%s\")";
-        js.executeScript(String.format(SetValueTemplate, item, elementId), "");
     }
 
 
