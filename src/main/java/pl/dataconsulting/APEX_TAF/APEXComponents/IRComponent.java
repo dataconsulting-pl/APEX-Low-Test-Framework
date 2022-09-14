@@ -94,7 +94,7 @@ public class IRComponent extends BaseComponent {
      * @param value      - value to be set
      */
     private void setIRFilter(WebElement worksheet, String columnName, String value) {
-
+        waitForApex();
         String description = "Setting the filter for the column: %s with value %s";
         WebElement element = worksheet.findElement(By.xpath(String.format(IR_HEADER_XPATH_TEMPLATE, columnName.toString())));
         wait.until(ExpectedConditions.elementToBeClickable(element)).click();

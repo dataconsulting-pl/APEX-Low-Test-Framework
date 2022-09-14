@@ -155,11 +155,9 @@ public class BaseComponent {
      */
     protected void waitForApex() {
         try {
-            Thread.sleep(200);
             while (driver.findElements(By.className("u-Processing")).size() > 0) {
                 Thread.sleep(200);
             }
-            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
