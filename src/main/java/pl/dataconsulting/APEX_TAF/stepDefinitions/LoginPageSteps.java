@@ -24,8 +24,8 @@ public class LoginPageSteps {
      * Step switches content to iframe for example APEX pop-up
      * @param frameName - iframe name
      */
-    @Given("frame {string} is visible")
-    @Then("frame {string} has been opened")
+    @Given("frame/pop-up {string} is visible")
+    @Then("frame/pop-up {string} has been opened")
     public void switch_to_frame(String frameName){
         baseComponent.switchToFrame(frameName);
     }
@@ -33,8 +33,8 @@ public class LoginPageSteps {
     /**
      * Step switches content back to main frame
      */
-    @Given("main frame is visible")
-    @Then("a main frame is again active")
+    @Given("main frame/page is visible")
+    @Then("a main frame/page is again active")
     public void switch_to_main_frame(){
         baseComponent.switchToMainFrame();
     }
