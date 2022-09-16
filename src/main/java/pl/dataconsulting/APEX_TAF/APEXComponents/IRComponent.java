@@ -64,7 +64,13 @@ public class IRComponent extends BaseComponent {
         String action = "Compare Activities IR Values. ";
 
         for (Map<String, String> row : expected) {
-            row.forEach((k, v) -> asserts.assertEqualRegexp(action, k, v, getCellValue(getWorksheetByName(IRName), startIdx - 1, k)));
+            row.forEach((k, v) -> {
+                // if cell is empty, the value is passed as null by cucumber. Change it to empty string before comparison
+                if (v == null) {
+                    v = "";
+                }
+                asserts.assertEqualRegexp(action, k, v, getCellValue(getWorksheetByName(IRName), startIdx - 1, k));
+            });
         }
     }
 
