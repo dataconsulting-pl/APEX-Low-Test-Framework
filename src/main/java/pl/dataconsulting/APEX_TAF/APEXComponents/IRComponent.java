@@ -64,7 +64,13 @@ public class IRComponent extends BaseComponent {
         String action = "Compare Activities IR Values. ";
 
         for (Map<String, String> row : expected) {
-            row.forEach((k, v) -> asserts.assertEqualRegexp(action, k, v, getCellValue(getWorksheetByName(IRName), startIdx - 1, k)));
+            row.forEach((k, v) -> {
+                // if cell is empty, the value is passed as null by cucumber. Change it to empty string before comparison
+                if (v == null) {
+                    v = "";
+                }
+                asserts.assertEqualRegexp(action, k, v, getCellValue(getWorksheetByName(IRName), startIdx - 1, k));
+            });
         }
     }
 
@@ -94,7 +100,7 @@ public class IRComponent extends BaseComponent {
      * @param value      - value to be set
      */
     private void setIRFilter(WebElement worksheet, String columnName, String value) {
-
+        waitForApex();
         String description = "Setting the filter for the column: %s with value %s";
         WebElement element = worksheet.findElement(By.xpath(String.format(IR_HEADER_XPATH_TEMPLATE, columnName.toString())));
         wait.until(ExpectedConditions.elementToBeClickable(element)).click();
