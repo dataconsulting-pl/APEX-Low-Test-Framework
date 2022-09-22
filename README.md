@@ -23,3 +23,11 @@ To get a local copy up and running follow these simple example steps:
  
 # Prerequisites
 JDK > 1.8
+
+# License
+[APEX Low Test Framework license](LICENSE.MD)
+
+We decided to use the open-source license in good faith, and we hope that no one will abuse the freedom it provides. Either by rebranding or by reusing/copying the source code in a product that competes with us.
+
+# Credits
+This project is started and maintained by experts from [dataconsulting.pl](https://datacons.co.uk)
