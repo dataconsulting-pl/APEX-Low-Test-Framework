@@ -1,6 +1,6 @@
 # APEX_Low_Test_Framework
 
-The goal of the project is to create an Automated Test Framework used for APEX application that allows non experience users to write and execute automated tests using human readable language. We’ve created a dictionary of predefined English phrases that can be used for requirements specification. The same predefined phrases can be used to run tests automatically by our framework. With the low-test approach anyone who can write English description of the requirements could write automated tests executed against APEX application. 
+The goal of the project is to create an Automated Test Framework used for APEX application that allows non experience users to write and execute automated tests using human readable language. We’ve created a dictionary of predefined English phrases that can be used for requirements specification. The same predefined phrases can be used to run tests automatically by our framework. With the low-test approach anyone who can write English description of the requirements can write automated tests executed against APEX application. 
 
 # Getting Started
 
