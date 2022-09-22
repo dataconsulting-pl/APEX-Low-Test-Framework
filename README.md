@@ -1,11 +1,22 @@
-# APEX_Low_Test_Framework
+# APEX Low Test Framework
 
-The goal of the project is to create an Automated Test Framework used for APEX application that allows non experience users to write and execute automated tests using human readable language. We’ve created a dictionary of predefined English phrases that can be used for requirements specification. The same predefined phrases can be used to run tests automatically by our framework. With the low-test approach anyone who can write English description of the requirements can write automated tests executed against APEX application. 
+The goal of the project is to create an Automated Test Framework used for APEX application that allows non experience users to write and execute automated tests using human readable language. We’ve created a dictionary of predefined English phrases that can be used for requirements specification. The same predefined phrases can be used to run tests automatically by our framework. With the low-test approach anyone who can write English description of the requirements can write automated tests executed against APEX application. To feel flawor of what we are talking about see the following example of low-test requirements (and test case) specification:
+
+```
+Scenario: User log-in and access Activities page
+    Given the user access the 'https://apex.oracle.com/pls/apex/dataconsulting/r/customers/login' url
+    And user entered 'demo' in 'Username' field
+    And user entered 'demo_password' in 'Password' field
+    And user clicked on the 'Sign In' button
+    Then user navigates to 'Activities' page
+```
+
+Our framework can take above desciption and run test case automaticaly.
 
 # Getting Started
 
 To get a local copy up and running follow these simple example steps:
--	Clone the repository (https://github.com/dataconsulting-pl/APEX_Low_Test_Framework.git)
+-	Clone the repository (https://github.com/dataconsulting-pl/APEX-Low-Test-Framework.git)
 -	Open the project in IDEA IntelliJ
 -	Instal “Cucumber for Java” and “Gherkin” plugins
 
@@ -30,4 +41,4 @@ JDK > 1.8
 We decided to use the open-source license in good faith, and we hope that no one will abuse the freedom it provides. Either by rebranding or by reusing/copying the source code in a product that competes with us.
 
 # Credits
-This project is started and maintained by experts from [dataconsulting.pl](https://datacons.co.uk)
+This project is started and maintained by experts from [dataconsulting.pl](https://datacons.co.uk). If you need commercial support [contact us](https://datacons.co.uk/contacts/) 
