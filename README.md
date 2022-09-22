@@ -15,10 +15,22 @@ Our framework can take above desciption and run test case automaticaly.
 
 # Getting Started
 
-To get a local copy up and running follow these simple example steps:
--	Clone the repository (https://github.com/dataconsulting-pl/APEX-Low-Test-Framework.git)
--	Open the project in IDEA IntelliJ
--	Instal “Cucumber for Java” and “Gherkin” plugins
+To get a local copy up and running please follow these simple example steps:
+-	Install [IDEA IntelliJ](https://www.jetbrains.com/idea/download/#section=windows) (IntelliJ IDEA Community Edition is fine)
+-	Clone the project from the (https://github.com/dataconsulting-pl/APEX-Low-Test-Framework.git). Choose option to install GIT if needed.
+-	From File -> Settings -> Plugins install “Cucumber for Java” and “Gherkin” plugins
+-   From File -> Project structure -> Project download JDK 
+-   you are ready to go...
+
+Screencast of setup on fresh Windows environment:
+
+
+https://user-images.githubusercontent.com/59740730/191653915-51966c50-de6f-4644-a834-551ac4cea25e.mp4
+
+
+
+Some screenshots from installation and usage:
+- IntelliJ plugin installation
 
 ![image](https://user-images.githubusercontent.com/109535056/191544408-e6f5dec2-6569-41f3-98f2-43b252f0e83a.png)
 
