@@ -43,6 +43,9 @@ Some screenshots from installation and usage:
 
 ![image](https://user-images.githubusercontent.com/109535056/191544006-df952fc1-c7aa-42b8-a302-826c504deb1c.png)
 
+# Documentation
+
+[See list of supported commands](Command_list.md)
  
 # Prerequisites
 JDK > 1.8
