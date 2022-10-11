@@ -3,6 +3,7 @@ package pl.dataconsulting.APEX_TAF.stepDefinitions.common;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Scenario;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -28,7 +29,6 @@ public class Hooks {
             String timeMilliseconds = Long.toString(timestamp.getTime());
             scenario.attach(this.screenShotService.getScreenshot(), "image/png", timeMilliseconds);
         }
-
     }
 
     @After

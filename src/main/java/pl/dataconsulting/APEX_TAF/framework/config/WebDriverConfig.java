@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import pl.dataconsulting.APEX_TAF.framework.annotation.BeanThreadScope;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 @Lazy
 @Configuration
@@ -23,26 +24,33 @@ public class WebDriverConfig {
     @Value("${timeout:300}")
     private Duration timeout;
 
+    @Value("${wait.implicit:10000}")
+    private Duration implicitWait;
+
 
     @BeanThreadScope
     @Scope("driverscope")
     @ConditionalOnProperty(name = "browser", havingValue = "chrome")
-    public WebDriver chromeDriver(){
+    public WebDriver chromeDriver() {
         WebDriverManager.chromedriver().setup();
-        return new ChromeDriver();
+        ChromeDriver chromeDriver = new ChromeDriver();
+        chromeDriver.manage().timeouts().implicitlyWait(implicitWait);
+        return chromeDriver;
     }
 
     @BeanThreadScope
     @ConditionalOnProperty(name = "browser", havingValue = "firefox")
-    public WebDriver firefoxDriver(){
+    public WebDriver firefoxDriver() {
         WebDriverManager.firefoxdriver().setup();
-        return new FirefoxDriver();
+        FirefoxDriver firefoxDriver = new FirefoxDriver();
+        firefoxDriver.manage().timeouts().implicitlyWait(implicitWait);
+        return firefoxDriver;
     }
 
     @Bean
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public WebDriverWait webDriverWait(WebDriver driver) {
-        return new WebDriverWait(driver,this.timeout);
+        return new WebDriverWait(driver, this.timeout);
     }
 
 

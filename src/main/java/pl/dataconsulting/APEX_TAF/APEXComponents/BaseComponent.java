@@ -10,6 +10,7 @@ import org.testng.Assert;
 import pl.dataconsulting.APEX_TAF.framework.annotation.APEXComponent;
 
 import javax.annotation.PostConstruct;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -72,6 +73,7 @@ public class BaseComponent {
      * @param textToSend - text to be sent
      */
     protected void sendKeys(WebElement element, String textToSend) {
+        wait.until(ExpectedConditions.elementToBeClickable(element)).clear();
         wait.until(ExpectedConditions.elementToBeClickable(element)).sendKeys(textToSend);
 
     }
@@ -99,6 +101,19 @@ public class BaseComponent {
     }
 
 
+    protected WebElement getWebElement(String identity) {
+        WebElement webElement = getWebElementByLabel(identity);
+        if (webElement == null) {
+            try {
+                webElement = driver.findElement(By.id(identity));
+            } catch (NoSuchElementException e) {
+                Assert.fail("Element count not be localised", e.getCause());
+            }
+
+        }
+        return webElement;
+    }
+
     /**
      * Gets webElement by its label
      *
@@ -108,24 +123,24 @@ public class BaseComponent {
     protected WebElement getWebElementByLabel(String label) {
         String action = "Search element by its label";
         String ELEMENT_TEMPLATE_XPATH_STARTS_WITH = "//*[contains(@class,'t-Form-label') and starts-with(text(),'%s')]/.";
-        String ELEMENT_TEMPLATE_XPATH_CONTAINS = "//*[contains(@class,'t-Form-label') and starts-with(text(),'%s')]/.";
         String xpath = String.format(ELEMENT_TEMPLATE_XPATH_STARTS_WITH, label);
 
-        WebElement element = driver.findElement(By.xpath(xpath));
-        if (element == null) {
-            // try to find element using CONTAINS
-            xpath = String.format(ELEMENT_TEMPLATE_XPATH_CONTAINS, label);
+        WebElement element = null;
+        try {
             element = driver.findElement(By.xpath(xpath));
+            String searchElementId = element.getAttribute("for");
+            if (searchElementId == null) {
+                Assert.assertEquals("Web element could not be found", "Web element can be found",
+                        "Searched webElement: " + label);
+                return null;
+            }
+            WebElement searchedWebElement = driver.findElement(By.id(searchElementId));
+            return searchedWebElement;
 
-        }
-        String searchElementId = element.getAttribute("for");
-        if (searchElementId == null) {
-            Assert.assertEquals("Web element could not be found", "Web element can be found",
-                    "Searched webElement: " + label);
+        } catch (NoSuchElementException e) {
+            // Add some logging, that element was not found
             return null;
         }
-        WebElement searchedWebElement = driver.findElement(By.id(searchElementId));
-        return searchedWebElement;
     }
 
     /**
