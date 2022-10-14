@@ -57,15 +57,8 @@ public class MenuComponent extends BaseComponent {
     public void verifyMenuOption(List<String> menuOption) {
         String lastOptionXpath = getMenuElementsXpath(menuOption).get(getMenuElementsXpath(menuOption).size() - 1);
         WebElement menuElement = driver.findElement(By.xpath(lastOptionXpath));
-        if (menuElement.getAttribute("aria-selected") != null &&
-                menuElement.getAttribute("aria-selected").equals("true")) {
-
-            Assert.assertEquals("Menu element selected", "Menu element selected", "Menu element: "
-                    + menuElement.getText());
-        } else {
-            Assert.assertEquals("Menu element selected", "Menu element not selected", "Menu element: "
-                    + menuElement.getText());
-        }
+        Assert.assertTrue(menuElement.getAttribute("aria-selected") != null &&
+                menuElement.getAttribute("aria-selected").equals("true"), "Menu element selected: " + menuElement.getText());
 
     }
 
