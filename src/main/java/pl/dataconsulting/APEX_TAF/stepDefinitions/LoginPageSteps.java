@@ -3,7 +3,12 @@ package pl.dataconsulting.APEX_TAF.stepDefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.Assert;
 import pl.dataconsulting.APEX_TAF.APEXComponents.BaseComponent;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 
 
 public class LoginPageSteps {
@@ -18,6 +23,19 @@ public class LoginPageSteps {
     @Given("the user access the {string} url")
     public void user_access_url(String url) {
         baseComponent.navigateToUrl(url);
+
+   }
+
+    @Given("the user access the url stored in file: {string}")
+    public void user_access_url_from_file(String filePath ) {
+        try {
+            List<String> fileLines = Files.readAllLines(Path.of(filePath));
+            baseComponent.navigateToUrl(fileLines.get(0));
+        } catch (IOException e) {
+            Assert.fail("File could not be found");
+        }
+
+
     }
 
     /**
