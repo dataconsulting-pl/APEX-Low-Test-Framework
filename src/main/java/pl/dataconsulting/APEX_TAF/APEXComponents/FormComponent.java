@@ -17,7 +17,7 @@ public class FormComponent extends BaseComponent {
      */
     public void enterStringIntoTextItem(String frameTitle, String fieldName, String text) {
         switchToFrame(frameTitle);
-        sendKeys(getWebElementByLabel(fieldName), text);
+        sendKeys(getWebElement(fieldName), text);
     }
 
     /**
@@ -27,7 +27,7 @@ public class FormComponent extends BaseComponent {
      * @param text      - text to enter
      */
     public void enterStringIntoTextItem(String fieldName, String text) {
-        sendKeys(getWebElementByLabel(fieldName), text);
+        sendKeys(getWebElement(fieldName), text);
 
     }
 

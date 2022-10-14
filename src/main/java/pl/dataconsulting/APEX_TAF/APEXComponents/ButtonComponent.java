@@ -40,7 +40,7 @@ public class ButtonComponent extends BaseComponent {
 
     private WebElement getSpanButton(String buttonName) {
 
-        String xpath = String.format("//button/span[text()='%s']", buttonName);
+        String xpath = String.format("//button/span[text()='%s']/..", buttonName);
         try {
             return driver.findElement(By.xpath(xpath));
         } catch (NoSuchElementException e) {
