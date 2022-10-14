@@ -10,7 +10,7 @@ Feature: Set and verify APEX Radio Buttons
 
   @unit
   Scenario: Set Radiobutton
-    When user sets radioButton 'Customer' for 'Contact Type' radioButton item
+    When user sets radioButton's option 'Customer' for 'Contact Type' radioButton item
     Then radioButton 'Customer' in 'Contact Type' radioButton is selected
-    When user sets radioButton 'Other' for 'Contact Type' radioButton item
+    When user sets radioButton's option 'Other' for 'Contact Type' radioButton item
     Then radioButton 'Other' in 'Contact Type' radioButton is selected
