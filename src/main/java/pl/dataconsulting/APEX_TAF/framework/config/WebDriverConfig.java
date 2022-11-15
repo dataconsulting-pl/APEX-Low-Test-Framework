@@ -42,6 +42,7 @@ public class WebDriverConfig {
         chromeOptions.setAcceptInsecureCerts(acceptInsecureConnection);
         ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
         chromeDriver.manage().timeouts().implicitlyWait(implicitWait);
+        chromeDriver.manage().window().maximize();
         return chromeDriver;
     }
 
@@ -53,6 +54,7 @@ public class WebDriverConfig {
         firefoxOptions.setAcceptInsecureCerts(acceptInsecureConnection);
         FirefoxDriver firefoxDriver = new FirefoxDriver(firefoxOptions);
         firefoxDriver.manage().timeouts().implicitlyWait(implicitWait);
+        firefoxDriver.manage().window().maximize();
         return firefoxDriver;
     }
 
