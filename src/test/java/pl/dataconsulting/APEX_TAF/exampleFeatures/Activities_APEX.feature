@@ -79,3 +79,4 @@ Feature: Example Feature File - Creating Activities
       | Meeting      | activity 2 |
       | Phone Call   | activity 3 |
       | Presentation | activity 4 |
+
