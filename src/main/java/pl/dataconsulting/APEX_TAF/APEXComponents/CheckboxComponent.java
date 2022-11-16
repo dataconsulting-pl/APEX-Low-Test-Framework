@@ -37,10 +37,11 @@ public class CheckboxComponent extends BaseComponent {
         }
         if (match.isEmpty()) {
             Reporter.log("Could not find any checkbox elements to select. Element list: " + String.join("; ", optionNamesToSelect));
+            setValueJS(element.getAttribute("id"), "");
+        } else {
+            String checkboxValuesToSelect = match.stream().map(e -> e.getAttribute("value")).reduce("", (a, b) -> a + ":" + b).substring(1);
+            setValueJS(element.getAttribute("id"), checkboxValuesToSelect);
         }
-
-        String checkboxValuesToSelect = match.stream().map(e -> e.getAttribute("value")).reduce("", (a, b) -> a + ":" + b).substring(1);
-        setValueJS(element.getAttribute("id"), checkboxValuesToSelect);
     }
 
     /**
