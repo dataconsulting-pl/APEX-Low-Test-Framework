@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -32,6 +33,9 @@ public class WebDriverConfig {
     @Value("${driver.acceptInsecureConnection:false}")
     private boolean acceptInsecureConnection;
 
+    @Value("${driver.maximizeWindow:true}")
+    private boolean maximizeWindow;
+
 
     @BeanThreadScope
     @Scope("driverscope")
@@ -41,8 +45,7 @@ public class WebDriverConfig {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setAcceptInsecureCerts(acceptInsecureConnection);
         ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
-        chromeDriver.manage().timeouts().implicitlyWait(implicitWait);
-        chromeDriver.manage().window().maximize();
+        configureBrowser(chromeDriver);
         return chromeDriver;
     }
 
@@ -53,8 +56,7 @@ public class WebDriverConfig {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setAcceptInsecureCerts(acceptInsecureConnection);
         FirefoxDriver firefoxDriver = new FirefoxDriver(firefoxOptions);
-        firefoxDriver.manage().timeouts().implicitlyWait(implicitWait);
-        firefoxDriver.manage().window().maximize();
+        configureBrowser(firefoxDriver);
         return firefoxDriver;
     }
 
@@ -62,6 +64,12 @@ public class WebDriverConfig {
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public WebDriverWait webDriverWait(WebDriver driver) {
         return new WebDriverWait(driver, this.timeout);
+    }
+
+    private void configureBrowser(RemoteWebDriver driver) {
+        driver.manage().timeouts().implicitlyWait(implicitWait);
+        if (maximizeWindow)
+            driver.manage().window().maximize();
     }
 
 
