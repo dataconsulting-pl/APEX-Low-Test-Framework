@@ -110,7 +110,7 @@ public class ShuttleComponent extends BaseComponent {
 
         if (!notMatch.isEmpty()) {
             String log = String.join("; ", notMatch);
-            Assert.assertEquals("Not all shuttle options are chosen on shuttle item ", "All checkboxes are set",
+            Assert.assertEquals("Not all shuttle options are chosen on shuttle item ", "All shuttle items are set",
                     itemName + " Shuttle options not set : " + log);
         } else {
             Assert.assertEquals("All shuttle options are chosen on shuttle item", "All shuttle options are chosen on shuttle item",

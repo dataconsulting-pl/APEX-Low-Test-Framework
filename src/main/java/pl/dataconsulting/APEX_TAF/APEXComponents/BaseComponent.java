@@ -61,6 +61,7 @@ public class BaseComponent {
 
             if (iframe.getAttribute("title").equalsIgnoreCase(frameTitle)) {
                 driver.switchTo().frame(iframe);
+                waitForApex();
                 break;
             }
         }
@@ -265,6 +266,23 @@ public class BaseComponent {
         String item = element.getAttribute("id");
         setValueJS(item, elementId);
     }
+
+    /**
+     * Executes JS command
+     *
+     * @param jsCommand - JS command to be executed
+     */
+    protected String executeJSCommand(String jsCommand) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        Object jsResult = js.executeScript(jsCommand);
+        if (jsResult instanceof String stringResult) {
+            return stringResult;
+        } else if (jsResult instanceof ArrayList<?>) {
+            return jsResult.toString();
+        } else
+            return null;
+    }
+
 
 
 }
