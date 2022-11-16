@@ -21,7 +21,6 @@ Feature: Test Cases - Customers
       When user enters 'Eliza Mann' in 'Search' field
       #Then ... nie ma możliwości kliknąć w item w container grid, zgłoszony BUG
 
-
     Scenario: Add and edit new Customer
       Given user clicked on the 'Add Customer' button
       When user enters 'Annas Mann' in 'Customer Name' field
@@ -128,7 +127,6 @@ Feature: Test Cases - Customers
         | Prospect |
         | Unknown  |
 
-
     Scenario: Set Checkbox - Single
       Given user navigates to 'Customers' page
       When user sets checkbox 'Logo' for 'Reference Types' checkbox item
@@ -175,7 +173,9 @@ Feature: Test Cases - Customers
       When user presses the 'Uncheck All' button
       #Then no checkboxes are selected
 
-
+    Scenario: Navigate to 'help'
+      Given user navigates to 'Customers' page
+      When user presses the 'Help' button
 
 
 
