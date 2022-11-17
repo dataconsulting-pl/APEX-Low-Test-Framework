@@ -57,7 +57,7 @@ public class CheckboxComponent extends BaseComponent {
         List<WebElement> options =
                 element.findElements(By.xpath("//*[@class='apex-item-option']/input[@type = 'checkbox']"));
         // get selected options
-        List<String> selectedOptions = getSelectedOptions(element);
+        List<String> selectedOptions = getSelectedOptionsDisplayName(element);
 
         // get list of option that should be set after the action
         List<String> toSelect = selectedOptions.stream().filter(
@@ -80,7 +80,7 @@ public class CheckboxComponent extends BaseComponent {
     public void verifyCheckboxesByOptionName(String itemName, List<String> expectedOptionNames) {
         WebElement element = getWebElementByLabel(itemName);
 
-        List<String> selectedOptions = getSelectedOptions(element);
+        List<String> selectedOptions = getSelectedOptionsDisplayName(element);
         List<String> notMatch = expectedOptionNames.stream().filter(
                 s -> selectedOptions.stream().noneMatch(name -> name.trim().equals(s.trim()))).toList();
 

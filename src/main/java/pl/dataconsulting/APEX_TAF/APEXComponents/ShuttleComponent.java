@@ -21,14 +21,20 @@ public class ShuttleComponent extends BaseComponent {
      */
     public void moveShuttleOptionName(String radioItemName, List<String> optionNamesToSelect) {
         WebElement element = getWebElementByLabel(radioItemName);
+        String alreadySelectedOptions = "";
 
         List<WebElement> optionToBeSelected =
                 element.findElements(By.xpath("//*[contains(@class, 'apex-item-select') and contains(@class, 'shuttle')]/option[not(@disabled)]"));
-
         List<String> notMatch = optionNamesToSelect.stream().filter(
                 s -> optionToBeSelected.stream().noneMatch(name -> name.getText().trim().equals(s.trim()))).toList();
-        List<WebElement> match = optionToBeSelected.stream().filter(
-                s -> optionNamesToSelect.stream().anyMatch(name -> name.trim().equals(s.getText().trim()))).toList();
+        // get already selected options
+        List<String> selectedOptions = getSelectedOptions(element);
+        if (!selectedOptions.isEmpty())
+            alreadySelectedOptions = ":" + selectedOptions.stream().reduce("", (a, b) -> a + ":" + b).substring(1);
+
+        List<WebElement> match = optionToBeSelected.stream()
+                .filter(s -> optionNamesToSelect.stream().anyMatch(name -> name.trim().equals(s.getText().trim())))
+                .toList();
 
         if (!notMatch.isEmpty()) {
             String log = String.join("; ", notMatch);
@@ -37,10 +43,13 @@ public class ShuttleComponent extends BaseComponent {
         }
         if (match.isEmpty()) {
             Reporter.log("Could not find any Shuttle elements to select. Element list: " + String.join("; ", optionNamesToSelect));
+            setValueJS(element.getAttribute("id"), "");
+        } else {
+            String radioValuesToSelect = match.stream().map(e -> e.getAttribute("value")).reduce("", (a, b) -> a + ":" + b).substring(1);
+            String optionsToSelect = radioValuesToSelect + alreadySelectedOptions;
+            setValueJS(element.getAttribute("id"), optionsToSelect);
         }
 
-        String radioValuesToSelect = match.stream().map(e -> e.getAttribute("value")).reduce("", (a, b) -> a + ":" + b).substring(1);
-        setValueJS(element.getAttribute("id"), radioValuesToSelect);
     }
 
     /**
@@ -71,7 +80,7 @@ public class ShuttleComponent extends BaseComponent {
         List<WebElement> options =
                 element.findElements(By.xpath("//*[contains(@class, 'apex-item-select') and contains(@class, 'shuttle')]/option[not(@disabled)]"));
         // get selected options
-        List<String> selectedOptions = getSelectedOptions(element);
+        List<String> selectedOptions = getSelectedOptionsDisplayName(element);
 
         // get list of option that should be set after the action
         List<String> toSelect = selectedOptions.stream().filter(
@@ -104,7 +113,7 @@ public class ShuttleComponent extends BaseComponent {
     public void verifyShuttleByOptionName(String itemName, List<String> expectedOptionNames) {
         WebElement element = getWebElementByLabel(itemName);
 
-        List<String> selectedOptions = getSelectedOptions(element);
+        List<String> selectedOptions = getSelectedOptionsDisplayName(element);
         List<String> notMatch = expectedOptionNames.stream().filter(
                 s -> selectedOptions.stream().noneMatch(name -> name.trim().equals(s.trim()))).toList();
 
@@ -126,7 +135,7 @@ public class ShuttleComponent extends BaseComponent {
     public void verifyNoShuttleOptionChosen(String itemName) {
         WebElement element = getWebElementByLabel(itemName);
 
-        List<String> selectedOptions = getSelectedOptions(element);
+        List<String> selectedOptions = getSelectedOptionsDisplayName(element);
 
         if (!selectedOptions.isEmpty()) {
             String log = String.join("; ", selectedOptions);
