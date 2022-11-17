@@ -14,33 +14,34 @@ public class ButtonComponent extends BaseComponent {
      *
      * @param frameName  - name of the frame
      * @param buttonName - button name
+     * @param className  - class name that button should contain. If empty, no class is taken into account
      */
-    public void pressPopUpButton(String frameName, String buttonName) {
+    public void pressPopUpButton(String frameName, String buttonName, String className) {
         switchToFrame(frameName);
-        pressButton(buttonName);
+        pressButton(buttonName, className);
     }
 
     /**
      * Presses the button
      *
      * @param buttonName - button name
+     * @param className  - class name that button should contain. If empty, no class is taken into account
      */
-    public void pressButton(String buttonName) {
-        WebElement element = getSpanButton(buttonName);
-        if (element != null) {
-            wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+    public void pressButton(String buttonName, String className) {
+        WebElement elementSpanButton = getSpanButton(buttonName, className);
+        if (elementSpanButton != null) {
+            wait.until(ExpectedConditions.elementToBeClickable(elementSpanButton)).click();
         } else {
-            element = getButton(buttonName);
-            if (element != null) {
-                wait.until(ExpectedConditions.elementToBeClickable(element)).click();
-            }
+            WebElement element = getButton(buttonName, className);
+            wait.until(ExpectedConditions.elementToBeClickable(element)).click();
         }
         waitForApex();
     }
 
-    private WebElement getSpanButton(String buttonName) {
+    private WebElement getSpanButton(String buttonName, String className) {
 
-        String xpath = String.format("//button/span[text()='%s']/..", buttonName);
+        String xpath = String.format("//button/span[text()='%s' and contains(@class,'%s')]/..", buttonName, className);
+
         try {
             return driver.findElement(By.xpath(xpath));
         } catch (NoSuchElementException e) {
@@ -48,9 +49,9 @@ public class ButtonComponent extends BaseComponent {
         }
     }
 
-    private WebElement getButton(String buttonName) {
+    private WebElement getButton(String buttonName, String className) {
 
-        String xpath = String.format("//*[@type='button' and text()='%s']", buttonName);
+        String xpath = String.format("//*[@type='button' and text()='%s' and contains(@class,'%s')]", buttonName, className);
         try {
             return driver.findElement(By.xpath(xpath));
         } catch (NoSuchElementException e) {
