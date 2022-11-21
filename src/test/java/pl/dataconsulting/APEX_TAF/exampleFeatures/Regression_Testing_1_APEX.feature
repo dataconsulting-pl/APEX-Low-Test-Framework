@@ -32,9 +32,9 @@ Feature: Regression Tests
 
   Scenario: Unset Reference Type Checkbox - List 4
     When user sets checkboxes 'Quote, Logo, Success Story, Analyst Interview, Available for Calls' for 'Reference Types' checkbox item
-    And waiting for 4 seconds
-    And user unsets checkboxes  for 'Quote, Logo, Success Story, Analyst Interview, Available for Calls' checkbox item
-    And waiting for 5 seconds
+    And waiting for 3 seconds
+    And user unsets checkboxes 'Quote, Logo, Success Story, Analyst Interview, Available for Calls' for 'Reference Types' checkbox item
+    And waiting for 2 seconds
     #Nie działa to samo, nie jestem w stanie odznaczyć tej samej ilości checkboxów, którą uprzednio zaznaczyłam.
 
 
