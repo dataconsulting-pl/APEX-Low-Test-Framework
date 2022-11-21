@@ -52,8 +52,6 @@ Feature: Regression Tests
       When user navigates to 'Contacts' page
       And user clicked on the 'Actions' button
       And user presses the 'Download' button
-      And user presses the 'Download' button on 'Download' pop-up
-      And waiting for 3 seconds
 
     Scenario: Cancel on pop-up 2
       When user navigates to 'Contacts' page

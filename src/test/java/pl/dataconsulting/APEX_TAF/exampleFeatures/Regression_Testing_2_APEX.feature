@@ -8,18 +8,15 @@ Feature: Set and verify APEX shuttle item
 
   Scenario: Set Shuttle Box - Single 1
     When user moves values 'Option 2' in 'Shuttle Item' shuttle item
-    And waiting for 2 seconds
     Then value 'Option 2' in 'Shuttle Item' shuttle item is chosen
-    And waiting for 2 seconds
+
 
   Scenario: Set Shuttle Box - Single
     When user moves values 'Option 2' in 'Shuttle Item' shuttle item
-    And waiting for 2 seconds
     Then value 'Option 2' in 'Shuttle Item' shuttle item is chosen
-    And waiting for 2 seconds
     And user moves values 'Option 1' in 'Shuttle Item' shuttle item
     Then value 'Option 1' in 'Shuttle Item' shuttle item is chosen
-    And waiting for 2 seconds
+
 
 
   @unit

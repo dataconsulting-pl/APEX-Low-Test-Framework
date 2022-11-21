@@ -173,10 +173,34 @@ Feature: Test Cases - Customers
       When user presses the 'Uncheck All' button
       #Then no checkboxes are selected
 
-    Scenario: Navigate to 'help'
+    Scenario: Sellection option
       Given user navigates to 'Customers' page
-      When user presses the 'Help' button
+      When user selects 'Symmetric 2000' in 'Product' field
+      Then value 'Symmetric 2000' is selected in 'Product' field
+      And user selects 'Japan' in 'Geography' field
+      Then value 'Japan' is selected in 'Geography' field
+      And user selects 'Yes' in 'Publicly Referenceable' field
+      Then value 'Yes' is selected in 'Publicly Referenceable' field
+      And user sets checkboxes 'Logo' for 'Reference Types' checkbox item
+      Then checkboxes 'Logo' in 'Reference Types' checkbox is selected
+      And user selects 'Partner' in 'Status' field
+      Then value 'Partner' is selected in 'Status' field
+      And user selects 'Name' in 'Sort By' field
+      Then value 'Name' is selected in 'Sort By' field
+      And waiting for 2 seconds
+      And user presses the 'Reset' button
 
 
-
+    Scenario: Adding Customer
+      Given user navigates to 'Customers' page
+      When user clicked on the 'Add Customer' button
+      And user enters 'Caroline Dor' in 'Customer Name' field
+      And user enters '10' in 'Discount' field
+      And user enters '5' in 'ARR' field
+      And waiting for 4 seconds
+      And user presses the 'Project' button
+      And user selects 'Closed' in 'Type' field
+      Then value 'Closed' is selected in 'Type' field
+      And user enters '5' in 'Number of Users' field
+      And waiting for 6 seconds
 
