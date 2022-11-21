@@ -1,13 +1,9 @@
 package pl.dataconsulting.APEX_TAF.APEXComponents;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.Reporter;
 import pl.dataconsulting.APEX_TAF.framework.annotation.APEXComponent;
-
-import java.util.List;
 
 @APEXComponent
 public class RadioButtonComponent extends BaseComponent {
@@ -48,7 +44,7 @@ public class RadioButtonComponent extends BaseComponent {
     public void verifyRadioButtonsByOptionName(String itemName, String expectedOptionName) {
         WebElement element = getWebElement(itemName);
 
-        String selectedOptions = getSelectedOption(element);
+        String selectedOptions = getSelectedOptionDisplayName(element);
 
         Assert.assertEquals(selectedOptions, expectedOptionName,
                 itemName + " Expected radioButton option set");

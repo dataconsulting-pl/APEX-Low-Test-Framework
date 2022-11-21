@@ -10,7 +10,6 @@ import org.testng.Assert;
 import pl.dataconsulting.APEX_TAF.framework.annotation.APEXComponent;
 
 import javax.annotation.PostConstruct;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -187,6 +186,26 @@ public class BaseComponent {
      * @return - returns list of selected option
      */
     protected List<String> getSelectedOptions(WebElement element) {
+        String script = String.format("return apex.item( \"%s\" ).getValue()",
+                element.getAttribute("id"),
+                element.getAttribute("id"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        Object jsResult = js.executeScript(script, " ");
+        if (jsResult instanceof String stringResult) {
+            return Arrays.stream(stringResult.split(",")).toList();
+        } else if (jsResult instanceof ArrayList<?>) {
+            return (List<String>) jsResult;
+        } else
+            return null;
+    }
+
+    /**
+     * Gets display names of selected options of APEX item using JS
+     *
+     * @param element - corresponding webElement
+     * @return - returns list of selected option
+     */
+    protected List<String> getSelectedOptionsDisplayName(WebElement element) {
         String script = String.format("return apex.item( \"%s\" ).displayValueFor( apex.item( \"%s\").getValue() )",
                 element.getAttribute("id"),
                 element.getAttribute("id"));
@@ -201,12 +220,12 @@ public class BaseComponent {
     }
 
     /**
-     * Gets selected option of APEX item using JS
+     * Gets display name of selected option of APEX item using JS
      *
      * @param element - corresponding webElement
      * @return - returns selected option
      */
-    protected String getSelectedOption(WebElement element) {
+    protected String getSelectedOptionDisplayName(WebElement element) {
         String script = String.format("return apex.item( \"%s\" ).displayValueFor( apex.item( \"%s\").getValue() )",
                 element.getAttribute("id"),
                 element.getAttribute("id"));
