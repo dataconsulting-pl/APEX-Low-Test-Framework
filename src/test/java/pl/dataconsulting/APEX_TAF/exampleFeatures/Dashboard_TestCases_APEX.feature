@@ -9,7 +9,12 @@ Feature: Test Cases - Dashboard
   Scenario:
     When user navigates to 'Customers' page
     Then verify, that menu option 'Customers' is selected
-    When user navigates to 'Dashoboard' page
+    And user navigates to 'Dashboard' page
     Then verify, that menu option 'Dashboard' is selected
+    And user navigates to 'Products' page
+    And user navigates to 'Partners' page
+    And user navigates to 'Competitors' page
+    And user navigates to 'Contacts' page
+    And user navigates to 'Activities' page
+    And user navigates to 'Reports' page
 
-    #Nie mogę przejść między zakładkami z menu, dlaczego?

@@ -19,6 +19,8 @@ Feature: Test Cases - Customers
     Scenario: Delete a Customer
       Given user navigates to 'Customers' page
       When user enters 'Eliza Mann' in 'Search' field
+      #Then user selects 'Eliza Mann' from 'Kontener Grid' field
+
       #Then ... nie ma możliwości kliknąć w item w container grid, zgłoszony BUG
 
     Scenario: Add and edit new Customer
