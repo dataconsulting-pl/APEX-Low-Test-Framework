@@ -44,7 +44,7 @@ public class RadioButtonComponent extends BaseComponent {
     public void verifyRadioButtonsByOptionName(String itemName, String expectedOptionName) {
         WebElement element = getWebElement(itemName);
 
-        String selectedOptions = getSelectedOptionDisplayName(element);
+        String selectedOptions = getDisplayValue(element);
 
         Assert.assertEquals(selectedOptions, expectedOptionName,
                 itemName + " Expected radioButton option set");
