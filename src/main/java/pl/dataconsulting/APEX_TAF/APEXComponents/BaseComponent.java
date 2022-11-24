@@ -225,7 +225,7 @@ public class BaseComponent {
      * @param element - corresponding webElement
      * @return - returns selected option
      */
-    protected String getSelectedOptionDisplayName(WebElement element) {
+    protected String getDisplayValue(WebElement element) {
         String script = String.format("return apex.item( \"%s\" ).displayValueFor( apex.item( \"%s\").getValue() )",
                 element.getAttribute("id"),
                 element.getAttribute("id"));
