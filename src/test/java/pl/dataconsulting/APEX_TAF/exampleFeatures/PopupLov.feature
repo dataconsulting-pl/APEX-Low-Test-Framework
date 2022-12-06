@@ -12,5 +12,5 @@ Feature: Set and verify APEX Select Item elements
   Scenario: Select and verify popup lov value
     When user select 'Soho Chair' in 'Parent' popup lov element
     Then verify, that value of popup lov field 'Parent' is 'Soho Chair'
-    Then value 'Soho Chair' is selected in 'Parent' popup lov field
+    Then value in pop-up lov filed 'Parent' is 'Soho Chair'
 
