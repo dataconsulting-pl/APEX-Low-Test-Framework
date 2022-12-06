@@ -1,10 +1,18 @@
 Feature: Regression Tests
 
-  Background:
-    Given the user access the 'https://apex.oracle.com/pls/apex/r/dataconsulting/customers/login' url
-    When user entered 'taf_demo' in 'Username' field
+  Background: User access Customer page and resets sample data
+    Given the user access the 'https://apex.oracle.com/pls/apex/dataconsulting/r/customers/login' url
+    When user entered 'taf_admin@dataconsulting.pl' in 'Username' field
     And user entered 'taf_demo_123password!' in 'Password' field
-    And user presses the 'Sign In' button
+    And user clicked on the 'Sign In' button
+    And user navigates to 'Administration->Configuration->Sample Data' page
+    And user presses the 'Reset Data' button on 'Manage Sample Data' pop-up
+
+  Scenario: Set Filter
+    When user navigates to 'Products' page
+    Then at least one record can be found in 'Customer Product Usage' IR by:
+      | Product / Service Name       | Customer Uses | Updated   |
+      | Peregrine Enterprise Edition | 3             | Last Year |
 
   Scenario: Set IG Filter and verify record exists - Reports
     When user navigates to 'Reports->All Customers' page
@@ -24,13 +32,11 @@ Feature: Regression Tests
     When user navigates to 'Customers' page
     Then verify, that menu option 'Customers' is selected
     And user sets checkboxes 'Quote, Logo, Success Story, Analyst Interview, Available for Calls' for 'Reference Types' checkbox item
-    And waiting for 2 seconds
-    And user unsets checkboxes 'Analyst Interview, Available for Calls' for 'Reference Types' checkbox item
-    And waiting for 2 seconds
-    Then checkbox 'Quote, Logo, Success Story' in 'Reference Types' checkbox is selected
-    And waiting for 5 seconds
+    #And user unsets checkboxes 'Analyst Interview, Available for Calls' for 'Reference Types' checkbox item
+    #Then checkbox 'Quote, Logo, Success Story' in 'Reference Types' checkbox is selected
 
   Scenario: Unset Reference Type Checkbox - List 4
+    Given user navigates to 'Customers' page
     When user sets checkboxes 'Quote, Logo, Success Story, Analyst Interview, Available for Calls' for 'Reference Types' checkbox item
     And waiting for 3 seconds
     And user unsets checkboxes 'Quote, Logo, Success Story, Analyst Interview, Available for Calls' for 'Reference Types' checkbox item
