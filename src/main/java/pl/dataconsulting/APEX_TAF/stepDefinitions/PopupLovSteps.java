@@ -31,7 +31,7 @@ public class PopupLovSteps {
      * @param expectedValue - expected value to be selected
      */
     @Then("verify, that value of popup lov field {string} is {string}")
-    @Then("value {string} is selected in {string} popup lov field")
+    @Then("value in pop-up lov filed {string} is {string}")
     public void user_verifies_value_in_text_field(String fieldName, String expectedValue) {
         popupLovComponent.verifyPopupLovValue(fieldName, expectedValue);
     }
