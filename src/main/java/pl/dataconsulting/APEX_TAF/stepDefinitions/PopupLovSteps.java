@@ -27,15 +27,14 @@ public class PopupLovSteps {
     /**
      * Step verifies the given value is selected in popup lov component
      *
-     * @param fieldName     - popup lov field name
      * @param expectedValue - expected value to be selected
+     * @param fieldName     - popup lov field name
      */
     @Then("verify, that value of popup lov field {string} is {string}")
     @Then("value in pop-up lov filed {string} is {string}")
     public void user_verifies_value_in_text_field(String fieldName, String expectedValue) {
-        popupLovComponent.verifyPopupLovValue(fieldName, expectedValue);
+        popupLovComponent.verifyPopupLovValue(expectedValue, fieldName);
     }
-
 
 
 }
