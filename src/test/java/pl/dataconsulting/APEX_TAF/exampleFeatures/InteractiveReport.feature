@@ -13,5 +13,5 @@ Feature: Set filter and validate data on APEX Interactive Report
       | Type         | Name           |
       | Presentation | Cloud Overview |
     Then in 'Activities' IR, data starting from 1 row match table below:
-      | Type         | Name           | Activity Date | Owner        | Location | References | Updated          | Updated by                 |
-      | Presentation | Cloud Overview | ^$            | Irene Walker | ^$       | 2          | ^\d+ months ago$ | pkantyka@dataconsulting.pl |
+      | Type         | Name           | Activity Date | Owner        | Location | References |
+      | Presentation | Cloud Overview | ^$            | Irene Walker | ^$       | 2          |

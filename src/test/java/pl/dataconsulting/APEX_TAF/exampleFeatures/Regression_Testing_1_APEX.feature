@@ -11,8 +11,8 @@ Feature: Regression Tests
   Scenario: Set Filter
     When user navigates to 'Products' page
     Then at least one record can be found in 'Customer Product Usage' IR by:
-      | Product / Service Name       | Customer Uses | Updated   |
-      | Peregrine Enterprise Edition | 3             | Last Year |
+      | Product / Service Name       | Customer Uses |
+      | Peregrine Enterprise Edition | 3             |
 
   Scenario: Set IG Filter and verify record exists - Reports
     When user navigates to 'Reports->All Customers' page

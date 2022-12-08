@@ -1,7 +1,7 @@
 Feature: Acceptance Test Cases - Activities
 
   Background: User access Customer page and resets sample data
-    Given the user access the 'https://apex.oracle.com/pls/apex/dataconsulting/r/customers/login' url
+    Given the user access the url stored in file: 'C:\\tests\\url_apex_taf.txt'
     When user entered 'taf_admin@dataconsulting.pl' in 'Username' field
     And user entered 'taf_demo_123password!' in 'Password' field
     And user clicked on the 'Sign In' button
@@ -28,7 +28,7 @@ Feature: Acceptance Test Cases - Activities
     And user switch on the 'Set Location' switch item
     And user enters 'Berlin' in 'Location' field
     And user enters 'Low-Code development platform' in 'Description' field
-    And user clicked on the 'Create' button
+    And user presses the 'Create' button
     Then main page is visible
     And at least one record can be found in 'Activities' IR by:
       | Type       | Name               | Owner        | Location |
@@ -50,9 +50,9 @@ Feature: Acceptance Test Cases - Activities
     And user switch on the 'Set Location' switch item
     And user enters 'Warsaw' in 'Location' field
     And user enters 'APEX' in 'Description' field
-    And user presses the 'Create' button
+    And user clicked on the 'Create' button
     Then main page is visible
-    And at least one record can be found in 'Activities' IR by:
+    And 'Activities' IR Filter is set on columns:
       | Type   | Name   |
       | <type> | <name> |
     And in 'Activities' IR, data starting from 1 row match table below:

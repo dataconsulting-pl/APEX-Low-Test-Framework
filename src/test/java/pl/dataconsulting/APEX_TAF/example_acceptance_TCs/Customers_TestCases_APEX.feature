@@ -33,8 +33,7 @@ Feature: Acceptance Test Cases - Customers
     And user clicked on the 'Add Customer' button
     And user clicked on the 'Edit Customer' button
     Then verify, that value of text item 'Customer Name' is 'Daniel Bosch'
-    Then value 'Cyphria' is selected in 'Parent' popup lov field
-    #Then verify, that value of popup lov field 'Parent' is 'Cyphria'
+    Then value in pop-up lov filed 'Parent' is 'Cyphria'
     Then value 'Customer' is selected in 'Status' field
     Then value 'Corporate' is selected in 'Category' field
     Then value 'Insurance' is selected in 'Industry' field
@@ -56,7 +55,8 @@ Feature: Acceptance Test Cases - Customers
     Given user clicked on the 'Add Customer' button
     When user enters 'Mogul Mashups' in 'Customer Name' field
     And user clicked on the 'Add Customer' button
-    Then validation message 'unique constraint (DATACONSULTING.EBA_CUST_CUSTOMERS_UK) violated' for 'Customer Name' field is displayed
+    Then validation message 'unique constraint (DATACONSULTING.EBA_CUST_CUSTOMERS_UK) violated' for 'Customer Name' field is displayed in '1 error has occurred' pop-up
+    #Then validation message 'unique constraint (DATACONSULTING.EBA_CUST_CUSTOMERS_UK) violated' for 'Customer Name' field is displayed
 
 
 
