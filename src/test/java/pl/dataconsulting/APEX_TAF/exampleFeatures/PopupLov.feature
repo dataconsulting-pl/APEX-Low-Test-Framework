@@ -14,3 +14,11 @@ Feature: Set and verify APEX Select Item elements
     Then verify, that value of popup lov field 'Parent' is 'Soho Chair'
     Then value in pop-up lov filed 'Parent' is 'Soho Chair'
 
+  @unit
+  Scenario: Select and verify popup lov value element
+    Given user navigates to 'Contacts' page
+    When user clicked on the 'Add Contact' button
+    And frame 'Contact Details' is visible
+    And user select "Bauhaus Ink" in 'Customer' popup lov element
+    Then user enters 'Martin Lut' in 'Name' field
+

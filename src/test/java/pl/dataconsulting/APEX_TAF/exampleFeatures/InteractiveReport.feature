@@ -15,3 +15,17 @@ Feature: Set filter and validate data on APEX Interactive Report
     Then in 'Activities' IR, data starting from 1 row match table below:
       | Type         | Name           | Activity Date | Owner        | Location | References |
       | Presentation | Cloud Overview | ^$            | Irene Walker | ^$       | 2          |
+
+  @unit
+  Scenario Outline: Search Report - for many customers
+    Given user navigates to 'Contacts' page
+    Then at least one record can be found in 'Contacts' IR by:
+      | Name   | Customer   | Title   | Contact Type   | Phone   |
+      | <name> | <customer> | <title> | <contact type> | <phone> |
+
+    Examples:
+      | name           | customer      | title | contact type | phone |
+      | Ignacio Cirac  | Organic Farms | CEO   | Customer     | -     |
+      | Matt Hanson    | Logistics 36  | CFO   | Customer     | -     |
+      | Max Tegmark    | Bauhaus Ink   | CEO   | Customer     | -     |
+      | Josh Tenenbaum | Soho Chair    | CIO   | Customer     | -     |

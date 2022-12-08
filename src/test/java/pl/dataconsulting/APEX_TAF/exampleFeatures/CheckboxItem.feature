@@ -29,3 +29,11 @@ Feature: Set and verify checkbox value
     When user sets checkboxes 'Analyst Interview, Logo, Quote, Success Story' for "Reference Types" checkbox item
     And user unsets checkbox 'Quote' for "Reference Types" checkbox item
     Then checkbox 'Analyst Interview, Logo, Success Story' in "Reference Types" checkbox is selected
+
+  @unit
+  Scenario: Unset Checkbox - List - Dashboard
+    When user navigates to 'Dashboard' page
+    And user sets checkboxes 'Analyst Interview, Available for Calls, Logo, Quote, Success Story' for 'Reference Types' checkbox item
+    And user unsets checkboxes 'Analyst Interview, Available for Calls, Logo, Quote' for 'Reference Types' checkbox item
+    Then checkboxes 'Success Story' in 'Reference Types' checkbox is selected
+
