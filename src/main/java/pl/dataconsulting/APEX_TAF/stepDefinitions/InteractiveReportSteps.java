@@ -65,4 +65,19 @@ public class InteractiveReportSteps extends BaseComponent {
         irComponent.compareMainIRValues(IRName, rows, rowIdx);
     }
 
+    /**
+     * Clicks on the element in the cell in Interactive Report
+     *
+     * @param rowNumber   - the row number
+     * @param columnLabel - the label or the icon name of the column.
+     * @param irName      - name of the IR that is visible to user
+     */
+    @Then("user clicks on the element in {int} row in column {string} in {string} IR")
+    @Given("element in {int} row in column {string} in {string} IR has been clicked")
+    public void click_on_element_in_cell(int rowNumber, String columnLabel, String irName) {
+        irComponent.clickOnElementInCell(irName, rowNumber, columnLabel);
+    }
+
+
+
 }

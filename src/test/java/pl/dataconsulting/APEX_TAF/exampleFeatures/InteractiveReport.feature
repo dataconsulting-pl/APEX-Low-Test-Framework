@@ -15,3 +15,6 @@ Feature: Set filter and validate data on APEX Interactive Report
     Then in 'Activities' IR, data starting from 1 row match table below:
       | Type         | Name           | Activity Date | Owner        | Location | References | Updated          | Updated by                 |
       | Presentation | Cloud Overview | ^$            | Irene Walker | ^$       | 2          | ^\d+ months ago$ | pkantyka@dataconsulting.pl |
+
+  Scenario: Click on the element in cell
+    When user clicks on the element in 1 row in column 'Name' in 'Activities' IR
