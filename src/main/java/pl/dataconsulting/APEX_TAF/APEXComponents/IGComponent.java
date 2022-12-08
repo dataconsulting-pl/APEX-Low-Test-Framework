@@ -1,8 +1,10 @@
 package pl.dataconsulting.APEX_TAF.APEXComponents;
 
 import org.jsoup.Jsoup;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.dataconsulting.APEX_TAF.framework.annotation.APEXComponent;
@@ -70,11 +72,35 @@ public class IGComponent extends BaseComponent {
     public void clickOnElementInCell(String igName, int rowNumber, String columnLabel) {
         // try to find column na Name
         String igId = getIGidByName(igName);
+        if (igId == null) {
+            Assert.fail(String.format("Could not find an interactive grid by its name: %s", igName));
+        }
+
         int columnIdx = getColumnIdxByName(columnLabel, igId);
 
-        String xpathTemplate = "//*[@id='%s_ig_grid_vc']//*[@data-rownum=%d]/td[%d]/a";
+        String xpathTemplate = "//*[@id='%s_ig_grid_vc']//*[@data-rownum=%d]/td[%d]";
         String xpath = String.format(xpathTemplate, igId, rowNumber, columnIdx);
-        driver.findElement(By.xpath(xpath)).click();
+        WebElement cell = driver.findElement(By.xpath(xpath));
+        clickOnCell(cell);
+    }
+
+    /**
+     * Clicks on the element in the cell in Interactive Grid
+     *
+     * @param rowNumber    - the row number
+     * @param columnNumber - the column number
+     * @param igName       - name of the IG that is visible to user
+     */
+    public void clickOnElementInCell(String igName, int rowNumber, int columnNumber) {
+        // try to find column na Name
+        String igId = getIGidByName(igName);
+        if (igId == null) {
+            Assert.fail(String.format("Could not find an interactive grid by its name: %s", igName));
+        }
+        String xpathTemplate = "//*[@id='%s_ig_grid_vc']//*[@data-rownum=%d]/td[%d]";
+        String xpath = String.format(xpathTemplate, igId, rowNumber, columnNumber);
+        WebElement cell = driver.findElement(By.xpath(xpath));
+        clickOnCell(cell);
     }
 
     /**
@@ -96,7 +122,11 @@ public class IGComponent extends BaseComponent {
                 if (v == null) {
                     v = "";
                 }
-                asserts.assertEqualRegexp(action, k, v, getCellValue(igAd, startIdx, k));
+                try {
+                    asserts.assertEqualRegexp(action, k, v, getCellValue(igAd, startIdx, k));
+                } catch (NoSuchElementException e) {
+                    Assert.fail(String.format("Unable to find a cell in IG %s, in column %s and row %d. %s", igName, k, startIdx, e.getLocalizedMessage()));
+                }
             });
         }
     }
@@ -109,7 +139,7 @@ public class IGComponent extends BaseComponent {
      * @param columnLabel - the label or the icon name of the column.
      * @return text value of the IG cell
      */
-    private String getCellValue(String igID, int row, String columnLabel) {
+    private String getCellValue(String igID, int row, String columnLabel) throws NoSuchElementException {
         String xpathTemplate = "//*[@id='%s_ig_grid_vc']//tr[@data-rownum='%d']/td[@role='gridcell'][%d]";
         int columnIdx = getColumnIdxByName(columnLabel, igID);
         String xpathFinal = String.format(xpathTemplate, igID, row, columnIdx);
@@ -155,8 +185,7 @@ public class IGComponent extends BaseComponent {
 
 
     /**
-     *
-     * @param igId - static id of the interactive grid
+     * @param igId        - static id of the interactive grid
      * @param columnLabel - the label or the icon name of the column.
      * @return the id of the column
      */
@@ -188,6 +217,7 @@ public class IGComponent extends BaseComponent {
 
     /**
      * Gets the static Interactive Grid Id by its name
+     *
      * @param igName - human redable name of the Interactive Grid
      * @return static id of the Interactive Grid
      */
@@ -197,14 +227,35 @@ public class IGComponent extends BaseComponent {
         for (WebElement el : igs) {
             if (el.getAttribute("id") != null) {
                 // get the id of the element and add heading to it
-                String igId = el.getAttribute("id");
-                String igHeading = igId.replaceAll("_ig$", "_heading");
-                WebElement igHeadingEl = driver.findElement(By.xpath(String.format("//*[@id='%s']", igHeading)));
-                if (igHeadingEl.getAttribute("innerText").equals(igName)) return igId.replaceAll("_ig$", "");
+                String igId = el.getAttribute("id").replaceAll("_ig$", "");
+                WebElement IgElement = driver.findElement(By.id(igId));
+                // try to find the name by IG aria-label
+                if (IgElement.getAttribute("aria-label") != null) {
+                    if (IgElement.getAttribute("aria-label").equals(igName))
+                        return igId;
+                } else {
+                    // element has no aria-label. Try to find by its heading name
+                    String igHeading = igId + "_heading";
+                    List<WebElement> igHeadingEls = driver.findElements(By.xpath(String.format("//*[@id='%s']", igHeading)));
+
+                    if (igHeadingEls.size() > 0 && (igHeadingEls.get(0).getAttribute("innerText").equals(igName))) {
+                        return igId;
+                    }
+
+                }
+
             }
         }
-
         return null;
+    }
+
+    private void clickOnCell(WebElement cell) {
+        List<WebElement> elements = cell.findElements(By.xpath("./child::*"));
+        if (elements.isEmpty()) {
+            cell.click();
+        } else {
+            elements.get(0).click();
+        }
     }
 
 }
