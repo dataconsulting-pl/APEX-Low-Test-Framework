@@ -70,7 +70,6 @@ public class IGComponent extends BaseComponent {
      * @param igName      - name of the IG that is visible to user
      */
     public void clickOnElementInCell(String igName, int rowNumber, String columnLabel) {
-        // try to find column na Name
         String igId = getIGidByName(igName);
         if (igId == null) {
             Assert.fail(String.format("Could not find an interactive grid by its name: %s", igName));
