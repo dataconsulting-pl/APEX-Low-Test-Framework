@@ -75,6 +75,23 @@ public class IRComponent extends BaseComponent {
     }
 
     /**
+     * Clicks on the element in the cell in Interactive Grid
+     *
+     * @param rowNumber   - the row number
+     * @param columnName  - the label or the icon name of the column.
+     * @param igName      - name of the IG that is visible to user
+     */
+    public void clickOnElementInCell(String igName, int rowNumber, String columnName) {
+        // try to find column na Name
+        WebElement worksheet = getWorksheetByName(igName);
+        int columnNumber = getColumnIdx(worksheet, columnName);
+        String xpathFinal = String.format(CELL_XPATH_TEMPLATE, rowNumber + 2, columnNumber + 1);
+        WebElement cell = worksheet.findElement(By.xpath(xpathFinal));
+        clickOnCell(cell);
+    }
+
+
+    /**
      * Gets the value from cell
      *
      * @param worksheet  - IR component element
@@ -83,8 +100,6 @@ public class IRComponent extends BaseComponent {
      * @return - returns value from cell
      */
     private String getCellValue(WebElement worksheet, int row, String columnName) {
-
-
         int columnNumber = getColumnIdx(worksheet, columnName);
         String xpathFinal = String.format(CELL_XPATH_TEMPLATE, row + 2, columnNumber + 1);
         WebElement cell = worksheet.findElement(By.xpath(xpathFinal));
@@ -157,6 +172,16 @@ public class IRComponent extends BaseComponent {
     private WebElement getWorksheetByName(String IRName) {
         WebElement searchedWebElement = driver.findElement(By.xpath(String.format(IR_TEMPLATE_XPATH, IRName)));
         return searchedWebElement;
+    }
+
+
+    private void clickOnCell(WebElement cell) {
+        List<WebElement> elements = cell.findElements(By.xpath("./child::*"));
+        if (elements.isEmpty()) {
+            cell.click();
+        } else {
+            elements.get(0).click();
+        }
     }
 }
 
