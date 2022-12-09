@@ -16,4 +16,3 @@ Feature: Acceptance Test Cases - Customers
     And in 'Overwiew' IG, data starting from 1 row match table below:
       | Empno | Ename | Job     |
       | 7788  | SCOTT | ANALYST |
-    
