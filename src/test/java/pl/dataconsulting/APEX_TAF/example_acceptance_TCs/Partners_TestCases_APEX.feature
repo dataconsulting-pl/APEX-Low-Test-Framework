@@ -16,6 +16,7 @@ Feature: Acceptance Test Cases - Partners
     And user enters 'Customized software is key for your success' in 'Description' field on 'Implementation Partner Details' pop-up
     And user enters 'http://wwwww.opl.com' in 'Website' field on 'Implementation Partner Details' pop-up
     And user presses the 'Create' button on 'Implementation Partner Details' pop-up
+    And user clicks on the element in 1 row in column 'Edit' in 'Partners' IR
 
 
 
