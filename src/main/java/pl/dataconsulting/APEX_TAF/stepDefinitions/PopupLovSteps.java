@@ -19,7 +19,7 @@ public class PopupLovSteps {
      * @param fieldName - text field name
      */
     @Given("user selected {string} in {string} popup lov element")
-    @When("user select {string} in {string} popup lov element")
+    @When("user selects {string} in {string} popup lov element")
     public void user_select_element_in_popup_lov(String value, String fieldName) {
         popupLovComponent.selectElement(fieldName, value);
     }

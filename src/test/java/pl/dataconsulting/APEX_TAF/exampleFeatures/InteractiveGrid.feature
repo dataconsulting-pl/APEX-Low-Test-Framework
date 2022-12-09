@@ -9,18 +9,11 @@ Feature: Acceptance Test Cases - Customers
 
 
   Scenario: Set IG Filter
-    Given element in 1 row in column 'Empno' in 'Overview' IG has been clicked
-    And user clicks on the element in 2 row in column 'Job' in 'Overview' IG
-    And filter on column 'Mgr' Not Equals '7566' in 'Overview' IG is set
-    And user sets filter on column 'Ename' Equals 'SCOTT' in 'Overview' IG
+    Given element in 1 row in column 'Empno' in 'Single Row View' IG has been clicked
+    And user clicks on the element in 2 row in column 'Job' in 'Single Row View' IG
+    And filter on column 'Mgr' Not Equals '7566' in 'Single Row View' IG is set
+    And user sets filter on column 'Ename' Equals 'SCOTT' in 'Single Row View' IG
     And in 'Overwiew' IG, data starting from 1 row match table below:
       | Empno | Ename | Job     |
       | 7788  | SCOTT | ANALYST |
-
-
-
-    #And element in {int} row in column {string} in {string} IG has been clicked
-    #And user sets filter on column {string} {operator} {string} in {string} IG
-    #And user clicks on the element in {int} row in column {string} in {string} IG
-    #And filter on column {string} {operator} {string} in {string} IG is set
-    #And in {string} IG, data starting from {int} row match table below:
+    

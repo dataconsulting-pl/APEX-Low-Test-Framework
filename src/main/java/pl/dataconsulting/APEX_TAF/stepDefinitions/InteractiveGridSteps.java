@@ -59,6 +59,19 @@ public class InteractiveGridSteps extends BaseComponent {
     }
 
     /**
+     * Clicks on the element in the cell in Interactive Grid
+     *
+     * @param rowNumber   - the row number
+     * @param columnNumber - the column number.
+     * @param igName      - name of the IG that is visible to user
+     */
+    @Then("user clicks on the element in {int} row in {int} column in {string} IG")
+    @Given("element in {int} row in {int} column in {string} IG has been clicked")
+    public void click_on_element_in_cell(int rowNumber, int columnNumber, String igName) {
+        igComponent.clickOnElementInCell(igName, rowNumber, columnNumber);
+    }
+
+    /**
      * Step compares the data in Interactive Grid
      *
      * @param IgName    - name of the IG that is visible to user
