@@ -13,7 +13,7 @@ Feature: Acceptance Test Cases - Customers
     Given user navigates to 'Customer' page
     When user clicked on the 'Add Customer' button
     And user enters 'Daniel Bosch' in 'Customer Name' field
-    And user select 'Cyphria' in 'Parent' popup lov element
+    And user selects 'Cyphria' in 'Parent' popup lov element
     And user selects 'Customer' in 'Status' field
     And user selects 'Corporate' in 'Category' field
     And user selects 'Insurance' in 'Industry' field
@@ -42,11 +42,8 @@ Feature: Acceptance Test Cases - Customers
     Then value 'Partner' is selected in 'Sales Channel' field
     Then verify, that value of text item 'ARR' is '5'
     Then verify, that value of text item 'Discount' is '10'
-    #Then value 'Yes' is selected in 'Publicly Referenceable' field
-    #Then checkboxes 'Logo, Quote' in 'Reference Types' checkbox are selected
     Then value 'Closed' is selected in 'Type' field
     Then verify, that value of text item 'Number of Users' is '10'
-    #Then verify, that value of text item 'Tags' is 'CLOUD'
     Then verify, that value of text item 'Project Summary' is 'Project'
     Then verify, that value of text item 'Stock Symbol' is 'AGD'
     Then verify, that value of text item 'Account Number' is '5145862552'
@@ -56,9 +53,6 @@ Feature: Acceptance Test Cases - Customers
     When user enters 'Mogul Mashups' in 'Customer Name' field
     And user clicked on the 'Add Customer' button
     Then validation message 'unique constraint (DATACONSULTING.EBA_CUST_CUSTOMERS_UK) violated' for 'Customer Name' field is displayed in '1 error has occurred' pop-up
-    #Then validation message 'unique constraint (DATACONSULTING.EBA_CUST_CUSTOMERS_UK) violated' for 'Customer Name' field is displayed
-
-
 
 
 

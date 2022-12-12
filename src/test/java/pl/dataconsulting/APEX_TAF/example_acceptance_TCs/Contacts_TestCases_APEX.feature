@@ -11,7 +11,7 @@ Feature: Acceptance Test Cases - Contacts
 
   Scenario: Add Customer Contact
     Given user presses the 'Add Contact' button
-    When user select 'Bauhaus Ink' in 'Customer' popup lov element
+    When user selects 'Bauhaus Ink' in 'Customer' popup lov element
     And user enters 'Greg Muller' in 'Name' field
     And user sets radioButton's option 'Other' for 'Contact Type' radioButton item
     And user enters 'CEO' in 'Title' field

@@ -9,7 +9,7 @@ Feature: Test Cases - Dashboard
   Scenario:
     When user navigates to 'Customers' page
     Then verify, that menu option 'Customers' is selected
-    And user navigates to 'Dashboard' page
+    When user navigates to 'Dashboard' page
     Then verify, that menu option 'Dashboard' is selected
     And user navigates to 'Products' page
     And user navigates to 'Partners' page

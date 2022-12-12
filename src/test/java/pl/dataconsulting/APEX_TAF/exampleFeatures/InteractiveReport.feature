@@ -17,4 +17,13 @@ Feature: Set filter and validate data on APEX Interactive Report
       | Presentation | Cloud Overview | ^$            | Irene Walker | ^$       | 2          | ^\d+ months ago$ | pkantyka@dataconsulting.pl |
 
   Scenario: Click on the element in cell
-    When user clicks on the element in 1 row in column 'Name' in 'Activities' IR
+    When user clicks on the element in 0 row in column 'Name' in 'Activities' IR
+
+  Scenario: Click on the element in cell 2
+    Given user navigates to 'Partners' page
+    And user clicks on the element in 1 row in column 'Edit' in 'Partners' IR
+#nie wychodzi test, nie widzi pencil
+
+  Scenario: Click on the element in cell 3
+    Given user navigates to 'Contacts' page
+    And user clicks on the element in 1 row in column 'Name' in 'Contacts' IR
