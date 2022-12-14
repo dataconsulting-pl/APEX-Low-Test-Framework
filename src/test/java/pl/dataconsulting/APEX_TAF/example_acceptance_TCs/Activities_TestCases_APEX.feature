@@ -50,17 +50,18 @@ Feature: Acceptance Test Cases - Activities
     And user switch on the 'Set Location' switch item
     And user enters 'Warsaw' in 'Location' field
     And user enters 'APEX' in 'Description' field
-    And user clicked on the 'Create' button
+    And user presses the 'Create' button 
+    #And waiting for 4 seconds
     Then main page is visible
     And 'Activities' IR Filter is set on columns:
       | Type   | Name   |
       | <type> | <name> |
     And in 'Activities' IR, data starting from 1 row match table below:
-      | Type   | Name   | Activity Date            | Owner    | Location | Updated           | Updated by                  |
+      | Type   | Name   | Activity Date             | Owner      | Location | Updated           | Updated by                  |
       | <type> | <name> | Monday, 28 November, 2022 | Peter Mann | Warsaw   | ^\d+ seconds ago$ | taf_admin@dataconsulting.pl |
 
     Examples:
-      | type         | name       |
+      | type         | name   |
       | Conference   | APEX 1 |
       | Meeting      | APEX 2 |
       | Phone Call   | APEX 3 |
