@@ -50,8 +50,7 @@ Feature: Acceptance Test Cases - Activities
     And user switch on the 'Set Location' switch item
     And user enters 'Warsaw' in 'Location' field
     And user enters 'APEX' in 'Description' field
-    And user presses the 'Create' button 
-    #And waiting for 4 seconds
+    And user presses the 'Create' button
     Then main page is visible
     And 'Activities' IR Filter is set on columns:
       | Type   | Name   |
