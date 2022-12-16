@@ -11,8 +11,8 @@ Feature: Acceptance Test Cases - Activities
 
   Scenario: Create activity with missing mandatory field
     Given user clicked on the 'Create Activity' button
-    And pop-up 'Activity Details' is visible
-    When user selects 'Meeting' in 'Type' field
+    When pop-up 'Activity Details' is visible
+    And user selects 'Meeting' in 'Type' field
     And user presses the 'Create' button
     Then validation message 'Name must have some value.' for 'Name' field is displayed
 
@@ -29,19 +29,18 @@ Feature: Acceptance Test Cases - Activities
     And user enters 'Berlin' in 'Location' field
     And user enters 'Low-Code development platform' in 'Description' field
     And user presses the 'Create' button
-    Then main page is visible
+    And main page is visible
     And at least one record can be found in 'Activities' IR by:
       | Type       | Name               | Owner        | Location |
       | Conference | Project Mobile App | Monika Birne | Berlin   |
-    And in 'Activities' IR, data starting from 1 row match table below:
+    Then in 'Activities' IR, data starting from 1 row match table below:
       | Type       | Name               | Activity Date             | Owner        | Location | Updated           | Updated by                  |
       | Conference | Project Mobile App | Monday, 28 November, 2022 | Monika Birne | Berlin   | ^\d+ seconds ago$ | taf_admin@dataconsulting.pl |
 
-
   Scenario Outline: Create new activity - complete data with all activity types
     Given user clicked on the 'Create Activity' button
-    And frame 'Activity Details' is visible
-    When user selects '<type>' in 'Type' field
+    When frame 'Activity Details' is visible
+    And user selects '<type>' in 'Type' field
     And user enters '<name>' in 'Name' field
     And user switch on the 'Set Date' switch item
     And user enters '11.28.2022' in 'Activity Date' field
@@ -51,11 +50,11 @@ Feature: Acceptance Test Cases - Activities
     And user enters 'Warsaw' in 'Location' field
     And user enters 'APEX' in 'Description' field
     And user presses the 'Create' button
-    Then main page is visible
+    And main page is visible
     And 'Activities' IR Filter is set on columns:
       | Type   | Name   |
       | <type> | <name> |
-    And in 'Activities' IR, data starting from 1 row match table below:
+    Then in 'Activities' IR, data starting from 1 row match table below:
       | Type   | Name   | Activity Date             | Owner      | Location | Updated           | Updated by                  |
       | <type> | <name> | Monday, 28 November, 2022 | Peter Mann | Warsaw   | ^\d+ seconds ago$ | taf_admin@dataconsulting.pl |
 
