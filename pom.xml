@@ -10,16 +10,17 @@
 	</parent>
 	<groupId>pl.dataconsulting</groupId>
 	<artifactId>APEX_TAF</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>APEX_TAF</name>
 	<description>Test Automation framework for APEX applications</description>
 	<properties>
 		<java.version>17</java.version>
-		<selenium.version>4.2.2</selenium.version>
-		<webdrivermanager.version>5.2.0</webdrivermanager.version>
-		<testng.version>7.6.0</testng.version>
+		<selenium.version>4.7.2</selenium.version>
+		<webdrivermanager.version>5.3.1</webdrivermanager.version>
+		<testng.version>7.7.0</testng.version>
 		<surefire.version>2.22.2</surefire.version>
-		<cucumber.version>7.3.4</cucumber.version>
+		<cucumber.version>7.10.1</cucumber.version>
+		<jsop.version>1.15.3</jsop.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -83,7 +84,7 @@
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
-			<version>1.15.3</version>
+			<version>${jsop.version}</version>
 		</dependency>
 
 

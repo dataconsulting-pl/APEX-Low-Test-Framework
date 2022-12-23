@@ -169,11 +169,13 @@ public class BaseComponent {
      * Waits until u-Processing class is visible
      */
     protected void waitForApex() {
+
         try {
+            Thread.sleep(200);
             while (driver.findElements(By.className("u-Processing")).size() > 0) {
                 Thread.sleep(200);
             }
-        } catch (InterruptedException e) {
+        } catch (InvalidArgumentException | InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -301,7 +303,6 @@ public class BaseComponent {
         } else
             return null;
     }
-
 
 
 }
