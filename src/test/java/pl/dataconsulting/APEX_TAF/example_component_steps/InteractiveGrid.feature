@@ -6,15 +6,18 @@ Feature: Set Filters - IG Test Cases - Customers
     And user enters 'taf_demo_123password!' in 'Password' field
     And user presses the 'Sign In' button
 
+  @unit
   Scenario: Click on link
     When user navigates to Reporting->Add Toolbar Button page
     Then user clicks on the element in 2 row in column 'Name' in 'Add Toolbar Button' IG
     And waiting for 3 seconds
 
+  @unit
   Scenario: Click on Pencil
     When user navigates to Reporting->Single Row View page
     Then user clicks on the element in 1 row in 1 column in 'Single Row View' IG
 
+  @unit
   Scenario: Set IG Filter
     Given user has navigated to Reporting->Basic Reporting page
     And filter on column 'Job' Equals 'ANALYST' in 'Basic Reporting' IG is set
