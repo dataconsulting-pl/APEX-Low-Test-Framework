@@ -1,7 +1,7 @@
 Feature: Set and verify APEX shuttle item
 
   Background: User access Activities page
-    Given the user access the 'https://apex.oracle.com/pls/apex/f?p=59118' url
+    Given the user has accessed the 'https://apex.oracle.com/pls/apex/f?p=59118' url
     And user entered 'taf_demo' in 'username' field
     And user entered 'taf_demo_123password!' in 'password' field
     And user clicked on the 'Sign In' button
