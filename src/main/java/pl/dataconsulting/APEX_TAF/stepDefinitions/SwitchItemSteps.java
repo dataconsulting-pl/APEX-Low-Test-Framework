@@ -27,7 +27,7 @@ public class SwitchItemSteps {
      * @param switchName - name of the switch item element
      */
     @Given("user switched on the {string} switch item")
-    @When("user switch on the {string} switch item")
+    @When("user switches on the {string} switch item")
     public void user_sets_on_switch(String switchName) {
         switchItemComponent.switchItemOn(switchName);
     }
@@ -38,7 +38,7 @@ public class SwitchItemSteps {
      * @param frameTitle - frame/pop-up name
      */
     @Given("user switched off the {string} switch item on {string} pop-up")
-    @When("user switch off the {string} switch item on {string} pop-up")
+    @When("user switches off the {string} switch item on {string} pop-up")
     public void user_sets_off_switch(String switchName, String frameTitle) {
         switchItemComponent.switchItemOff(switchName,frameTitle);
     }
@@ -48,7 +48,7 @@ public class SwitchItemSteps {
      * @param switchName - name of the switch item element
      */
     @Given("user switched off the {string} switch item")
-    @When("user switch off the {string} switch item")
+    @When("user switches off the {string} switch item")
     public void user_sets_ff_switch(String switchName) {
         switchItemComponent.switchItemOff(switchName);
     }

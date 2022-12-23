@@ -2,6 +2,7 @@ package pl.dataconsulting.APEX_TAF.stepDefinitions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import pl.dataconsulting.APEX_TAF.APEXComponents.BaseComponent;
@@ -20,7 +21,8 @@ public class LoginPageSteps {
      * Step accesses the given url
      * @param url - url to access
      */
-    @Given("the user access the {string} url")
+    @Given("the user has accessed the {string} url")
+    @When("the user access the {string} url")
     public void user_access_url(String url) {
         baseComponent.navigateToUrl(url);
 

@@ -1,6 +1,7 @@
 package pl.dataconsulting.APEX_TAF.stepDefinitions;
 
 import io.cucumber.java.ParameterType;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class MenuItemSteps {
      * @param options - menu option to be selected In case navigation should be done to some sub-menu please use -> as delimiter.
      *                For exampele Administration->Access Control->Settings
      */
+    @Given("user has navigated to {listOfMenuElements} page")
     @When("user navigates to {listOfMenuElements} page")
     public void user_navigate_to_menu(List<String> options) {
         menuComponent.navigateToMenu(options);

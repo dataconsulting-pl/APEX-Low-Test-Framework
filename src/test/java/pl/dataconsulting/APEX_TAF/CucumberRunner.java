@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
-        features = {"src/test/java/pl/dataconsulting/APEX_TAF/exampleFeatures"},
+        features = {"src/test/java/pl/dataconsulting/APEX_TAF/example_component_steps"},
         tags = "@unit",
         glue = {"pl.dataconsulting.APEX_TAF.stepDefinitions" },
         monochrome = false,
@@ -13,7 +13,7 @@ import org.testng.annotations.DataProvider;
         plugin = {"pretty","html:target/cucumber.html", "json:target/cucumber.json"})
 public class CucumberRunner extends AbstractTestNGCucumberTests {
     @Override
-    @DataProvider(parallel = true)
+    @DataProvider(parallel = false)
     public Object[][] scenarios(){
         return super.scenarios();
     }
