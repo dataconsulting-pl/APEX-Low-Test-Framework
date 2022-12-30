@@ -2,7 +2,7 @@ Feature: Acceptance Test Cases - Activities
 
   Background: User access Customer page
     Given the user has accessed the 'https://apex.oracle.com/pls/apex/dataconsulting/r/customers/login' url
-    When user entered 'taf_demo' in 'Username' field
+    When user entered 'taf_admin' in 'Username' field
     And user entered 'taf_demo_123password!' in 'Password' field
     And user clicked on the 'Sign In' button
     Then user navigates to Activities' page

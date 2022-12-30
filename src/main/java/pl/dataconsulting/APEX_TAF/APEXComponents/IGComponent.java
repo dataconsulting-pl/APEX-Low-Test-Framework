@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.dataconsulting.APEX_TAF.framework.annotation.APEXComponent;
 import pl.dataconsulting.APEX_TAF.framework.util.Asserts;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @APEXComponent
 public class IGComponent extends BaseComponent {
@@ -58,7 +56,7 @@ public class IGComponent extends BaseComponent {
                 + ", value : \"%s\""
                 + "      });";
         String igId = getIGidByName(igName);
-        executeJSCommand(String.format(jsCommand, igId, getColumnIdByLabel(igId, columnLabel), operator, value));
+        executeJSCommand(String.format(jsCommand, igId, Objects.requireNonNull(getColumnAttributesByLabel(igId, columnLabel)).id, operator, value));
         waitForApex();
     }
 
@@ -70,17 +68,7 @@ public class IGComponent extends BaseComponent {
      * @param igName      - name of the IG that is visible to user
      */
     public void clickOnElementInCell(String igName, int rowNumber, String columnLabel) {
-        String igId = getIGidByName(igName);
-        if (igId == null) {
-            Assert.fail(String.format("Could not find an interactive grid by its name: %s", igName));
-        }
-
-        int columnIdx = getColumnIdxByName(columnLabel, igId);
-
-        String xpathTemplate = "//*[@id='%s_ig_grid_vc']//*[@data-rownum=%d]/td[%d]";
-        String xpath = String.format(xpathTemplate, igId, rowNumber, columnIdx);
-        WebElement cell = driver.findElement(By.xpath(xpath));
-        clickOnCell(cell);
+        clickOnCell(getIgCellElement(igName, columnLabel, rowNumber));
     }
 
     /**
@@ -115,100 +103,192 @@ public class IGComponent extends BaseComponent {
         String action = "Compare Activities IR Values. ";
 
         String igAd = getIGidByName(igName);
+        int rowIdx = startIdx;
         for (Map<String, String> row : expected) {
+            int finalRowIdx = rowIdx;
             row.forEach((k, v) -> {
                 // if cell is empty, the value is passed as null by cucumber. Change it to empty string before comparison
                 if (v == null) {
                     v = "";
                 }
                 try {
-                    asserts.assertEqualRegexp(action, k, v, getCellValue(igAd, startIdx, k));
+                    asserts.assertEqualRegexp(action, k, v, getCellValue(igAd, finalRowIdx, k));
                 } catch (NoSuchElementException e) {
                     Assert.fail(String.format("Unable to find a cell in IG %s, in column %s and row %d. %s", igName, k, startIdx, e.getLocalizedMessage()));
                 }
             });
+            rowIdx++;
         }
     }
 
     /**
-     * Get the text value of the cell
+     * Set the value in the cell in Interactive Grid
      *
-     * @param igID        - static id of the interactive grid
-     * @param row         - row number
+     * @param value       - value to be set
+     * @param rowNumber   - the row number
      * @param columnLabel - the label or the icon name of the column.
-     * @return text value of the IG cell
+     * @param igName      - name of the IG that is visible to user
      */
-    private String getCellValue(String igID, int row, String columnLabel) throws NoSuchElementException {
-        String xpathTemplate = "//*[@id='%s_ig_grid_vc']//tr[@data-rownum='%d']/td[@role='gridcell'][%d]";
-        int columnIdx = getColumnIdxByName(columnLabel, igID);
-        String xpathFinal = String.format(xpathTemplate, igID, row, columnIdx);
-        WebElement cell = driver.findElement(By.xpath(xpathFinal));
-        return cell.getAttribute("innerText");
+    public void setValueInCell(String value, String igName, int rowNumber, String columnLabel) {
+        String jsCommand = "return apex.region(\"%s\").widget()" +
+                ".interactiveGrid('getViews','grid')" +
+                ".view$.grid('getModel').setValue(" +
+                "apex.region('%s').widget().interactiveGrid('getViews','grid')." +
+                "getSelectedRecords()[0], '%s','%s')";
 
-    }
+        String igId = getIGidByName(igName);
+        if (igId == null) {
+            Assert.fail(String.format("Could not find an interactive grid by its name: %s", igName));
+        }
+        //select the row
+        //selectRecord(igId, rowNumber);
+        clickOnCell(getIgCellElement(igName, columnLabel, rowNumber));
 
-    /**
-     * Get the index of the column by its label
-     *
-     * @param columnLabel - the label or the icon name of the column.
-     * @param igId        - static id of the interactive grid
-     * @return the index of the column
-     */
-    private int getColumnIdxByName(String columnLabel, String igId) {
+        IgColumn igColumn = getColumnAttributesByLabel(igId, columnLabel);
 
-        String jsCommand = "return apex.region(\"%s\")"
-                + ".call(\"getViews\", \"grid\")"
-                + ".view$.grid(\"getColumns\")"
-                + ".filter((c)=>{return (c.hidden == false)})";
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        Object jsResult = js.executeScript(String.format(jsCommand, igId));
-        ArrayList<Map<String, String>> iGColumns = (ArrayList<Map<String, String>>) jsResult;
-
-        for (int i = 0; i < iGColumns.size(); i++) {
-
-            // verify the column name
-            if (Jsoup.parse(iGColumns.get(i).get("heading")).text().replaceAll("\\s+", "").equalsIgnoreCase(columnLabel.replaceAll("\\s+", ""))) {
-                return i + 1;
-            } else {
-                // column by name was not found. Try to search by the name in span, for example icon name used as column label
-                if (iGColumns.get(i).get("heading") != null
-                        && iGColumns.get(i).get("heading").startsWith("<span")
-                        && iGColumns.get(i).get("heading").contains(columnLabel)) {
-                    return i + 1;
-                }
-
+        // check if in IG Cell there is a select list
+        assert igColumn != null;
+        if (igColumn.dataType.equals("NUMBER") && igColumn.mapDefaultValue) {
+            // find option
+            String xpath = "//select[@name='%s']/option[text()='%s']";
+            try {
+                value = driver.findElement(By.xpath(String.format(xpath, igColumn.id, value))).getAttribute("value");
+            } catch (NoSuchElementException e) {
+                Assert.fail(String.format("Element could not be found. Please verify is value is selectable." +
+                        "IG: %s, rowNumber: %s, column name: %s, value to select: %s. Exception message: %s", igName, rowNumber, columnLabel, value, e.getLocalizedMessage()));
             }
         }
-        return -1;
+
+
+        String jsOutput = executeJSCommand(String.format(jsCommand, igId, igId, Objects.requireNonNull(igColumn).property, value));
+        if (jsOutput.equals("SET") || jsOutput.equals("NC")) {
+            Assert.assertTrue(String.format("%s value in IG %s cell in column %s and row %d has been set", value, igName, columnLabel, rowNumber), true);
+        }
     }
 
-
     /**
-     * @param igId        - static id of the interactive grid
-     * @param columnLabel - the label or the icon name of the column.
-     * @return the id of the column
+     * Verifies is the order of the column on the page match the given order
+     *
+     * @param igName          - name of the IG that is visible to user
+     * @param columnsToVerify - list of columns to verify
      */
-    private String getColumnIdByLabel(String igId, String columnLabel) {
+    public void verifyColumnsOrder(String igName, List<Map<Integer, String>> columnsToVerify) {
         // get all not hidden columns
         String jsCommand = "return apex.region(\"%s\")"
                 + ".call(\"getViews\", \"grid\")"
                 + ".view$.grid(\"getColumns\")"
                 + ".filter((c)=>{return (c.hidden == false)})";
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        Object jsResult = js.executeScript(String.format(jsCommand, getIGidByName(igName)));
+        ArrayList<Map<String, String>> iGColumns = (ArrayList<Map<String, String>>) jsResult;
+        boolean allMatch = true;
+        columnsToVerify.get(0).forEach((k, v) -> {
+            if (iGColumns.size() < k - 1) {
+                Assert.fail(String.format("Expected position is higher then the number of the IG columns. IG: %s, position: %d, IG size: %d", igName, k, iGColumns.size()));
+            }
+            Assert.assertEquals(String.format("Compare the order of column in IG: %s. Position: %s", igName, k), iGColumns.get(k - 1).get("heading"), v);
+        });
+
+
+    }
+
+    /**
+     * Select row in the IG
+     *
+     * @param igId      - id of the Interactive Grid
+     * @param rowNumber - number of the row to be selected
+     */
+    private void selectRecord(String igId, int rowNumber) {
+        String jsCommand = "return apex.region('%s')" +
+                ".widget()" +
+                ".interactiveGrid('getViews','grid')" +
+                ".gotoCell(%d)";
+
+        executeJSCommand(String.format(jsCommand, igId, rowNumber + 1));
+    }
+
+    /**
+     * Get the text value of the cell
+     *
+     * @param igId        - static id of the interactive grid
+     * @param row         - row number
+     * @param columnLabel - the label or the icon name of the column.
+     * @return text value of the IG cell
+     */
+    private String getCellValue(String igId, int row, String columnLabel) throws NoSuchElementException {
+        int columnIdx = Objects.requireNonNull(getColumnAttributesByLabel(igId, columnLabel)).idx;
+
+        String jsCommand = "return apex.region(\"%s\")" +
+                ".widget()" +
+                ".interactiveGrid(\"getViews\",\"grid\")" +
+                ".model" +
+                ".recordAt(%d)";
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        Object jsResult = js.executeScript(String.format(jsCommand, igId, row - 1));
+        if (jsResult == null) {
+            Assert.fail("No records could be found in IG: " + igId);
+        }
+
+        ArrayList<Objects> iGColumns = (ArrayList<Objects>) jsResult;
+        return cellCast(iGColumns.get(columnIdx));
+
+    }
+
+    /**
+     * Get column attributes by its label
+     *
+     * @param igId        - static id of the interactive grid
+     * @param columnLabel - the label or the icon name of the column.
+     * @return the id of the column
+     */
+    private IgColumn getColumnAttributesByLabel(String igId, String columnLabel) {
+        // get all columns
+        String jsCommand = "return apex.region(\"%s\")"
+                + ".call(\"getViews\", \"grid\")"
+                + ".view$.grid(\"getColumns\")";
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Object jsResult = js.executeScript(String.format(jsCommand, igId));
-        ArrayList<Map<String, String>> iGColumns = (ArrayList<Map<String, String>>) jsResult;
-
+        ArrayList<Map<String, Object>> iGColumns = (ArrayList<Map<String, Object>>) jsResult;
+        int htmlIdx = 1;
         for (int i = 0; i < iGColumns.size(); i++) {
-            // verify the column name
-            if (Jsoup.parse(iGColumns.get(i).get("heading")).text().replaceAll("\\s+", "").equalsIgnoreCase(columnLabel.replaceAll("\\s+", ""))) {
-                return iGColumns.get(i).get("id");
-            } else {
-                // column by name was not found. Try to search by the name in span, for example icon name used as column label
-                if (iGColumns.get(i).get("heading") != null
-                        && iGColumns.get(i).get("heading").startsWith("<span")
-                        && iGColumns.get(i).get("heading").contains(columnLabel)) {
-                    return iGColumns.get(i).get("id");
+            // skip the action column
+            if (iGColumns.get(i).get("property").equals("APEX$ROW_ACTION")) {
+                // increase the htmlIdx only if column is not hidden
+                if (!(Boolean) iGColumns.get(i).get("hidden"))
+                    htmlIdx++;
+                continue;
+            }
+            // Get the attributes for non-hidden columns (Note: hidden columns do not need to have the name
+            if (!(Boolean) iGColumns.get(i).get("hidden")) {
+
+                // verify the column name
+                if (Jsoup.parse((String) iGColumns.get(i).get("heading")).text().replaceAll("\\s+", "").equalsIgnoreCase(columnLabel.replaceAll("\\s+", ""))) {
+                    return new IgColumn(
+                            columnLabel,
+                            iGColumns.get(i).get("property"),
+                            iGColumns.get(i).get("dataType"),
+                            iGColumns.get(i).get("defaultValue"),
+                            iGColumns.get(i).get("id"),
+                            iGColumns.get(i).get("index"),
+                            htmlIdx);
+                } else {
+                    // column by name was not found. Try to search by the name in span, for example icon name used as column label
+                    if (iGColumns.get(i).get("heading") != null
+                            && ((String) iGColumns.get(i).get("heading")).startsWith("<span")
+                            && ((String) iGColumns.get(i).get("heading")).contains(columnLabel)) {
+                        return new IgColumn(
+                                columnLabel,
+                                iGColumns.get(i).get("property"),
+                                iGColumns.get(i).get("dataType"),
+                                iGColumns.get(i).get("defaultValue"),
+                                iGColumns.get(i).get("id"),
+                                iGColumns.get(i).get("index"),
+                                htmlIdx);
+                    }
                 }
+                htmlIdx++;
             }
         }
         return null;
@@ -217,7 +297,7 @@ public class IGComponent extends BaseComponent {
     /**
      * Gets the static Interactive Grid Id by its name
      *
-     * @param igName - human redable name of the Interactive Grid
+     * @param igName - human-readable name of the Interactive Grid
      * @return static id of the Interactive Grid
      */
     private String getIGidByName(String igName) {
@@ -245,9 +325,35 @@ public class IGComponent extends BaseComponent {
 
             }
         }
+        Assert.fail("Could not find the static id of the Interactive Grid: " + igName);
         return null;
     }
 
+    /**
+     * Gets the webElement that represent an IG Cell
+     * @param igName - human-readable name of the Interactive Grid
+     * @param columnLabel - the label or the icon name of the column.
+     * @param rowNumber - row number of the cell
+     * @return - webElement object that represent na IG Cell
+     */
+    private WebElement getIgCellElement(String igName, String columnLabel, int rowNumber) {
+        String igId = getIGidByName(igName);
+        if (igId == null) {
+            Assert.fail(String.format("Could not find an interactive grid by its name: %s", igName));
+        }
+
+        int columnIdx = Objects.requireNonNull(getColumnAttributesByLabel(igId, columnLabel)).htmlIdx;
+
+        String xpathTemplate = "//*[@id='%s_ig_grid_vc']//*[@data-rownum=%d]/td[%d]";
+        String xpath = String.format(xpathTemplate, igId, rowNumber, columnIdx);
+        return driver.findElement(By.xpath(xpath));
+    }
+
+
+    /**
+     * Clicks on the value in Cell
+     * @param cell - webElement object that represent na IG Cell
+     */
     private void clickOnCell(WebElement cell) {
         List<WebElement> elements = cell.findElements(By.xpath("./child::*"));
         if (elements.isEmpty()) {
@@ -255,6 +361,51 @@ public class IGComponent extends BaseComponent {
         } else {
             elements.get(0).click();
         }
+    }
+
+    /**
+     * Helper function to cast the object returned by JS. Variables returned by JS can be String or Map (e.g. in case of select List). Function will take the value from map and return as string
+     *
+     * @param object - object returned by JS
+     * @return - object cast to String
+     */
+    private String cellCast(Object object) {
+        if (object instanceof Map) {
+            Map<String, String> cell = (Map<String, String>) object;
+            Optional<String> value = cell.values().stream().findFirst();
+            if (value.isPresent()) {
+                return value.get();
+            }
+        } else if (object instanceof String) {
+            return String.valueOf(object);
+        }
+        return null;
+    }
+
+
+}
+
+/**
+ * Helper class to store parameters of IG Column
+ */
+class IgColumn {
+    public String label;
+    public String property;
+    //public int index;
+    public String dataType;
+    public boolean mapDefaultValue;
+    public String id;
+    public int idx;
+    public int htmlIdx;
+    public IgColumn(String label, Object property, Object dataType, Object defaultValue, Object id, Object idx, int htmlIdx) {
+
+        this.label = label;
+        this.property = (String) property;
+        this.dataType = (String) dataType;
+        this.mapDefaultValue = !(defaultValue instanceof String);
+        this.id = (String) id;
+        this.idx = ((Long) idx).intValue();
+        this.htmlIdx = htmlIdx;
     }
 
 }

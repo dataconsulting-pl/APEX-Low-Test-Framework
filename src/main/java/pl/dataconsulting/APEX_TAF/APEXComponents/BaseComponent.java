@@ -169,14 +169,27 @@ public class BaseComponent {
      * Waits until u-Processing class is visible
      */
     protected void waitForApex() {
-
         try {
+            waitForAjax();
             Thread.sleep(200);
             while (driver.findElements(By.className("u-Processing")).size() > 0) {
                 Thread.sleep(200);
             }
         } catch (InvalidArgumentException | InterruptedException e) {
             e.printStackTrace();
+        }
+
+    }
+
+    private void waitForAjax() throws InterruptedException {
+        String jsCommand = String.format("return jQuery.active == 0");
+        while (true) // Handle timeout somewhere
+        {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            Boolean ajaxResult = (Boolean) js.executeScript(jsCommand);
+            if (ajaxResult)
+                break;
+            Thread.sleep(200);
         }
 
     }

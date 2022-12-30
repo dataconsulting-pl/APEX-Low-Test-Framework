@@ -2,6 +2,8 @@ package pl.dataconsulting.APEX_TAF.stepDefinitions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import org.junit.Assert;
+import org.openqa.selenium.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.dataconsulting.APEX_TAF.APEXComponents.BaseComponent;
 import pl.dataconsulting.APEX_TAF.APEXComponents.IGComponent;
@@ -61,9 +63,9 @@ public class InteractiveGridSteps extends BaseComponent {
     /**
      * Clicks on the element in the cell in Interactive Grid
      *
-     * @param rowNumber   - the row number
+     * @param rowNumber    - the row number
      * @param columnNumber - the column number.
-     * @param igName      - name of the IG that is visible to user
+     * @param igName       - name of the IG that is visible to user
      */
     @Then("user clicks on the element in {int} row in {int} column in {string} IG")
     @Given("element in {int} row in {int} column in {string} IG has been clicked")
@@ -84,6 +86,62 @@ public class InteractiveGridSteps extends BaseComponent {
     public void compare_data_ig(String IgName, Integer rowNumber, io.cucumber.datatable.DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
         igComponent.compareMainIGValues(IgName, rows, rowNumber);
+    }
+
+    /**
+     * Step edits the value in the cell in Interactive Grid
+     *
+     * @param rowNumber   - the row number
+     * @param columnLabel - the label or the icon name of the column.
+     * @param igName      - name of the IG that is visible to user
+     */
+    @Then("user sets/selects the value {string} in the cell in {int} row in column {string} in {string} IG")
+    @Given("value {string} in {int} row in column {string} in {string} IG is set/selected")
+    public void set_value_in_cell(String value, int rowNumber, String columnLabel, String igName) {
+        igComponent.setValueInCell(value, igName, rowNumber, columnLabel);
+    }
+
+    /**
+     * Step sets/selects values in cells in Interactive Grid as presented in table
+     *
+     * @param igName    - name of the IG that is visible to user
+     * @param rowNumber - number of first row to be edited
+     * @param dataTable - table that present IG table in format:
+     *                  | Header 1  | Header 2  |
+     *                  | value1    | value2    |
+     */
+    @Then("user sets the values from table in cells in IG {string} starting from {int} row:")
+    @Given("value from table are is in cells in IG {string} starting from {int} row:")
+    public void setValuesInCells(String igName, Integer rowNumber, io.cucumber.datatable.DataTable dataTable) {
+        List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+        int rowIdx = rowNumber;
+        for (Map<String, String> row : rows) {
+            int finalRowIdx = rowIdx;
+            row.forEach((k, v) -> {
+                // if cell is empty, the value is passed as null by cucumber. Change it to empty string before comparison
+                if (v == null) {
+                    v = "";
+                }
+                igComponent.setValueInCell(v, igName, finalRowIdx, k);
+
+            });
+            rowIdx++;
+        }
+
+    }
+
+    /**
+     * Step verifies the position of columns in IG
+     *
+     * @param igName    - name of the IG that is visible to user
+     * @param dataTable - table that contain expected position in IG table in format:
+     *                  |  1        | 2         |
+     *                  | Header 1  | Header 2  |
+     */
+    @Then("the position of columns in IG {string} is as in table:")
+    public void verifyColumnsOrder(String igName, io.cucumber.datatable.DataTable dataTable) {
+        List<Map<Integer, String>> rows = dataTable.asMaps(Integer.class, String.class);
+        igComponent.verifyColumnsOrder(igName, rows);
     }
 
 
