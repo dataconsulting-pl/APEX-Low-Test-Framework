@@ -5,7 +5,7 @@ Feature: set and verify APEX Text field value
     And user entered 'taf_admin@dataconsulting.pl' in 'Username' field
     And user entered 'taf_demo_123password!' in 'Password' field
     And user clicked on the 'Sign In' button
-    Then user navigates to 'Customers' page
+    Then user navigates to 'Activities' page
 
   @unit
   Scenario: Enter text into simple text field
@@ -16,7 +16,8 @@ Feature: set and verify APEX Text field value
 
   @unit
   Scenario: Enter text into text fields
-    Given user clicked on the 'Add Customer' button
+    Given user navigates to 'Customers' page
+    And user clicked on the 'Add Customer' button
     When user enters text into text fields according to data in table:
     | Customer Name | TCV | ARR |
     | Customer 1    | AB1 | 23a |
