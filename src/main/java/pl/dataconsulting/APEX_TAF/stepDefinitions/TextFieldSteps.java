@@ -6,6 +6,9 @@ import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.dataconsulting.APEX_TAF.APEXComponents.FormComponent;
 
+import java.util.List;
+import java.util.Map;
+
 
 public class TextFieldSteps {
 
@@ -35,6 +38,30 @@ public class TextFieldSteps {
     @When("user enters {string} in {string} field")
     public void user_enters_text_into_field(String value, String fieldName) {
         formComponent.enterStringIntoTextItem(fieldName, value);
+    }
+
+    /**
+     * Step enters text into text field according to table
+     *
+     * @param dataTable - table that contain field names and values to enter in format:
+     *                  | field1  | field2  |
+     *                  | value1  | value2  |
+     */
+    @Given("data is entered into text fields according to data in table:")
+    @When("user enters text into text fields according to data in table:")
+    public void usre_enters_in_cells(io.cucumber.datatable.DataTable dataTable) {
+        List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+        for (Map<String, String> row : rows) {
+            row.forEach((k, v) -> {
+                // if cell is empty, the value is passed as null by cucumber. Change it to empty string before comparison
+                if (v == null) {
+                    v = "";
+                }
+                formComponent.enterStringIntoTextItem(k,v);
+
+            });
+        }
+
     }
 
     /**
