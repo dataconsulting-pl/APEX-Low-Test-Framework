@@ -67,6 +67,4 @@ Feature: Set Filters - IG Test Cases - Customers
   Scenario: Select All - Unselect
     Given user has navigated to Editing->Basic Editing page
     When records in IG 'Basic Editing' are selected
-    Then waiting for 5 seconds
     And user unselects records in IG 'Basic Editing'
-    Then waiting for 5 seconds
