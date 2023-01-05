@@ -44,6 +44,7 @@ public class MenuComponent extends BaseComponent {
                     wait.until(ExpectedConditions.elementToBeClickable(
                             menuElement.findElement(By.xpath("../../span[@class='a-TreeView-toggle']")))
                     ).click();
+                    waitForApex();
                 }
             }
         }

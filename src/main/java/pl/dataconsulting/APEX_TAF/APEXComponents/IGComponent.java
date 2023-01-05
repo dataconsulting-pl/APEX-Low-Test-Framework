@@ -182,7 +182,6 @@ public class IGComponent extends BaseComponent {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Object jsResult = js.executeScript(String.format(jsCommand, getIGidByName(igName)));
         ArrayList<Map<String, String>> iGColumns = (ArrayList<Map<String, String>>) jsResult;
-        boolean allMatch = true;
         columnsToVerify.get(0).forEach((k, v) -> {
             if (iGColumns.size() < k - 1) {
                 Assert.fail(String.format("Expected position is higher then the number of the IG columns. IG: %s, position: %d, IG size: %d", igName, k, iGColumns.size()));
@@ -191,6 +190,33 @@ public class IGComponent extends BaseComponent {
         });
 
 
+    }
+
+    /**
+     * Select all visible records in IG
+     *
+     * @param igName          - name of the IG that is visible to user
+     */
+    public void selectAllRecords(String igName) {
+        String jsCommand = "return apex.region(\"%s\")"
+                + ".call(\"getViews\", \"grid\")"
+                + ".view$.grid(\"selectAll\")";
+
+        executeJSCommand(String.format(jsCommand,getIGidByName(igName)));
+    }
+
+
+    /**
+     * Unselect records in IG
+     *
+     * @param igName          - name of the IG that is visible to user
+     */
+    public void unselectRecords(String igName) {
+        String jsCommand = "return apex.region(\"%s\")"
+                + ".call(\"getViews\", \"grid\")"
+                + ".view$.grid(\"setSelection\",[])";
+
+        executeJSCommand(String.format(jsCommand,getIGidByName(igName)));
     }
 
     /**

@@ -2,6 +2,7 @@ package pl.dataconsulting.APEX_TAF.stepDefinitions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +113,7 @@ public class InteractiveGridSteps extends BaseComponent {
      */
     @Then("user sets the values from table in cells in IG {string} starting from {int} row:")
     @Given("value from table are is in cells in IG {string} starting from {int} row:")
-    public void setValuesInCells(String igName, Integer rowNumber, io.cucumber.datatable.DataTable dataTable) {
+    public void set_values_in_cells(String igName, Integer rowNumber, io.cucumber.datatable.DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
         int rowIdx = rowNumber;
         for (Map<String, String> row : rows) {
@@ -139,10 +140,31 @@ public class InteractiveGridSteps extends BaseComponent {
      *                  | Header 1  | Header 2  |
      */
     @Then("the position of columns in IG {string} is as in table:")
-    public void verifyColumnsOrder(String igName, io.cucumber.datatable.DataTable dataTable) {
+    public void verify_columns_Order(String igName, io.cucumber.datatable.DataTable dataTable) {
         List<Map<Integer, String>> rows = dataTable.asMaps(Integer.class, String.class);
         igComponent.verifyColumnsOrder(igName, rows);
     }
 
+    /**
+     * Step selects all records in given Interactive Grid
+     *
+     * @param igName - name of the IG that is visible to user
+     */
+    @Given("records in IG {string} are selected")
+    @When("user selects all records in IG {string}")
+    public void select_all_records(String igName) {
+        igComponent.selectAllRecords(igName);
+    }
+
+    /**
+     * Step unselects records in given Interactive Grid
+     *
+     * @param igName - name of the IG that is visible to user
+     */
+    @Given("records in IG {string} are not selected")
+    @When("user unselects records in IG {string}")
+    public void unselect_records(String igName) {
+        igComponent.selectAllRecords(igName);
+    }
 
 }
