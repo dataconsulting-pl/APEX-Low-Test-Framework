@@ -10,25 +10,25 @@ Feature: Set and verify checkbox value
 
   @unit
   Scenario: Set Checkbox - List
-    When user sets checkboxes 'Analyst Interview, Logo, Quote' for "Reference Types" checkbox item
-    Then checkboxes 'Analyst Interview, Logo, Quote' in "Reference Types" checkbox are selected
+    When user sets checkboxes 'Analyst Interview, Logo, Quote' for 'Reference Types' checkbox item
+    Then checkboxes 'Analyst Interview, Logo, Quote' in 'Reference Types' checkbox are selected
 
   @unit
   Scenario: Set Checkbox - Single
-    When user sets checkbox 'Logo' for "Reference Types" checkbox item
-    Then checkbox 'Logo' in "Reference Types" checkbox is selected
+    When user sets checkbox 'Logo' for 'Reference Types' checkbox item
+    Then checkbox 'Logo' in 'Reference Types' checkbox is selected
 
   @unit
   Scenario: Unset Checkbox - List
-    When user sets checkboxes 'Analyst Interview, Logo, Quote, Success Story' for "Reference Types" checkbox item
-    And user unsets checkboxes 'Analyst Interview, Logo, Quote' for "Reference Types" checkbox item
-    Then checkbox 'Success Story' in "Reference Types" checkbox is selected
+    When user sets checkboxes 'Analyst Interview, Logo, Quote, Success Story' for 'Reference Types' checkbox item
+    And user unsets checkboxes 'Analyst Interview, Logo, Quote' for 'Reference Types' checkbox item
+    Then checkbox 'Success Story' in 'Reference Types' checkbox is selected
 
   @unit
   Scenario: Unset Checkbox - Single
-    When user sets checkboxes 'Analyst Interview, Logo, Quote, Success Story' for "Reference Types" checkbox item
-    And user unsets checkbox 'Quote' for "Reference Types" checkbox item
-    Then checkbox 'Analyst Interview, Logo, Success Story' in "Reference Types" checkbox is selected
+    When user sets checkboxes 'Analyst Interview, Logo, Quote, Success Story' for 'Reference Types' checkbox item
+    And user unsets checkbox 'Quote' for 'Reference Types' checkbox item
+    Then checkbox 'Analyst Interview, Logo, Success Story' in 'Reference Types' checkbox is selected
 
   @unit
   Scenario: Unset Checkbox - List - Dashboard

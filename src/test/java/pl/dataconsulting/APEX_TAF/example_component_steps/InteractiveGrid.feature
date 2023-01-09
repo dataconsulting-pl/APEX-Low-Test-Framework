@@ -68,3 +68,4 @@ Feature: Set Filters - IG Test Cases - Customers
     Given user has navigated to Editing->Basic Editing page
     When records in IG 'Basic Editing' are selected
     And user unselects records in IG 'Basic Editing'
+
