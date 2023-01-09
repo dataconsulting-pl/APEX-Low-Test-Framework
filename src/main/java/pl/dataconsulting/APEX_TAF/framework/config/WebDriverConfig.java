@@ -1,5 +1,6 @@
 package pl.dataconsulting.APEX_TAF.framework.config;
 
+import io.cucumber.spring.ScenarioScope;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,9 +17,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import pl.dataconsulting.APEX_TAF.framework.annotation.BeanThreadScope;
-
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
+
 
 @Lazy
 @Configuration

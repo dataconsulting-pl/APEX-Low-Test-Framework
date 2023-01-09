@@ -19,23 +19,25 @@ public class SelectItemSteps {
 
     /**
      * Step selects an option on the select item
-     * @param value - option to be selected
+     *
+     * @param value     - option to be selected
      * @param fieldName - name of the filed
      * @param frameName - frame/pop-up name
      */
-    @Given("user selected {string} in {string} field on {string} pop-up")
-    @When("user selects {string} in {string} field on {string} pop-up")
+    @Given("user selected {myString} in {myString} field on {myString} pop-up")
+    @When("user selects {myString} in {myString} field on {myString} pop-up")
     public void user_set_value_in_select_item(String value, String fieldName, String frameName) {
         selectItemComponent.selectItem(frameName, value, fieldName);
     }
 
     /**
      * Step selects an option on the select item
-     * @param value - option to be selected
+     *
+     * @param value     - option to be selected
      * @param fieldName - name of the filed
      */
-    @Given("user selected {string} in {string} field")
-    @When("user selects {string} in {string} field")
+    @Given("user selected {myString} in {myString} field")
+    @When("user selects {myString} in {myString} field")
     public void user_set_value_in_select_item(String value, String fieldName) {
         selectItemComponent.selectItem(value, fieldName);
     }
@@ -57,7 +59,7 @@ public class SelectItemSteps {
                 if (v == null) {
                     v = "";
                 }
-                selectItemComponent.selectItem(v,k);
+                selectItemComponent.selectItem(v, k);
 
             });
         }
@@ -66,12 +68,26 @@ public class SelectItemSteps {
 
     /**
      * Step verifies a value in the select item
+     *
      * @param expectedValue - option to be selected
-     * @param fieldName - name of the filed
+     * @param fieldName     - name of the filed
      */
-    @Then("value {string} is selected in {string} field")
+    @Then("value {myString} is selected in {myString} field")
     public void verify_select_item(String expectedValue, String fieldName) {
         selectItemComponent.verifySelectItemValue(expectedValue, fieldName);
+    }
+
+    /**
+     * Steps reads the text from selected option of select item. Value saved in variables can be passed to other steps. To pass the variable
+     * a prefix @$ must be used. For example @$variableName
+     *
+     * @param fieldName - text field name
+     * @param variable  - name of the variable where data will be saved
+     */
+    @Given("text of selected option of select item field {myString} is saved in -> {word}")
+    @Then("save the text of selected option of select item field {myString} in -> {word}")
+    public void get_text_and_save_it(String fieldName, String variable) {
+        selectItemComponent.saveTestData(variable, selectItemComponent.getSelectItemValue(fieldName));
     }
 
 

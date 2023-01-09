@@ -21,14 +21,14 @@ public class LoginPageSteps {
      * Step accesses the given url
      * @param url - url to access
      */
-    @Given("the user has accessed the {string} url")
-    @When("the user access the {string} url")
+    @Given("the user has accessed the {myString} url")
+    @When("the user access the {myString} url")
     public void user_access_url(String url) {
         baseComponent.navigateToUrl(url);
 
    }
 
-    @Given("the user access the url stored in file: {string}")
+    @Given("the user access the url stored in file: {myString}")
     public void user_access_url_from_file(String filePath ) {
         try {
             List<String> fileLines = Files.readAllLines(Path.of(filePath));
@@ -44,8 +44,8 @@ public class LoginPageSteps {
      * Step switches content to iframe for example APEX pop-up
      * @param frameName - iframe name
      */
-    @Given("frame/pop-up {string} is visible")
-    @Then("frame/pop-up {string} has been opened")
+    @Given("frame/pop-up {myString} is visible")
+    @Then("frame/pop-up {myString} has been opened")
     public void switch_to_frame(String frameName){
         baseComponent.switchToFrame(frameName);
     }

@@ -2,7 +2,8 @@ package pl.dataconsulting.APEX_TAF.stepDefinitions.common;
 
 import com.google.common.base.CharMatcher;
 import io.cucumber.java.ParameterType;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import pl.dataconsulting.APEX_TAF.APEXComponents.BaseComponent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,13 +11,14 @@ import java.util.Properties;
 
 public class CustomParameters {
 
-    @ParameterType(".*")
-    public String PropString(String arg) {
-        Properties prop = new Properties();
-        prop.get("ac");
+    @Autowired
+    BaseComponent baseComponent;
 
+    @ParameterType("['|@]([^'\\\\]*(\\\\.[^'\\\\]*)*)'?")
+    public String myString(String arg) {
         if (arg.startsWith("$")){
-            return null;
+            arg = arg.substring(1);
+            return baseComponent.getTestData(arg);
         } else {
             return arg;
         }

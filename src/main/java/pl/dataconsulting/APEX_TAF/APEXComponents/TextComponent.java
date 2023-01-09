@@ -4,7 +4,7 @@ import org.testng.Assert;
 import pl.dataconsulting.APEX_TAF.framework.annotation.APEXComponent;
 
 @APEXComponent
-public class FormComponent extends BaseComponent {
+public class TextComponent extends BaseComponent {
 
     // == String Item action functions ==
 
@@ -41,6 +41,16 @@ public class FormComponent extends BaseComponent {
      */
     public void verifyTextItemValue(String fieldName, String expectedValue) {
         Assert.assertEquals(getTextFromWebElement(getWebElementByLabel(fieldName)), expectedValue);
+
+    }
+
+    /**
+     * Gets text from text field
+     *
+     * @param fieldName     - name of the filed
+     */
+    public String getTextItemValue(String fieldName) {
+        return getTextFromWebElement(getWebElementByLabel(fieldName));
 
     }
 

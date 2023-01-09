@@ -19,7 +19,7 @@ public class ShuttleItemSteps {
      * @param options - options separated by coma, e.g. option 1, option2.
      * @param itemName - name of the shuttle item
      */
-    @When("user moves value(s) {listOfStrings} in {string} shuttle item")
+    @When("user moves value(s) {listOfStrings} in {myString} shuttle item")
     public void user_moves_values(List<String> options, String itemName) {
         shuttleComponent.moveShuttleOptionName(itemName, options);
     }
@@ -29,7 +29,7 @@ public class ShuttleItemSteps {
      * @param options - options separated by coma, e.g. option 1, option2.
      * @param itemName - name of the shuttle item
      */
-    @When("user removes value(s) {listOfStrings} in {string} shuttle item")
+    @When("user removes value(s) {listOfStrings} in {myString} shuttle item")
     public void user_removes_values(List<String> options, String itemName) {
         shuttleComponent.removeShuttleOptionName(itemName, options);
     }
@@ -38,7 +38,7 @@ public class ShuttleItemSteps {
      * Step moves all options in shuttle item
      * @param itemName - name of the shuttle item
      */
-    @When("user moves all values in {string} shuttle item")
+    @When("user moves all values in {myString} shuttle item")
     public void user_moves_all_values(String itemName) {
         shuttleComponent.moveAllShuttleOptions(itemName);
     }
@@ -47,7 +47,7 @@ public class ShuttleItemSteps {
      * Step removes all options in shuttle item
      * @param itemName - name of the shuttle item
      */
-    @When("user removes all values in {string} shuttle item")
+    @When("user removes all values in {myString} shuttle item")
     public void remove_all_values(String itemName) {
         shuttleComponent.removeAllShuttleOptions(itemName);
     }
@@ -57,7 +57,7 @@ public class ShuttleItemSteps {
      * @param options - options separated by coma, e.g. option 1, option2.
      * @param itemName - name of the shuttle item
      */
-    @Then("value(s) {listOfStrings} in {string} shuttle item is/are chosen")
+    @Then("value(s) {listOfStrings} in {myString} shuttle item is/are chosen")
     public void verify_chosen_values(List<String> options, String itemName) {
         shuttleComponent.verifyShuttleByOptionName(itemName,options);
     }
@@ -66,7 +66,7 @@ public class ShuttleItemSteps {
      * Step, verifies if none of the option is moved in shuttle item
      * @param itemName - name of the shuttle item
      */
-    @Then("no value(s) in {string} shuttle item is/are chosen")
+    @Then("no value(s) in {myString} shuttle item is/are chosen")
     public void verify_chosen_values(String itemName) {
         shuttleComponent.verifyNoShuttleOptionChosen(itemName);
     }

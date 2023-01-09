@@ -15,7 +15,7 @@ public class ButtonItemSteps {
      * @param buttonName - name of the button
      * @param frameName - iframe name (pop-up name)
      */
-    @When("user presses the {string} button on {string} pop-up")
+    @When("user presses the {myString} button on {myString} pop-up")
     public void user_presses_the_button_on_popup(String buttonName, String frameName) {
         buttonComponent.pressPopUpButton(frameName, buttonName,"");
     }
@@ -24,8 +24,8 @@ public class ButtonItemSteps {
      * Step presses the button by its name
      * @param buttonName - name of the button
      */
-    @Given("user clicked on the {string} button")
-    @When("user presses the {string} button")
+    @Given("user clicked on the {myString} button")
+    @When("user presses the {myString} button")
     public void user_presses_the_button(String buttonName) {
         buttonComponent.pressButton(buttonName,"");
     }
@@ -35,8 +35,8 @@ public class ButtonItemSteps {
      * @param buttonName - name of the button
      * @param className - class of the button
      */
-    @Given("user clicked on the {string} button that contains class {string}")
-    @When("user presses the {string} button that contains class {string}")
+    @Given("user clicked on the {myString} button that contains class {myString}")
+    @When("user presses the {myString} button that contains class {myString}")
     public void user_presses_the_button(String buttonName, String className) {
         buttonComponent.pressButton(buttonName, className);
     }

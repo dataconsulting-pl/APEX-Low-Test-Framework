@@ -21,7 +21,7 @@ public class RadioButtonItemSteps {
      * @param options  - option to be selected
      * @param itemName - the name of a radioButton item
      */
-    @When("user sets radioButton's option {string} for {string} radioButton item")
+    @When("user sets radioButton's option {myString} for {myString} radioButton item")
     public void user_sets_radioButton(String options, String itemName) {
         radioButtonComponent.setRadioButtonByOptionName(itemName, options);
     }
@@ -32,7 +32,7 @@ public class RadioButtonItemSteps {
      * @param option   - expected selected option
      * @param itemName - the name of the radioButton item
      */
-    @Then("radioButton {string} in {string} radioButton is selected")
+    @Then("radioButton {myString} in {myString} radioButton is selected")
     public void verify_selected_radioButton(String option, String itemName) {
         radioButtonComponent.verifyRadioButtonsByOptionName(itemName, option);
     }

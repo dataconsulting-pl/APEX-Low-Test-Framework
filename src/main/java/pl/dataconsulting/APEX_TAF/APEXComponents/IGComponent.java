@@ -195,29 +195,43 @@ public class IGComponent extends BaseComponent {
     /**
      * Select all visible records in IG
      *
-     * @param igName          - name of the IG that is visible to user
+     * @param igName - name of the IG that is visible to user
      */
     public void selectAllRecords(String igName) {
         String jsCommand = "return apex.region(\"%s\")"
                 + ".call(\"getViews\", \"grid\")"
                 + ".view$.grid(\"selectAll\")";
 
-        executeJSCommand(String.format(jsCommand,getIGidByName(igName)));
+        executeJSCommand(String.format(jsCommand, getIGidByName(igName)));
     }
 
 
     /**
      * Unselect records in IG
      *
-     * @param igName          - name of the IG that is visible to user
+     * @param igName - name of the IG that is visible to user
      */
     public void unselectRecords(String igName) {
         String jsCommand = "return apex.region(\"%s\")"
                 + ".call(\"getViews\", \"grid\")"
                 + ".view$.grid(\"setSelection\",[])";
 
-        executeJSCommand(String.format(jsCommand,getIGidByName(igName)));
+        executeJSCommand(String.format(jsCommand, getIGidByName(igName)));
     }
+
+    /**
+     * Gets the text from cell in Interactive Grid
+     *
+     * @param igName      - name of the IG that is visible to user
+     * @param columnLabel - Name of the column
+     * @param rowNumber   - the row number
+     */
+    public String getCellValue(String igName, String columnLabel, int rowNumber) {
+        String igAd = getIGidByName(igName);
+        return getCellValue(igAd, rowNumber, columnLabel);
+
+    }
+
 
     /**
      * Select row in the IG
@@ -357,9 +371,10 @@ public class IGComponent extends BaseComponent {
 
     /**
      * Gets the webElement that represent an IG Cell
-     * @param igName - human-readable name of the Interactive Grid
+     *
+     * @param igName      - human-readable name of the Interactive Grid
      * @param columnLabel - the label or the icon name of the column.
-     * @param rowNumber - row number of the cell
+     * @param rowNumber   - row number of the cell
      * @return - webElement object that represent na IG Cell
      */
     private WebElement getIgCellElement(String igName, String columnLabel, int rowNumber) {
@@ -378,6 +393,7 @@ public class IGComponent extends BaseComponent {
 
     /**
      * Clicks on the value in Cell
+     *
      * @param cell - webElement object that represent na IG Cell
      */
     private void clickOnCell(WebElement cell) {
@@ -423,6 +439,7 @@ class IgColumn {
     public String id;
     public int idx;
     public int htmlIdx;
+
     public IgColumn(String label, Object property, Object dataType, Object defaultValue, Object id, Object idx, int htmlIdx) {
 
         this.label = label;

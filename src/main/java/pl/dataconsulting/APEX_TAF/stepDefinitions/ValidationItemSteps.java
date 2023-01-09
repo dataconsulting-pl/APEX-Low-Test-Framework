@@ -2,12 +2,12 @@ package pl.dataconsulting.APEX_TAF.stepDefinitions;
 
 import io.cucumber.java.en.Then;
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.dataconsulting.APEX_TAF.APEXComponents.FormComponent;
+import pl.dataconsulting.APEX_TAF.APEXComponents.TextComponent;
 
 public class ValidationItemSteps {
 
     @Autowired
-    private FormComponent formComponent;
+    private TextComponent textComponent;
 
     /**
      * Step verifies the validation message of the APEX item
@@ -15,9 +15,9 @@ public class ValidationItemSteps {
      * @param fieldName - name of the field
      * @param frameName - name of the iframe (APEX pop-up)
      */
-    @Then("validation message {string} for {string} field is displayed in {string} pop-up")
+    @Then("validation message {myString} for {myString} field is displayed in {myString} pop-up")
     public void verify_validation_message(String expectedValidationMessage, String fieldName, String frameName) {
-        formComponent.verifyValidationMessage(frameName, fieldName, expectedValidationMessage);
+        textComponent.verifyValidationMessage(frameName, fieldName, expectedValidationMessage);
     }
 
     /**
@@ -25,9 +25,9 @@ public class ValidationItemSteps {
      * @param expectedValidationMessage -expected validation message
      * @param fieldName - name of the field
      */
-    @Then("validation message {string} for {string} field is displayed")
+    @Then("validation message {myString} for {myString} field is displayed")
     public void verify_validation_message(String expectedValidationMessage, String fieldName) {
-        formComponent.verifyValidationMessage(fieldName, expectedValidationMessage);
+        textComponent.verifyValidationMessage(fieldName, expectedValidationMessage);
     }
 
 

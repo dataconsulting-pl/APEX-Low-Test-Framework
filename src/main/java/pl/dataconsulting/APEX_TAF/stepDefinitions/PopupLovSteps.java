@@ -18,8 +18,8 @@ public class PopupLovSteps {
      * @param value     - value to be selected
      * @param fieldName - text field name
      */
-    @Given("user selected {string} in {string} popup lov element")
-    @When("user selects {string} in {string} popup lov element")
+    @Given("user selected {myString} in {myString} popup lov element")
+    @When("user selects {myString} in {myString} popup lov element")
     public void user_select_element_in_popup_lov(String value, String fieldName) {
         popupLovComponent.selectElement(fieldName, value);
     }
@@ -30,8 +30,8 @@ public class PopupLovSteps {
      * @param expectedValue - expected value to be selected
      * @param fieldName     - popup lov field name
      */
-    @Then("verify, that value of popup lov field {string} is {string}")
-    @Then("value in pop-up lov filed {string} is {string}")
+    @Then("verify, that value of popup lov field {myString} is {myString}")
+    @Then("value in pop-up lov filed {myString} is {myString}")
     public void user_verifies_value_in_text_field(String fieldName, String expectedValue) {
         popupLovComponent.verifyPopupLovValue(expectedValue, fieldName);
     }

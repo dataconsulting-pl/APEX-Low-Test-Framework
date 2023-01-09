@@ -21,8 +21,8 @@ public class InteractiveReportSteps extends BaseComponent {
      *                  | Header 1     | Header 2     |
      *                  | filter value | filter value |
      */
-    @Given("{string} IR Filter is set on columns:")
-    @Then("set {string} IR Filter on columns:")
+    @Given("{myString} IR Filter is set on columns:")
+    @Then("set {myString} IR Filter on columns:")
     public void set_IR_Filter(String IRName, io.cucumber.datatable.DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
         irComponent.setMainIRGFilter(IRName, rows);
@@ -35,7 +35,7 @@ public class InteractiveReportSteps extends BaseComponent {
      *                  | Header 1     | Header 2     |
      *                  | filter value | filter value |
      */
-    @Then("at least one record can be found in {string} IR by:")
+    @Then("at least one record can be found in {myString} IR by:")
     public void set_filter_and_verify_at_least_one_record_exists_in_IG(String IRName, io.cucumber.datatable.DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
         irComponent.setMainIRGFilter(IRName, rows);
@@ -46,7 +46,7 @@ public class InteractiveReportSteps extends BaseComponent {
      * Step verifies on Interactive Report component if at least one record exists
      * @param IRName - name of Interactive Report component
      */
-    @Then("at least one record can be found in {string} IR")
+    @Then("at least one record can be found in {myString} IR")
     public void verify_at_least_one_record_exists_in_IG(String IRName) {
         irComponent.verifyAtLeastOneRowExists(IRName);
     }
@@ -59,7 +59,7 @@ public class InteractiveReportSteps extends BaseComponent {
      *                  | Header 1     | Header 2     |
      *                  | filter value | filter value |
      */
-    @Then("in {string} IR, data starting from {int} row match table below:")
+    @Then("in {myString} IR, data starting from {int} row match table below:")
     public void compare_data_ig(String IRName, Integer rowIdx, io.cucumber.datatable.DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
         irComponent.compareMainIRValues(IRName, rows, rowIdx);
@@ -72,8 +72,8 @@ public class InteractiveReportSteps extends BaseComponent {
      * @param columnLabel - the label or the icon name of the column.
      * @param irName      - name of the IR that is visible to user
      */
-    @Then("user clicks on the element in {int} row in column {string} in {string} IR")
-    @Given("element in {int} row in column {string} in {string} IR has been clicked")
+    @Then("user clicks on the element in {int} row in column {myString} in {myString} IR")
+    @Given("element in {int} row in column {myString} in {myString} IR has been clicked")
     public void click_on_element_in_cell(int rowNumber, String columnLabel, String irName) {
         irComponent.clickOnElementInCell(irName, rowNumber, columnLabel);
     }

@@ -58,4 +58,16 @@ public class SelectItemComponent extends BaseComponent {
     }
 
 
+    /**
+     * Gets selected option value of select item
+     *
+     * @param fieldName - name of the select item field
+     * @return - text of the selected option of select item field
+     */
+    public String getSelectItemValue(String fieldName) {
+        WebElement selectItem = getWebElementByLabel(fieldName);
+        final Select selectBox = new Select(selectItem);
+        return selectBox.getFirstSelectedOption().getText();
+    }
+
 }

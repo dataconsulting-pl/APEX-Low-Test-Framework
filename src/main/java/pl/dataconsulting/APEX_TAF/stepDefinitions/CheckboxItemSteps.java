@@ -21,7 +21,7 @@ public class CheckboxItemSteps {
      * @param options  - list of checkboxes separated by comma to be selected, for example: item1, item2, item3
      * @param itemName - the name of a checkbox item
      */
-    @When("user sets checkbox(es) {listOfStrings} for {string} checkbox item")
+    @When("user sets checkbox(es) {listOfStrings} for {myString} checkbox item")
     public void user_sets_checkboxes(List<String> options, String itemName) {
         checkboxComponent.setCheckboxesByOptionName(itemName, options);
     }
@@ -32,7 +32,7 @@ public class CheckboxItemSteps {
      * @param options  - List of options (separated by comma) that should be selected.
      * @param itemName - name of the item
      */
-    @Then("checkbox(es) {listOfStrings} in {string} checkbox are/is selected")
+    @Then("checkbox(es) {listOfStrings} in {myString} checkbox are/is selected")
     public void verify_selected_checkboxes(List<String> options, String itemName) {
         checkboxComponent.verifyCheckboxesByOptionName(itemName, options);
     }
@@ -43,7 +43,7 @@ public class CheckboxItemSteps {
      * @param options  - List of options (separated by comma) to unset.
      * @param itemName - name of the item
      */
-    @When("user unsets checkbox(es) {listOfStrings} for {string} checkbox item")
+    @When("user unsets checkbox(es) {listOfStrings} for {myString} checkbox item")
     public void user_unsets_checkboxes(List<String> options, String itemName) {
         checkboxComponent.unsetCheckboxesByOptionName(itemName, options);
     }

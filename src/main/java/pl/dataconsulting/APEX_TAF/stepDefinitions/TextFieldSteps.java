@@ -4,7 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.dataconsulting.APEX_TAF.APEXComponents.FormComponent;
+import pl.dataconsulting.APEX_TAF.APEXComponents.TextComponent;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.Map;
 public class TextFieldSteps {
 
     @Autowired
-    private FormComponent formComponent;
+    private TextComponent textComponent;
 
     /**
      * Step enters given text into the text field
@@ -22,10 +22,10 @@ public class TextFieldSteps {
      * @param fieldName - text field name
      * @param frameName - frame/pop-up name
      */
-    @Given("user entered {string} in {string} field on {string} pop-up")
-    @When("user enters {string} in {string} field on {string} pop-up")
+    @Given("user entered {myString} in {myString} field on {myString} pop-up")
+    @When("user enters {myString} in {myString} field on {myString} pop-up")
     public void user_enters_text_into_field(String value, String fieldName, String frameName) {
-        formComponent.enterStringIntoTextItem(frameName, fieldName, value);
+        textComponent.enterStringIntoTextItem(frameName, fieldName, value);
     }
 
     /**
@@ -34,10 +34,10 @@ public class TextFieldSteps {
      * @param value     - text to enter
      * @param fieldName - text field name
      */
-    @Given("user entered {string} in {string} field")
-    @When("user enters {string} in {string} field")
+    @Given("user entered {myString} in {myString} field")
+    @When("user enters {myString} in {myString} field")
     public void user_enters_text_into_field(String value, String fieldName) {
-        formComponent.enterStringIntoTextItem(fieldName, value);
+        textComponent.enterStringIntoTextItem(fieldName, value);
     }
 
     /**
@@ -49,7 +49,7 @@ public class TextFieldSteps {
      */
     @Given("data is entered into text fields according to data in table:")
     @When("user enters text into text fields according to data in table:")
-    public void usre_enters_in_cells(io.cucumber.datatable.DataTable dataTable) {
+    public void user_enters_in_cells(io.cucumber.datatable.DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> row : rows) {
             row.forEach((k, v) -> {
@@ -57,7 +57,7 @@ public class TextFieldSteps {
                 if (v == null) {
                     v = "";
                 }
-                formComponent.enterStringIntoTextItem(k,v);
+                textComponent.enterStringIntoTextItem(k, v);
 
             });
         }
@@ -70,10 +70,22 @@ public class TextFieldSteps {
      * @param fieldName     - text field name
      * @param expectedValue - expected text of the text field
      */
-    @Then("verify, that value of text item {string} is {string}")
-    @Then("text item {string} value is {string}")
+    @Then("verify, that value of text item {myString} is {myString}")
+    @Then("text item {myString} value is {myString}")
     public void user_verifies_value_in_text_field(String fieldName, String expectedValue) {
-        formComponent.verifyTextItemValue(fieldName, expectedValue);
+        textComponent.verifyTextItemValue(fieldName, expectedValue);
+    }
+
+    /**
+     * Steps reads the text from text item and save it in variable. Value saved in variables can be passed to other steps. To pass the variable
+     * a prefix @$ must be used. For example @$variableName
+     * @param fieldName - text field name
+     * @param variable - name of the variable where data will be saved
+     */
+    @Given("text from text field {myString} is saved in -> {word}")
+    @Then("save the text from text field {myString} in -> {word}")
+    public void get_text_and_save_it(String fieldName, String variable) {
+        textComponent.saveTestData(variable, textComponent.getTextItemValue(fieldName));
     }
 
 

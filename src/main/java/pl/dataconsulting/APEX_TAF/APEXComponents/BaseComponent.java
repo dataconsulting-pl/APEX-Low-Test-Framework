@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import pl.dataconsulting.APEX_TAF.framework.annotation.APEXComponent;
+import pl.dataconsulting.APEX_TAF.framework.service.TestData;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ public class BaseComponent {
     @Autowired
     protected WebDriverWait wait;
 
+    @Autowired
+    protected TestData testData;
+
 
     @PostConstruct
     private void init() {
@@ -38,6 +42,14 @@ public class BaseComponent {
     protected void sendKeys(By by, String textToSend) {
         wait.until(ExpectedConditions.elementToBeClickable(by)).sendKeys(textToSend);
 
+    }
+
+    public void saveTestData(String key, String value) {
+        testData.savedData(key,value);
+    }
+
+    public String getTestData(String key) {
+        return testData.getData(key);
     }
 
     /**
