@@ -66,4 +66,44 @@ public class CommonSteps {
         baseComponent.saveTestData(variable, generatedString);
     }
 
+
+    /**
+     * Step accepts alert
+     */
+    @Then("accept alert")
+    @Then("user accepts alert")
+    public void accept_alert() {
+        baseComponent.acceptAlert();
+    }
+
+    /**
+     * Step dismiss alert
+     */
+    @Then("dismiss alert")
+    @Then("user dismisses alert")
+    public void decline_alert() {
+        baseComponent.dismissAlert();
+    }
+
+    /**
+     * Step dismiss alert
+     */
+    @Then("user sends text {myString} to alert")
+    public void send_text_to_alert(String text) {
+        baseComponent.sendTextToAlert(text);
+    }
+
+    /**
+     * Step gets Text from Alert and save it to variable some random number in variable. Data saved in variables can be passed to other steps. To pass the variable
+     * a prefix @$ must be used. For example @$variableName
+     *
+     * @param variable - name of the variable
+     */
+    @Given("text of alert is saved in -> {word}")
+    @Given("save the text of alert in -> {word}")
+    public void save_text_from_alert_in_variable(String variable) {
+        baseComponent.saveTestData(variable, baseComponent.getAlertText());
+    }
+
+
 }

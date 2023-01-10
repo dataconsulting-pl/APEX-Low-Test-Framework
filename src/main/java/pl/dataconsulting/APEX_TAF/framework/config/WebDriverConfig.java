@@ -24,7 +24,7 @@ import java.time.Duration;
 @Configuration
 public class WebDriverConfig {
 
-    @Value("${timeout:300}")
+    @Value("${timeout:3000}")
     private Duration timeout;
 
     @Value("${wait.implicit:10000}")

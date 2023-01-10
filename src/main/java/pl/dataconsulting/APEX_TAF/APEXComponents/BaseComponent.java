@@ -45,7 +45,7 @@ public class BaseComponent {
     }
 
     public void saveTestData(String key, String value) {
-        testData.savedData(key,value);
+        testData.savedData(key, value);
     }
 
     public String getTestData(String key) {
@@ -75,6 +75,59 @@ public class BaseComponent {
                 waitForApex();
                 break;
             }
+        }
+    }
+
+    /**
+     * Accepts alert
+     */
+    public void acceptAlert() {
+        try {
+            wait.until(ExpectedConditions.alertIsPresent());
+            driver.switchTo().alert().accept();
+        } catch (NoAlertPresentException e) {
+            Assert.fail("Error on accepting alert. Alert not present");
+        }
+    }
+
+    /**
+     * Dismiss alert
+     */
+    public void dismissAlert() {
+        try {
+            wait.until(ExpectedConditions.alertIsPresent());
+            driver.switchTo().alert().dismiss();
+        } catch (NoAlertPresentException e) {
+            Assert.fail("Error on dismissing alert. Alert not present");
+        }
+    }
+
+    /**
+     * Send text to Alert
+     *
+     * @param text - text to be send
+     */
+    public void sendTextToAlert(String text) {
+        try {
+            wait.until(ExpectedConditions.alertIsPresent());
+            driver.switchTo().alert().sendKeys(text);
+        } catch (NoAlertPresentException e) {
+            Assert.fail("Error on sending text to alert. Alert not present");
+        }
+    }
+
+    /**
+     * Gets Alert's Text
+     *
+     * @return - text of the Alert
+     */
+    public String getAlertText() {
+        try {
+            wait.until(ExpectedConditions.alertIsPresent());
+            return driver.switchTo().alert().getText();
+        } catch (NoAlertPresentException e) {
+            Assert.fail("Error on sending text to alert. Alert not present");
+            return null;
         }
     }
 
@@ -266,18 +319,6 @@ public class BaseComponent {
             return null;
     }
 
-
-    /**
-     * Accepts alert
-     *
-     */
-    protected void acceptAlert() {
-        try {
-            driver.switchTo().alert().accept();
-        } catch (NoAlertPresentException  e) {
-            Assert.fail("Error on accepting alert. Alert not present");
-        }
-    }
 
     /**
      * Gets value of APEX item using JS
