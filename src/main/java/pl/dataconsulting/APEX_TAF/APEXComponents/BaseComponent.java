@@ -266,6 +266,19 @@ public class BaseComponent {
             return null;
     }
 
+
+    /**
+     * Accepts alert
+     *
+     */
+    protected void acceptAlert() {
+        try {
+            driver.switchTo().alert().accept();
+        } catch (NoAlertPresentException  e) {
+            Assert.fail("Error on accepting alert. Alert not present");
+        }
+    }
+
     /**
      * Gets value of APEX item using JS
      *

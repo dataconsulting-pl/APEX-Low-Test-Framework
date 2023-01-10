@@ -1,5 +1,6 @@
 package pl.dataconsulting.APEX_TAF.APEXComponents;
 
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import pl.dataconsulting.APEX_TAF.framework.annotation.APEXComponent;
 
@@ -28,6 +29,17 @@ public class TextComponent extends BaseComponent {
      */
     public void enterStringIntoTextItem(String fieldName, String text) {
         sendKeys(getWebElement(fieldName), text);
+
+    }
+
+    /**
+     * Sends key to the text item component
+     *
+     * @param fieldName - name of the field
+     * @param key      - key to be sent
+     */
+    public void sendKeyIntoTextItem(String fieldName, Keys key) {
+        getWebElement(fieldName).sendKeys(key);
 
     }
 

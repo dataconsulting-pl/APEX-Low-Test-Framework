@@ -3,6 +3,7 @@ package pl.dataconsulting.APEX_TAF.stepDefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.dataconsulting.APEX_TAF.APEXComponents.TextComponent;
 
@@ -38,6 +39,17 @@ public class TextFieldSteps {
     @When("user enters {myString} in {myString} field")
     public void user_enters_text_into_field(String value, String fieldName) {
         textComponent.enterStringIntoTextItem(fieldName, value);
+    }
+
+    /**
+     * Step sends a key to text field. Supported keys are:
+     *
+     * @param key     - key to send
+     * @param fieldName - text field name
+     */
+    @When("user sends {key} in {myString} field")
+    public void user_sends_key_into_field(Keys key, String fieldName) {
+        textComponent.sendKeyIntoTextItem(fieldName, key);
     }
 
     /**
@@ -79,8 +91,9 @@ public class TextFieldSteps {
     /**
      * Steps reads the text from text item and save it in variable. Value saved in variables can be passed to other steps. To pass the variable
      * a prefix @$ must be used. For example @$variableName
+     *
      * @param fieldName - text field name
-     * @param variable - name of the variable where data will be saved
+     * @param variable  - name of the variable where data will be saved
      */
     @Given("text from text field {myString} is saved in -> {word}")
     @Then("save the text from text field {myString} in -> {word}")
