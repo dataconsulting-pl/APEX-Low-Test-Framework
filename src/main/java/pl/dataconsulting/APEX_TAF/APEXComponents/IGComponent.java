@@ -122,6 +122,25 @@ public class IGComponent extends BaseComponent {
     }
 
     /**
+     * Verify if the text value in given row and column do not match
+     *
+     * @param igName     - name of the IG that is visible to user
+     * @param columnName - column label
+     * @param row        - row inex
+     * @param value      - value to be verfified
+     */
+    public void verifyMissingData(String igName, String columnName, int row, String value) {
+        String igAd = getIGidByName(igName);
+
+        // if cell is empty, the value is passed as null by cucumber. Change it to empty string before comparison
+        if (value == null) {
+            value = "";
+        }
+        Assert.assertNotEquals(String.format("Cell in %d row and %s column in IG %s has not expected %s value", row, columnName, igName, value), value, getCellValue(igAd, row, columnName));
+
+    }
+
+    /**
      * Set the value in the cell in Interactive Grid
      *
      * @param value       - value to be set
@@ -229,6 +248,26 @@ public class IGComponent extends BaseComponent {
     public String getCellValue(String igName, String columnLabel, int rowNumber) {
         String igAd = getIGidByName(igName);
         return getCellValue(igAd, rowNumber, columnLabel);
+
+    }
+
+    /**
+     * Verify, that no record is displayed in given IG
+     *
+     * @param igName        - static id of the interactive grid
+     */
+    public void verifyNoRecordDisplayed(String igName) {
+        String jsCommand = "return apex.region(\"%s\")" +
+                ".widget()" +
+                ".interactiveGrid(\"getViews\",\"grid\")" +
+                ".model" +
+                ".recordAt(0)";
+
+        String igAd = getIGidByName(igName);
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        Object jsResult = js.executeScript(String.format(jsCommand, igAd));
+        Assert.assertNull(String.format("IG %s has some records displayed", igName));
 
     }
 

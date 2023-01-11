@@ -90,6 +90,30 @@ public class InteractiveGridSteps extends BaseComponent {
     }
 
     /**
+     * Step verify, that data from table is not present in Interactive Grid
+     *
+     * @param notExpectedValue - not expected value
+     * @param IgName           - name of the IG that is visible to user
+     * @param columnName       - name of the IG's column
+     * @param rowNumber        - IG row number
+     */
+    @Then("cell's text value {myString} in {myString} IG in {myString} column and {int}(st)(nd)(rd)(th) record is not present")
+    public void verify_missing_data_ig(String notExpectedValue, String IgName, String columnName, Integer rowNumber) {
+        igComponent.verifyMissingData(IgName, columnName, rowNumber, notExpectedValue);
+    }
+
+    /**
+     * Step verify, that no record is displayed in Interactive Grid
+     *
+     * @param igName           - name of the IG that is visible to user
+     */
+    @Then("no record is displayed in {myString} IG")
+    public void verify_no_record_displayed(String igName) {
+        igComponent.verifyNoRecordDisplayed(igName);
+    }
+
+
+    /**
      * Step edits the value in the cell in Interactive Grid
      *
      * @param rowNumber   - the row number
@@ -164,7 +188,7 @@ public class InteractiveGridSteps extends BaseComponent {
     @Given("records in IG {myString} are not selected")
     @When("user unselects records in IG {myString}")
     public void unselect_records(String igName) {
-        igComponent.selectAllRecords(igName);
+        igComponent.unselectRecords(igName);
     }
 
     /**
