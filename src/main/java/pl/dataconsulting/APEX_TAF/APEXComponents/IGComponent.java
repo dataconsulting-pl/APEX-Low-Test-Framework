@@ -267,7 +267,7 @@ public class IGComponent extends BaseComponent {
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Object jsResult = js.executeScript(String.format(jsCommand, igAd));
-        Assert.assertNull(String.format("IG %s has some records displayed", igName));
+        Assert.assertNull(String.format("IG %s has some records displayed", igName),jsResult);
 
     }
 
