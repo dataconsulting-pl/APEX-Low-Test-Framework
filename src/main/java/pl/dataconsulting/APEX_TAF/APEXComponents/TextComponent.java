@@ -1,6 +1,7 @@
 package pl.dataconsulting.APEX_TAF.APEXComponents;
 
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pl.dataconsulting.APEX_TAF.framework.annotation.APEXComponent;
 
@@ -18,7 +19,7 @@ public class TextComponent extends BaseComponent {
      */
     public void enterStringIntoTextItem(String frameTitle, String fieldName, String text) {
         switchToFrame(frameTitle);
-        sendKeys(getWebElement(fieldName), text);
+        enterStringIntoTextItem(fieldName, text);
     }
 
     /**
@@ -28,7 +29,15 @@ public class TextComponent extends BaseComponent {
      * @param text      - text to enter
      */
     public void enterStringIntoTextItem(String fieldName, String text) {
-        sendKeys(getWebElement(fieldName), text);
+        WebElement element = getWebElement(fieldName);
+        // check if element is autocomplete
+        if (element.getAttribute("class").contains("apex-item-group--auto-complete")) {
+            String id = element.getAttribute("id");
+            executeJSCommand(String.format("return apex.item('%s').setValue('%s')", id, text));
+        } else {
+            sendKeys(getWebElement(fieldName), text);
+        }
+
 
     }
 
@@ -36,7 +45,7 @@ public class TextComponent extends BaseComponent {
      * Sends key to the text item component
      *
      * @param fieldName - name of the field
-     * @param key      - key to be sent
+     * @param key       - key to be sent
      */
     public void sendKeyIntoTextItem(String fieldName, Keys key) {
         getWebElement(fieldName).sendKeys(key);
@@ -59,7 +68,7 @@ public class TextComponent extends BaseComponent {
     /**
      * Gets text from text field
      *
-     * @param fieldName     - name of the filed
+     * @param fieldName - name of the filed
      */
     public String getTextItemValue(String fieldName) {
         return getTextFromWebElement(getWebElementByLabel(fieldName));
