@@ -215,18 +215,10 @@ public class BaseComponent {
      * @return - returns validation webElement of the corresponding label
      */
     protected WebElement getValidationWebElementByLabel(String label) {
-        String action = "Search element by its label";
-        String ELEMENT_TEMPLATE_XPATH = "//*[contains(@class,'t-Form-label') and starts-with(text(),'%s')]/.";
-        String xpath = String.format(ELEMENT_TEMPLATE_XPATH, label);
 
-        WebElement element = driver.findElement(By.xpath(xpath));
-        String searchElementId = element.getAttribute("for");
-        if (searchElementId == null) {
-            Assert.assertEquals("Web element could not be found", "Web element can be found",
-                    "Searched webElement: " + label);
-            return null;
-        }
-        WebElement searchedWebElement = driver.findElement(By.id(searchElementId + "_error"));
+        WebElement element = getWebElement(label);
+        // gets the ID of the element and add _error to the name
+        WebElement searchedWebElement = driver.findElement(By.id(element.getAttribute("id") + "_error"));
         return searchedWebElement;
     }
 

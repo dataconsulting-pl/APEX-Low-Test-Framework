@@ -85,7 +85,6 @@ public class TextComponent extends BaseComponent {
     public void verifyValidationMessage(String frameName, String fieldName, String expectedMessage) {
         switchToFrame(frameName);
         verifyValidationMessage(fieldName,expectedMessage);
-        Assert.assertEquals(getValidationWebElementByLabel(fieldName).getText(), expectedMessage);
     }
 
     /**
