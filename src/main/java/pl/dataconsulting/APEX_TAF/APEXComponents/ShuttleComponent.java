@@ -20,7 +20,7 @@ public class ShuttleComponent extends BaseComponent {
      * @param optionNamesToSelect list of option to be selected
      */
     public void moveShuttleOptionName(String radioItemName, List<String> optionNamesToSelect) {
-        WebElement element = getWebElementByLabel(radioItemName);
+        WebElement element = getWebElement(radioItemName);
         String alreadySelectedOptions = "";
 
         List<WebElement> optionToBeSelected =
@@ -58,7 +58,7 @@ public class ShuttleComponent extends BaseComponent {
      * @param radioItemName name (label) of the radiobox component
      */
     public void moveAllShuttleOptions(String radioItemName) {
-        WebElement element = getWebElementByLabel(radioItemName);
+        WebElement element = getWebElement(radioItemName);
 
         List<WebElement> optionToBeSelected =
                 element.findElements(By.xpath("//*[contains(@class, 'apex-item-select') and contains(@class, 'shuttle')]/option[not(@disabled)]"));
@@ -74,7 +74,7 @@ public class ShuttleComponent extends BaseComponent {
      * @param optionNamesToRemove list of option to be removed
      */
     public void removeShuttleOptionName(String itemName, List<String> optionNamesToRemove) {
-        WebElement element = getWebElementByLabel(itemName);
+        WebElement element = getWebElement(itemName);
 
         // get all the options
         List<WebElement> options =
@@ -96,7 +96,7 @@ public class ShuttleComponent extends BaseComponent {
      * @param radioItemName name (label) of the radiobox component
      */
     public void removeAllShuttleOptions(String radioItemName) {
-        WebElement element = getWebElementByLabel(radioItemName);
+        WebElement element = getWebElement(radioItemName);
         setValueJS(element.getAttribute("id"), "");
     }
 
@@ -111,7 +111,7 @@ public class ShuttleComponent extends BaseComponent {
      * @param expectedOptionNames list of option that should be chosen
      */
     public void verifyShuttleByOptionName(String itemName, List<String> expectedOptionNames) {
-        WebElement element = getWebElementByLabel(itemName);
+        WebElement element = getWebElement(itemName);
 
         List<String> selectedOptions = getSelectedOptionsDisplayName(element);
         List<String> notMatch = expectedOptionNames.stream().filter(
@@ -133,7 +133,7 @@ public class ShuttleComponent extends BaseComponent {
      * @param itemName name (label) of the shuttle component
      */
     public void verifyNoShuttleOptionChosen(String itemName) {
-        WebElement element = getWebElementByLabel(itemName);
+        WebElement element = getWebElement(itemName);
 
         List<String> selectedOptions = getSelectedOptionsDisplayName(element);
 
@@ -145,17 +145,6 @@ public class ShuttleComponent extends BaseComponent {
             Assert.assertEquals("No shuttle options are chosen in shuttle item", "No shuttle options are chosen in shuttle item",
                     "No option chosen on shuttle item: " + itemName);
         }
-    }
-
-    /**
-     * Moves all values in shuttle item
-     *
-     * @param itemName name (label) of the shuttle component
-     */
-    public void moveAllValues(String itemName) {
-        WebElement element = getWebElementByLabel(itemName);
-
-
     }
 
 
