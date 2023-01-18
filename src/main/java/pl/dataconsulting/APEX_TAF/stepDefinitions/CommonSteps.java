@@ -105,5 +105,15 @@ public class CommonSteps {
         baseComponent.saveTestData(variable, baseComponent.getAlertText());
     }
 
+    /**
+     * Step click on the href by ites name
+     *
+     * @param textToClick - text to be clicked
+     */
+    @Given("user has clicked on the {myString} link")
+    @When("user clicks on the {myString} link")
+    public void click_on_the_link_by_name(String textToClick) {
+        baseComponent.clickByLinkText(textToClick);
+    }
 
 }
