@@ -381,7 +381,7 @@ public class IGComponent extends BaseComponent {
      */
     private String getIGidByName(String igName) {
         // find all the IG on the page
-        List<WebElement> igs = driver.findElements(By.xpath("//*[@class=\"a-IG\"]"));
+        List<WebElement> igs = driver.findElements(By.xpath("//*[@class='a-IG'] | //*[@class='a-IG a-IG--noToolbar']"));
         for (WebElement el : igs) {
             if (el.getAttribute("id") != null) {
                 // get the id of the element and add heading to it
