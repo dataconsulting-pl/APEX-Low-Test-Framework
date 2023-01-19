@@ -132,6 +132,15 @@ public class BaseComponent {
     }
 
     /**
+     * Click on the link by link text
+     * @param linkText - text to be clicked
+     */
+    public void clickByLinkText(String linkText) {
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.linkText(linkText)))).click();
+        ;
+    }
+
+    /**
      * Sends keys to webElement
      *
      * @param element    - webElement to where the key must be sent
