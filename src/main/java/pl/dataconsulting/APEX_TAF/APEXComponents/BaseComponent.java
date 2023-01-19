@@ -11,6 +11,7 @@ import pl.dataconsulting.APEX_TAF.framework.annotation.APEXComponent;
 import pl.dataconsulting.APEX_TAF.framework.service.TestData;
 
 import javax.annotation.PostConstruct;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -133,6 +134,7 @@ public class BaseComponent {
 
     /**
      * Click on the link by link text
+     *
      * @param linkText - text to be clicked
      */
     public void clickByLinkText(String linkText) {
@@ -235,27 +237,30 @@ public class BaseComponent {
      * Waits until u-Processing class is visible
      */
     protected void waitForApex() {
-        try {
-            waitForAjax();
-            Thread.sleep(200);
-            while (driver.findElements(By.className("u-Processing")).size() > 0) {
+        // wait only if alert is not present
+        if (!isAlertPresent()) {
+            try {
+                waitForAjax();
                 Thread.sleep(200);
+                while (driver.findElements(By.className("u-Processing")).size() > 0) {
+                    Thread.sleep(200);
+                }
+            } catch (InvalidArgumentException | InterruptedException e) {
+                e.printStackTrace();
             }
-        } catch (InvalidArgumentException | InterruptedException e) {
-            e.printStackTrace();
         }
 
     }
 
     private void waitForAjax() throws InterruptedException {
         String jsCommand = String.format("return jQuery.active == 0");
-        while (true) // Handle timeout somewhere
-        {
+        while (true) {
             JavascriptExecutor js = (JavascriptExecutor) driver;
             Boolean ajaxResult = (Boolean) js.executeScript(jsCommand);
             if (ajaxResult)
                 break;
             Thread.sleep(200);
+
         }
 
     }
@@ -343,7 +348,22 @@ public class BaseComponent {
     }
 
 
-    // == private functions ==
+    // == protected functions ==
+
+    /**
+     * Check if alert is preset
+     *
+     * @return true if alert is present, false otherwise
+     */
+    protected boolean isAlertPresent() {
+        try {
+            new WebDriverWait(driver, Duration.ofMillis(50)).until(ExpectedConditions.alertIsPresent());
+            return true;
+        } catch (org.openqa.selenium.TimeoutException e) {
+            return false;
+        }
+    }
+
 
     /**
      * Sets the Value of APEX item using JS
