@@ -254,7 +254,7 @@ public class IGComponent extends BaseComponent {
     /**
      * Verify, that no record is displayed in given IG
      *
-     * @param igName        - static id of the interactive grid
+     * @param igName - static id of the interactive grid
      */
     public void verifyNoRecordDisplayed(String igName) {
         String jsCommand = "return apex.region(\"%s\")" +
@@ -267,7 +267,7 @@ public class IGComponent extends BaseComponent {
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Object jsResult = js.executeScript(String.format(jsCommand, igAd));
-        Assert.assertNull(String.format("IG %s has some records displayed", igName),jsResult);
+        Assert.assertNull(String.format("IG %s has some records displayed", igName), jsResult);
 
     }
 
@@ -331,6 +331,7 @@ public class IGComponent extends BaseComponent {
         Object jsResult = js.executeScript(String.format(jsCommand, igId));
         ArrayList<Map<String, Object>> iGColumns = (ArrayList<Map<String, Object>>) jsResult;
         int htmlIdx = 1;
+        int frozenHtmlIdx = 1;
         for (int i = 0; i < iGColumns.size(); i++) {
             // skip the action column
             if (iGColumns.get(i).get("property").equals("APEX$ROW_ACTION")) {
@@ -341,7 +342,6 @@ public class IGComponent extends BaseComponent {
             }
             // Get the attributes for non-hidden columns (Note: hidden columns do not need to have the name
             if (!(Boolean) iGColumns.get(i).get("hidden")) {
-
                 // verify the column name
                 if (Jsoup.parse((String) iGColumns.get(i).get("heading")).text().replaceAll("\\s+", "").equalsIgnoreCase(columnLabel.replaceAll("\\s+", ""))) {
                     return new IgColumn(
@@ -351,7 +351,8 @@ public class IGComponent extends BaseComponent {
                             iGColumns.get(i).get("defaultValue"),
                             iGColumns.get(i).get("id"),
                             iGColumns.get(i).get("index"),
-                            htmlIdx);
+                            ((Boolean) iGColumns.get(i).get("frozen")) ? frozenHtmlIdx : htmlIdx,
+                            iGColumns.get(i).get("frozen"));
                 } else {
                     // column by name was not found. Try to search by the name in span, for example icon name used as column label
                     if (iGColumns.get(i).get("heading") != null
@@ -364,8 +365,12 @@ public class IGComponent extends BaseComponent {
                                 iGColumns.get(i).get("defaultValue"),
                                 iGColumns.get(i).get("id"),
                                 iGColumns.get(i).get("index"),
-                                htmlIdx);
+                                ((Boolean) iGColumns.get(i).get("frozen")) ? frozenHtmlIdx : htmlIdx,
+                                iGColumns.get(i).get("frozen"));
                     }
+                }
+                if ((Boolean) iGColumns.get(i).get("frozen")) {
+                    frozenHtmlIdx++;
                 }
                 htmlIdx++;
             }
@@ -421,10 +426,17 @@ public class IGComponent extends BaseComponent {
         if (igId == null) {
             Assert.fail(String.format("Could not find an interactive grid by its name: %s", igName));
         }
+        String xpathTemplate = "";
+        int columnIdx = -1;
 
-        int columnIdx = Objects.requireNonNull(getColumnAttributesByLabel(igId, columnLabel)).htmlIdx;
-
-        String xpathTemplate = "//*[@id='%s_ig_grid_vc']//*[@data-rownum=%d]/td[%d]";
+        IgColumn igColumn = Objects.requireNonNull(getColumnAttributesByLabel(igId, columnLabel));
+        if (igColumn.frozen) {
+            columnIdx = igColumn.htmlIdx;
+            xpathTemplate = "//*[@id='%s_ig_grid_vc']//*[@class='a-GV-w-frozen']//*[@data-rownum=%d]/td[%d]";
+        } else {
+            columnIdx = igColumn.htmlIdx - getFrozenColumnsCount(igId);
+            xpathTemplate = "//*[@id='%s_ig_grid_vc']//*[@class='a-GV-w-scroll']//*[@data-rownum=%d]/td[%d]";
+        }
         String xpath = String.format(xpathTemplate, igId, rowNumber, columnIdx);
         return driver.findElement(By.xpath(xpath));
     }
@@ -463,6 +475,25 @@ public class IGComponent extends BaseComponent {
         return null;
     }
 
+    /**
+     * Gets the number of frozen columns
+     *
+     * @param igId - static id of the interactive grid
+     * @return - number of frozen columns
+     */
+    private int getFrozenColumnsCount(String igId) {
+        // get all not hidden columns
+        String jsCommand = "return apex.region(\"%s\")"
+                + ".call(\"getViews\", \"grid\")"
+                + ".view$.grid(\"getColumns\")"
+                + ".filter((c)=>{return (c.frozen == true & c.hidden == false)})";
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        Object jsResult = js.executeScript(String.format(jsCommand, igId));
+        ArrayList<Map<String, String>> iGColumns = (ArrayList<Map<String, String>>) jsResult;
+        return iGColumns.size();
+    }
+
 
 }
 
@@ -478,8 +509,9 @@ class IgColumn {
     public String id;
     public int idx;
     public int htmlIdx;
+    public boolean frozen;
 
-    public IgColumn(String label, Object property, Object dataType, Object defaultValue, Object id, Object idx, int htmlIdx) {
+    public IgColumn(String label, Object property, Object dataType, Object defaultValue, Object id, Object idx, int htmlIdx, Object frozen) {
 
         this.label = label;
         this.property = (String) property;
@@ -488,6 +520,7 @@ class IgColumn {
         this.id = (String) id;
         this.idx = ((Long) idx).intValue();
         this.htmlIdx = htmlIdx;
+        this.frozen = (Boolean) frozen;
     }
 
 }
