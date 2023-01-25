@@ -114,16 +114,24 @@ public class ShuttleComponent extends BaseComponent {
         WebElement element = getWebElement(itemName);
 
         List<String> selectedOptions = getSelectedOptionsDisplayName(element);
-        List<String> notMatch = expectedOptionNames.stream().filter(
+        List<String> expectedNotMatch = expectedOptionNames.stream().filter(
                 s -> selectedOptions.stream().noneMatch(name -> name.trim().equals(s.trim()))).toList();
 
-        if (!notMatch.isEmpty()) {
-            String log = String.join("; ", notMatch);
-            Assert.assertEquals("Not all shuttle options are chosen on shuttle item ", "All shuttle items are set",
-                    itemName + " Shuttle options not set : " + log);
+        List<String> selectedNotMatch = selectedOptions.stream().filter(
+                s -> expectedOptionNames.stream().noneMatch(name -> name.trim().equals(s.trim()))).toList();
+
+        if (expectedNotMatch.isEmpty()) {
+            Assert.assertTrue(true, String.format("All shuttle options are chosen on shuttle item %s", itemName));
         } else {
-            Assert.assertEquals("All shuttle options are chosen on shuttle item", "All shuttle options are chosen on shuttle item",
-                    itemName + " Shuttle options set : " + String.join(";", expectedOptionNames));
+            String log = String.join("; ", expectedNotMatch);
+            Assert.fail(String.format("Not all shuttle options are chosen on shuttle item %s. Shuttle options not set: %s", itemName, log));
+        }
+
+        if (selectedNotMatch.isEmpty()) {
+            Assert.assertTrue(true, String.format("All selected shuttle options are expected on shuttle item %s", itemName));
+        } else {
+            String log = String.join("; ", selectedNotMatch);
+            Assert.fail(String.format("Not all selected shuttle options were expected on shuttle item %s. Shuttle options set but not expected: %s", itemName, log));
         }
     }
 
