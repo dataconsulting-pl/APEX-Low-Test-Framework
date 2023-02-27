@@ -77,6 +77,29 @@ public class SelectItemSteps {
         selectItemComponent.verifySelectItemValue(expectedValue, fieldName);
     }
 
+
+    /**
+     * Step verify that each option is selected according to table
+     *
+     * @param dataTable - table that contain field names and values to enter in format:
+     *                  | field1  | field2  |
+     *                  | option1 | option2 |
+     */
+    @Then("verify that option is selected in fields according to data in table:")
+    public void verify_option_is_selected(io.cucumber.datatable.DataTable dataTable) {
+        List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+        for (Map<String, String> row : rows) {
+            row.forEach((k, v) -> {
+                // if cell is empty, the value is passed as null by cucumber. Change it to empty string before comparison
+                if (v == null) {
+                    v = "";
+                }
+                selectItemComponent.verifySelectItemValue(v, k);
+
+            });
+        }
+
+    }
     /**
      * Steps reads the text from selected option of select item. Value saved in variables can be passed to other steps. To pass the variable
      * a prefix @$ must be used. For example @$variableName
